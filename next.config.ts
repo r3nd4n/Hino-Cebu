@@ -1,4 +1,7 @@
 import type { NextConfig } from "next";
+import { getRuntimeConfig } from "./src/lib/runtime-config";
+
+getRuntimeConfig();
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,

@@ -1,13 +1,7 @@
-const LOCAL_ORIGIN = "http://localhost:3000";
+import { getRuntimeConfig } from "./runtime-config";
 
 export function getSiteOrigin() {
-  const configured = process.env.NEXT_PUBLIC_SITE_URL?.trim();
-  if (!configured) return LOCAL_ORIGIN;
-  try {
-    return new URL(configured).origin;
-  } catch {
-    return LOCAL_ORIGIN;
-  }
+  return getRuntimeConfig().siteOrigin;
 }
 
 export function absoluteUrl(path = "/") {
