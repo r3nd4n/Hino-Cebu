@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 01-07-PLAN.md
-last_updated: "2026-08-18T16:48:06Z"
-last_activity: 2026-08-19 -- Completed Plan 01-07 governed editorial and promotion surfaces
+stopped_at: Completed 01-08-PLAN.md
+last_updated: "2026-08-18T16:58:11Z"
+last_activity: 2026-08-19 -- Completed Plan 01-08 governed aftersales and legal surfaces
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 16
-  completed_plans: 8
-  percent: 50
+  completed_plans: 9
+  percent: 56
 ---
 
 # Project State
@@ -26,30 +26,30 @@ See: .planning/PROJECT.md (updated 2026-08-18)
 ## Current Position
 
 Phase: 01 (Production Contracts and Executable Configuration) — EXECUTING
-Plan: 8 of 16
+Plan: 9 of 16
 Status: Executing Phase 01
-Last activity: 2026-08-19 -- Completed Plan 01-07 governed editorial and promotion surfaces
+Last activity: 2026-08-19 -- Completed Plan 01-08 governed aftersales and legal surfaces
 
-Progress: [█████░░░░░] 50%
+Progress: [██████░░░░] 56%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 8
+- Total plans completed: 9
 - Average duration: 8 min
-- Total execution time: 1.1 hours
+- Total execution time: 1.2 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 01 | 8 | 64 min | 8 min |
+| 01 | 9 | 70 min | 8 min |
 
 **Recent Trend:**
 
-- Last 5 plans: 01-04 (14 min), 01-13 (7 min), 01-05 (4 min), 01-06 (7 min), 01-07 (6 min)
-- Trend: Selector-backed route and content migrations remain consistent after the public shell boundary was established
+- Last 5 plans: 01-13 (7 min), 01-05 (4 min), 01-06 (7 min), 01-07 (6 min), 01-08 (6 min)
+- Trend: Selector-backed route, content, aftersales, and legal migrations continue to hold the fail-closed public boundary
 
 *Updated after each plan completion*
 
@@ -87,6 +87,9 @@ Recent decisions affecting current work:
 - [01-07]: Guide and promotion items require an eligible canonical route and every attached claim ID to be current before publication.
 - [01-07]: Withheld editorial routes may render only a configured truthful unavailable page; pending claim wording never reaches the page.
 - [01-07]: Promotion expiry is inclusive at the end timestamp, and malformed temporal bounds fail closed.
+- [01-08]: Parts and service require current aftersales-owned minimum-truth claims plus at least one canonical eligible contact action before rendering.
+- [01-08]: Privacy topics publish atomically only when the contract and all eight topic values have current privacy/legal and technical approval.
+- [01-08]: Terms expose no legal conclusions until an approved legal terms contract exists; only neutral framing and eligible canonical contact details render.
 
 ### Pending Todos
 
@@ -110,6 +113,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-08-18T16:48:06Z
-Stopped at: Completed 01-07-PLAN.md
+Last session: 2026-08-18T16:58:11Z
+Stopped at: Completed 01-08-PLAN.md
 Resume file: None
