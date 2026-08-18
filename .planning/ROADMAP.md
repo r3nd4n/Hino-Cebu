@@ -52,7 +52,7 @@ Plans:
 - [x] 01-07-PLAN.md — Govern guide and promotion surfaces
 - [x] 01-08-PLAN.md — Govern aftersales and legal routes
 - [x] 01-09-PLAN.md — Govern products, finder, params, and JSON-LD
-- [ ] 01-15-PLAN.md — Govern delivery and business-application surfaces
+- [x] 01-15-PLAN.md — Govern delivery and business-application surfaces
 - [ ] 01-16-PLAN.md — Govern campaign route, params, metadata, and request semantics
 
 **Wave 5** *(blocked on Wave 4 completion)*
@@ -175,7 +175,7 @@ Plans:
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Production Contracts and Executable Configuration | 9/16 | In progress | - |
+| 1. Production Contracts and Executable Configuration | 11/16 | In progress | - |
 | 2. Lead Correctness, Durable Acceptance, and Recovery | 0/TBD | Not started | - |
 | 3. Truthful Publishing, Privacy, Measurement, and Security | 0/TBD | Not started | - |
 | 4. Behavioral Verification and Release Gate | 0/TBD | Not started | - |
