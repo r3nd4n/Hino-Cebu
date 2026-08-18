@@ -196,16 +196,16 @@ test("branch field groups and contact actions are independently eligible", () =>
 
 test("route eligibility emits one final state and category IDs without withheld wording", () => {
   const four = [
-    approvedClaim({ claimId: "CLAIM-ROUTE-IDENTITY", category: "identity", value: "Sales" }),
-    approvedClaim({ claimId: "CLAIM-ROUTE-PURPOSE", category: "purpose", value: "Compare model families" }),
-    approvedClaim({ claimId: "CLAIM-ROUTE-REQUEST", category: "request-semantics", value: "Request a consultation" }),
-    approvedClaim({ claimId: "CLAIM-ROUTE-CONTACT", category: "contact-action", value: "Contact sales" }),
+    approvedClaim({ claimId: "CLAIM-ROUTE-IDENTITY", surfaceId: "surface:route", category: "identity", value: "Sales" }),
+    approvedClaim({ claimId: "CLAIM-ROUTE-PURPOSE", surfaceId: "surface:route", category: "purpose", value: "Compare model families" }),
+    approvedClaim({ claimId: "CLAIM-ROUTE-REQUEST", surfaceId: "surface:route", category: "request-semantics", value: "Request a consultation" }),
+    approvedClaim({ claimId: "CLAIM-ROUTE-CONTACT", surfaceId: "surface:route", category: "contact-action", value: "Contact sales" }),
   ];
-  const optional = approvedClaim({ claimId: "CLAIM-ROUTE-OFFER", category: "offer", value: "Secret withheld offer", approval: { ...approvedEnvelope("sales"), departmentApproval: { status: "pending", lane: "sales" } } });
+  const optional = approvedClaim({ claimId: "CLAIM-ROUTE-OFFER", surfaceId: "surface:route", category: "offer", value: "Secret withheld offer", approval: { ...approvedEnvelope("sales"), departmentApproval: { status: "pending", lane: "sales" } } });
   const routes = [
-    { routeId: "ROUTE-FULL", path: "/full", surfaceId: "surface:route", requiredClaimIds: four.map(({ claimId }) => claimId), optionalClaimIds: [], unavailablePage: false },
-    { routeId: "ROUTE-REDUCED", path: "/reduced", surfaceId: "surface:route", requiredClaimIds: four.map(({ claimId }) => claimId), optionalClaimIds: [optional.claimId], unavailablePage: false },
-    { routeId: "ROUTE-WITHHELD", path: "/withheld", surfaceId: "surface:route", requiredClaimIds: [...four.slice(0, 3).map(({ claimId }) => claimId), "CLAIM-MISSING-CONTACT"], optionalClaimIds: [optional.claimId], unavailablePage: true },
+    { routeId: "ROUTE-FULL", path: "/full", surfaceId: "surface:route", minimumTruth: { identity: four[0].claimId, purpose: four[1].claimId, requestSemantics: four[2].claimId, contactAction: four[3].claimId }, optionalClaimIds: [], unavailablePage: false },
+    { routeId: "ROUTE-REDUCED", path: "/reduced", surfaceId: "surface:route", minimumTruth: { identity: four[0].claimId, purpose: four[1].claimId, requestSemantics: four[2].claimId, contactAction: four[3].claimId }, optionalClaimIds: [optional.claimId], unavailablePage: false },
+    { routeId: "ROUTE-WITHHELD", path: "/withheld", surfaceId: "surface:route", minimumTruth: { identity: four[0].claimId, purpose: four[1].claimId, requestSemantics: four[2].claimId, contactAction: "CLAIM-MISSING-CONTACT" }, optionalClaimIds: [optional.claimId], unavailablePage: true },
   ];
 
   const result = eligibility.getEligibleRoutes(NOW, routes, [...four, optional]);

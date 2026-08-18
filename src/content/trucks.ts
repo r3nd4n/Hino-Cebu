@@ -1,4 +1,6 @@
 export type Truck = {
+  routeId: string;
+  claimIds: string[];
   slug: string;
   name: string;
   category: string;
@@ -35,6 +37,8 @@ const commonFaqs = (name: string) => [
 
 export const trucks: Truck[] = [
   {
+    routeId: "ROUTE-TRUCK-HINO-200",
+    claimIds: ["CLAIM-TRUCKS-IDENTITY", "CLAIM-TRUCKS-PURPOSE", "CLAIM-TRUCKS-REQUEST", "CLAIM-TRUCKS-CONTACT", "CLAIM-HINO-200-DETAIL"],
     slug: "hino-200",
     name: "Hino 200",
     category: "Compact light-duty",
@@ -54,6 +58,8 @@ export const trucks: Truck[] = [
     faqs: commonFaqs("Hino 200"),
   },
   {
+    routeId: "ROUTE-TRUCK-HINO-300",
+    claimIds: ["CLAIM-TRUCKS-IDENTITY", "CLAIM-TRUCKS-PURPOSE", "CLAIM-TRUCKS-REQUEST", "CLAIM-TRUCKS-CONTACT", "CLAIM-HINO-300-DETAIL"],
     slug: "hino-300",
     name: "Hino 300",
     category: "Light-duty",
@@ -73,6 +79,8 @@ export const trucks: Truck[] = [
     faqs: commonFaqs("Hino 300"),
   },
   {
+    routeId: "ROUTE-TRUCK-HINO-500",
+    claimIds: ["CLAIM-TRUCKS-IDENTITY", "CLAIM-TRUCKS-PURPOSE", "CLAIM-TRUCKS-REQUEST", "CLAIM-TRUCKS-CONTACT", "CLAIM-HINO-500-DETAIL"],
     slug: "hino-500",
     name: "Hino 500",
     category: "Medium-duty",

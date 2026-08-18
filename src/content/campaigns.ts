@@ -1,10 +1,13 @@
 export type Campaign = {
+  routeId: string; claimIds: string[];
   slug: string; eyebrow: string; title: string; summary: string; benefits: string[];
   modelInterest: string; leadType: "sales" | "service" | "parts" | "financing"; index: boolean;
 };
 
 export const campaigns: Campaign[] = [
   {
+    routeId: "ROUTE-CAMPAIGN-HINO-300",
+    claimIds: ["CLAIM-CAMPAIGN-HINO-300"],
     slug: "hino-300-cebu",
     eyebrow: "Hino 300 in Cebu",
     title: "Start the Hino 300 conversation for your business",
