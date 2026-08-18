@@ -26,8 +26,8 @@ p { margin: 0 0 1rem; }
 .utility-inner a { color: white; font-weight: 700; text-decoration: none; }
 .site-header { position: sticky; top: 0; z-index: 50; background: rgb(255 255 255 / 96%); border-bottom: 1px solid var(--border); backdrop-filter: blur(10px); }
 .nav-row { height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
-.brand { display: inline-flex; flex-direction: column; text-decoration: none; line-height: .82; }
-.brand img { width: 124px; height: auto; }
+.brand { display: inline-flex; text-decoration: none; }
+.brand img { width: 124px; height: auto; filter: brightness(0) saturate(100%) invert(15%) sepia(93%) saturate(4512%) hue-rotate(350deg) brightness(98%) contrast(91%); }
 .brand-branch { font-size: .72rem; font-weight: 800; letter-spacing: .35em; padding-left: .1rem; margin-top: .4rem; }
 .primary-nav { display: flex; align-items: center; gap: clamp(.65rem, 1.4vw, 1.25rem); font-weight: 700; font-size: .84rem; }
 .primary-nav a { text-decoration: none; white-space: nowrap; }
@@ -44,17 +44,8 @@ p { margin: 0 0 1rem; }
 .eyebrow, .card-kicker { display: block; color: var(--brand); font-size: .76rem; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; margin-bottom: .8rem; }
 .lead { color: var(--muted); font-size: clamp(1.1rem, 2vw, 1.35rem); max-width: 64ch; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 1.8rem; }
-.home-hero { background: var(--ink); color: white; overflow: hidden; }
-.home-hero-grid { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); min-height: clamp(520px, 58vw, 680px); }
-.home-hero-copy { align-self: center; padding: clamp(3.5rem, 7vw, 6rem) clamp(2rem, 5vw, 5rem) clamp(3.5rem, 7vw, 6rem) 0; }
-.home-hero-copy h1 { font-size: clamp(3rem, 6vw, 5.8rem); }
-.home-hero-copy .lead { color: #d8dadd; max-width: 36ch; }
-.home-hero-brand { display: flex; align-items: center; gap: 1.1rem; margin-bottom: 2rem; }
-.home-hero-brand img { width: clamp(150px, 18vw, 224px); height: auto; }
-.home-hero-brand span { padding-left: 1.1rem; border-left: 1px solid #666a6e; font-size: .88rem; font-weight: 800; letter-spacing: .22em; text-transform: uppercase; }
-.home-hero-media { position: relative; min-width: 50vw; }
-.home-hero-media:after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgb(23 25 27 / 22%), transparent 34%); pointer-events: none; }
-.home-hero-media img { object-fit: cover; object-position: 72% center; }
+.home-hero-image { position: relative; min-height: clamp(260px, 28vw, 340px); overflow: hidden; background: var(--ink-soft); }
+.home-hero-image img { object-fit: cover; object-position: 74% center; }
 .page-hero { padding: clamp(4rem, 9vw, 7.5rem) 0; background: linear-gradient(110deg, #f2f3f3 0 62%, #e3e5e6 62%); border-bottom: 1px solid var(--border); }
 .page-hero h1 { font-size: clamp(2.45rem, 5vw, 4.6rem); }
 .section { padding: var(--space-6) 0; }
@@ -201,11 +192,7 @@ p { margin: 0 0 1rem; }
 @media (max-width: 720px) {
   :root { --space-6: 3.4rem; }
   body { padding-bottom: 66px; }.utility-inner span { display: none; }.utility-inner { justify-content: center; }
-  .home-hero-grid { width: 100%; grid-template-columns: 1fr; }
-  .home-hero-copy { width: min(calc(100% - 2rem), var(--max)); margin-inline: auto; padding: 3.5rem 0; }
-  .home-hero-media { min-width: 0; min-height: 300px; order: -1; }
-  .home-hero-media:after { background: linear-gradient(0deg, rgb(23 25 27 / 35%), transparent 45%); }
-  .home-hero-media img { object-position: 73% center; }
+  .home-hero-image { min-height: 260px; }
   .page-hero { background: var(--surface); }.grid-2, .grid-3, .grid-4, .split, .form-grid, .finder-grid { grid-template-columns: 1fr; }
   .cta-band .container, .footer-bottom { align-items: flex-start; flex-direction: column; }.footer-grid { grid-template-columns: 1fr; gap: 2rem; }
   .mobile-actions { display: grid; grid-template-columns: repeat(3, 1fr); position: fixed; z-index: 60; bottom: 0; left: 0; right: 0; height: 66px; background: var(--ink); color: white; box-shadow: 0 -4px 16px rgb(0 0 0 / 20%); }
