@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
+import { join } from "node:path";
 import test from "node:test";
 import {
   NOW,
@@ -14,6 +15,14 @@ const { schemas, decisions, privacy, leads, release, eligibility, claims, site, 
 
 function readSource(path) {
   return readFileSync(path, "utf8");
+}
+
+function sourceFiles(directory) {
+  return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
+    const path = join(directory, entry.name);
+    if (entry.isDirectory()) return sourceFiles(path);
+    return /\.(?:ts|tsx)$/.test(entry.name) ? [path] : [];
+  });
 }
 
 test("public layout structurally owns the public shell and root layout stays minimal", () => {
@@ -46,6 +55,34 @@ test("public 404 uses final selectors while root 404 remains shell-free", () => 
   assert.match(publicNotFound, /getEligibleRoutes/);
   assert.match(publicNotFound, /getEligibleContactActions/);
   assert.doesNotMatch(publicNotFound, /siteConfig|\/withheld|expired branch|provisional|diagnostic/i);
+});
+
+test("navigation and contact DTOs are projected by the public server layout", () => {
+  const publicLayout = readSource("src/app/(public)/layout.tsx");
+  const shellSources = [
+    "src/components/layout/Header.tsx",
+    "src/components/layout/Footer.tsx",
+    "src/components/layout/StickyMobileActions.tsx",
+  ].map(readSource).join("\n");
+
+  assert.match(publicLayout, /getEligibleRoutes/);
+  assert.match(publicLayout, /getEligibleContactActions/);
+  assert.match(publicLayout, /const navigation =/);
+  assert.match(publicLayout, /<Header[^>]*navigation=\{navigation\}[^>]*contactActions=\{contactActions\}/s);
+  assert.match(publicLayout, /<Footer[^>]*navigation=\{navigation\}[^>]*contactActions=\{contactActions\}/s);
+  assert.match(publicLayout, /<StickyMobileActions[^>]*navigation=\{navigation\}[^>]*contactActions=\{contactActions\}/s);
+  assert.doesNotMatch(shellSources, /siteConfig|directionsHref|\/trucks|\/quote|\/contact/);
+  assert.doesNotMatch(shellSources, /review|provisional|diagnostic|withheld/i);
+});
+
+test("client surfaces cannot import governance records or eligibility selectors", () => {
+  const forbidden = /@\/content\/governance|@\/lib\/governance\/eligibility|getEligibleBranch|getEligibleRoutes|getEligibleClaims|getEligibleContactActions|@\/content\/site/;
+
+  for (const path of sourceFiles("src")) {
+    const source = readSource(path);
+    if (!/^\s*["']use client["']/m.test(source)) continue;
+    assert.doesNotMatch(source, forbidden, path);
+  }
 });
 
 test("approval requires two tiers, the correct fixed lane, evidence, and a current review", () => {
