@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 01-16-PLAN.md
-last_updated: "2026-08-18T17:29:49Z"
-last_activity: 2026-08-19 -- Completed Plan 01-16 governed campaign route and discovery hooks
+stopped_at: Completed 01-10-PLAN.md
+last_updated: "2026-08-18T17:41:41Z"
+last_activity: 2026-08-19 -- Completed Plan 01-10 governed home and search discovery surfaces
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 16
-  completed_plans: 12
-  percent: 75
+  completed_plans: 13
+  percent: 81
 ---
 
 # Project State
@@ -26,30 +26,30 @@ See: .planning/PROJECT.md (updated 2026-08-18)
 ## Current Position
 
 Phase: 01 (Production Contracts and Executable Configuration) — EXECUTING
-Plan: 12 of 16
+Plan: 13 of 16
 Status: Executing Phase 01
-Last activity: 2026-08-19 -- Completed Plan 01-16 governed campaign route and discovery hooks
+Last activity: 2026-08-19 -- Completed Plan 01-10 governed home and search discovery surfaces
 
-Progress: [████████░░] 75%
+Progress: [████████░░] 81%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 12
+- Total plans completed: 13
 - Average duration: 8 min
-- Total execution time: 1.5 hours
+- Total execution time: 1.7 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 01 | 12 | 91 min | 8 min |
+| 01 | 13 | 100 min | 8 min |
 
 **Recent Trend:**
 
-- Last 5 plans: 01-07 (6 min), 01-08 (6 min), 01-09 (10 min), 01-15 (6 min), 01-16 (5 min)
-- Trend: Selector-backed route, content, product, delivery, application, and campaign migrations continue to hold the fail-closed public boundary
+- Last 5 plans: 01-08 (6 min), 01-09 (10 min), 01-15 (6 min), 01-16 (5 min), 01-10 (9 min)
+- Trend: Selector-backed route migrations now close the homepage, metadata, sitemap, and crawl boundary around final eligible output
 
 *Updated after each plan completion*
 
@@ -99,6 +99,9 @@ Recent decisions affecting current work:
 - [01-16]: Campaign params, metadata, lookup, and rendering consume the same final eligible campaign-route projection.
 - [01-16]: Eligible-reduced campaigns retain approved minimum-truth content while omitting optional offer benefits.
 - [01-16]: Campaign request outcomes remain governed by the shared durable-receipt boundary and receive only eligible contact alternatives.
+- [01-10]: Home aggregation renders only final eligible route, branch, action, product, editorial, service, delivery, and campaign projections.
+- [01-10]: Sitemap, shared metadata, breadcrumbs, and robots fail closed from the same final eligible-route result.
+- [01-10]: Preview and production share identical content omission; runtime target and crawl policy only determine index permission.
 
 ### Pending Todos
 
@@ -122,6 +125,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-08-18T17:29:49Z
-Stopped at: Completed 01-16-PLAN.md
+Last session: 2026-08-18T17:41:41Z
+Stopped at: Completed 01-10-PLAN.md
 Resume file: None

@@ -57,7 +57,7 @@ Plans:
 
 **Wave 5** *(blocked on Wave 4 completion)*
 
-- [ ] 01-10-PLAN.md — Enforce home, SEO, robots, and sitemap coherence
+- [x] 01-10-PLAN.md — Enforce home, SEO, robots, and sitemap coherence
 
 **Wave 6** *(blocked on Wave 5 completion)*
 
@@ -175,7 +175,7 @@ Plans:
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Production Contracts and Executable Configuration | 12/16 | In progress | - |
+| 1. Production Contracts and Executable Configuration | 13/16 | In progress | - |
 | 2. Lead Correctness, Durable Acceptance, and Recovery | 0/TBD | Not started | - |
 | 3. Truthful Publishing, Privacy, Measurement, and Security | 0/TBD | Not started | - |
 | 4. Behavioral Verification and Release Gate | 0/TBD | Not started | - |
