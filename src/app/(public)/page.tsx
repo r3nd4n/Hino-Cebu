@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { TrackedLink } from "@/components/marketing/TrackedLink";
 import { TruckCard } from "@/components/trucks/TruckCard";
@@ -39,18 +40,17 @@ export default function Home() {
     getEligibleClaims(`surface:${route.routeId.replace(/^ROUTE-/, "").toLowerCase()}`)
   ));
   const primaryPurpose = primaryClaims.find(({ category }) => category === "purpose")?.value;
-
-  if (eligibleRoutes.length === 0 && !branch.identity && contactActions.length === 0) {
-    return <section className="section"><Container><span className="eyebrow">Hino Cebu</span><h1>Public information is being verified.</h1><p className="lead">Approved product, support, and contact details will appear here when they are ready.</p></Container></section>;
-  }
+  const hasPublicContent = eligibleRoutes.length > 0 || Boolean(branch.identity) || contactActions.length > 0;
 
   return <>
-    <section className="section dark"><Container><span className="eyebrow">{branch.identity ?? "Hino Cebu"}</span><h1>{primaryPurpose ?? "Approved information for Cebu businesses"}</h1><div className="hero-actions">{eligibleRoutes.slice(0, 2).map((route) => <Link className="button button-light" href={route.path} key={route.routeId}>View available information</Link>)}</div></Container></section>
+    <section className="home-hero"><Container className="home-hero-grid"><div className="home-hero-copy"><div className="home-hero-brand"><Image src="/images/official/hino-logo.png" alt="Hino" width={248} height={60} priority /><span>Cebu</span></div><h1>{hasPublicContent ? primaryPurpose ?? "Built for Cebu business." : "Public information is being verified."}</h1><p className="lead">{hasPublicContent ? "Find the right Hino truck and support pathway for the work ahead." : "Approved product, support, and contact details will appear here when they are ready."}</p>{eligibleRoutes.length > 0 ? <div className="hero-actions">{eligibleRoutes.slice(0, 2).map((route) => <Link className="button" href={route.path} key={route.routeId}>View available information</Link>)}</div> : null}</div><div className="home-hero-media"><Image src="/images/official/hino-300.jpg" alt="Hino 300 Series truck in an urban business setting" fill priority sizes="(max-width: 720px) 100vw, 58vw" /></div></Container></section>
+    {!hasPublicContent ? null : <>
     {trucks.length > 0 ? <section className="section alt"><Container><SectionHeading eyebrow="Truck lineup" title="Eligible model families" /><div className="grid grid-3">{trucks.map((truck) => <TruckCard truck={truck} key={truck.slug} />)}</div></Container></section> : null}
     {applications.length > 0 ? <section className="section dark"><Container><SectionHeading eyebrow="Built around the job" title="Business applications" /><div className="grid grid-4">{applications.map((item) => <article className="card card-body" key={item.title}><h3>{item.title}</h3><p>{item.description}</p></article>)}</div></Container></section> : null}
     {services.length > 0 ? <section className="section"><Container><SectionHeading eyebrow="Support" title="Available support pathways" /><div className="grid grid-4">{services.map((item) => <article className="card card-body" key={item.title}><h3>{item.title}</h3><p>{item.description}</p><Link className="text-link" href={item.href}>{item.cta} <span aria-hidden>→</span></Link></article>)}</div></Container></section> : null}
     {guides.length > 0 || promotions.length > 0 || deliveries.length > 0 || campaigns.length > 0 ? <section className="section alt"><Container><SectionHeading eyebrow="Updates" title="Eligible guides and updates" /><div className="grid grid-3">{guides.map((guide) => <article className="card card-body" key={guide.slug}><h3>{guide.title}</h3><p>{guide.summary}</p>{routePaths.has("/guides") ? <Link className="text-link" href="/guides">Read more <span aria-hidden>→</span></Link> : null}</article>)}{promotions.map((promotion) => <article className="card card-body" key={promotion.slug}><h3>{promotion.title}</h3><p>{promotion.summary}</p></article>)}{deliveries.map((delivery) => <article className="card card-body" key={delivery.slug}><h3>{delivery.title}</h3><p>{delivery.summary}</p></article>)}{campaigns.map((campaign) => <article className="card card-body" key={campaign.slug}><h3>{campaign.title}</h3><p>{campaign.summary}</p><Link className="text-link" href={`/lp/${campaign.slug}`}>View campaign <span aria-hidden>→</span></Link></article>)}</div></Container></section> : null}
     {branch.identity || branch.address || contactActions.length > 0 ? <section className="section" id="location"><Container><SectionHeading eyebrow="Contact" title={branch.identity ?? "Available contact options"} />{branch.address ? <address>{branch.address}</address> : null}<div className="hero-actions">{contactActions.map((action) => <TrackedLink className="button" href={action.href} event={action.kind === "phone" ? "phone_click" : "directions_click"} eventProperties={{ location: "home_location" }} key={action.actionId}>{action.label}</TrackedLink>)}</div></Container></section> : null}
     {routeIds.has("ROUTE-QUOTE") ? <section className="cta-band"><Container><Link className="button button-light" href="/quote">Request information</Link></Container></section> : null}
+    </>}
   </>;
 }
