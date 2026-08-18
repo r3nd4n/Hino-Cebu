@@ -111,66 +111,67 @@ Explicitly excluded from this milestone to protect truth, cost, performance, saf
 
 ## Traceability
 
-Roadmap phase mapping is populated after requirements approval.
+Every v1 requirement is assigned to exactly one roadmap phase.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| PROD-01 | TBD | Pending |
-| PROD-02 | TBD | Pending |
-| PROD-03 | TBD | Pending |
-| PROD-04 | TBD | Pending |
-| PROD-05 | TBD | Pending |
-| PROD-06 | TBD | Pending |
-| PROD-07 | TBD | Pending |
-| LEAD-01 | TBD | Pending |
-| LEAD-02 | TBD | Pending |
-| LEAD-03 | TBD | Pending |
-| LEAD-04 | TBD | Pending |
-| LEAD-05 | TBD | Pending |
-| LEAD-06 | TBD | Pending |
-| LEAD-07 | TBD | Pending |
-| LEAD-08 | TBD | Pending |
-| LEAD-09 | TBD | Pending |
-| LEAD-10 | TBD | Pending |
-| GOV-01 | TBD | Pending |
-| GOV-02 | TBD | Pending |
-| GOV-03 | TBD | Pending |
-| GOV-04 | TBD | Pending |
-| GOV-05 | TBD | Pending |
-| GOV-06 | TBD | Pending |
-| GOV-07 | TBD | Pending |
-| GOV-08 | TBD | Pending |
-| GOV-09 | TBD | Pending |
-| GOV-10 | TBD | Pending |
-| QUAL-01 | TBD | Pending |
-| QUAL-02 | TBD | Pending |
-| QUAL-03 | TBD | Pending |
-| QUAL-04 | TBD | Pending |
-| QUAL-05 | TBD | Pending |
-| QUAL-06 | TBD | Pending |
-| QUAL-07 | TBD | Pending |
-| QUAL-08 | TBD | Pending |
-| LAUN-01 | TBD | Pending |
-| LAUN-02 | TBD | Pending |
-| LAUN-03 | TBD | Pending |
-| LAUN-04 | TBD | Pending |
-| LAUN-05 | TBD | Pending |
-| LAUN-06 | TBD | Pending |
-| LAUN-07 | TBD | Pending |
-| LAUN-08 | TBD | Pending |
-| GROW-01 | TBD | Pending |
-| GROW-02 | TBD | Pending |
-| GROW-03 | TBD | Pending |
-| GROW-04 | TBD | Pending |
-| GROW-05 | TBD | Pending |
-| GROW-06 | TBD | Pending |
-| GROW-07 | TBD | Pending |
+| PROD-01 | Phase 1 | Pending |
+| PROD-02 | Phase 1 | Pending |
+| PROD-03 | Phase 1 | Pending |
+| PROD-04 | Phase 1 | Pending |
+| PROD-05 | Phase 1 | Pending |
+| PROD-06 | Phase 1 | Pending |
+| PROD-07 | Phase 1 | Pending |
+| LEAD-01 | Phase 2 | Pending |
+| LEAD-02 | Phase 2 | Pending |
+| LEAD-03 | Phase 2 | Pending |
+| LEAD-04 | Phase 2 | Pending |
+| LEAD-05 | Phase 2 | Pending |
+| LEAD-06 | Phase 2 | Pending |
+| LEAD-07 | Phase 2 | Pending |
+| LEAD-08 | Phase 2 | Pending |
+| LEAD-09 | Phase 2 | Pending |
+| LEAD-10 | Phase 2 | Pending |
+| GOV-01 | Phase 3 | Pending |
+| GOV-02 | Phase 3 | Pending |
+| GOV-03 | Phase 3 | Pending |
+| GOV-04 | Phase 3 | Pending |
+| GOV-05 | Phase 3 | Pending |
+| GOV-06 | Phase 3 | Pending |
+| GOV-07 | Phase 3 | Pending |
+| GOV-08 | Phase 3 | Pending |
+| GOV-09 | Phase 3 | Pending |
+| GOV-10 | Phase 3 | Pending |
+| QUAL-01 | Phase 4 | Pending |
+| QUAL-02 | Phase 4 | Pending |
+| QUAL-03 | Phase 4 | Pending |
+| QUAL-04 | Phase 4 | Pending |
+| QUAL-05 | Phase 4 | Pending |
+| QUAL-06 | Phase 4 | Pending |
+| QUAL-07 | Phase 4 | Pending |
+| QUAL-08 | Phase 4 | Pending |
+| LAUN-01 | Phase 5 | Pending |
+| LAUN-02 | Phase 5 | Pending |
+| LAUN-03 | Phase 5 | Pending |
+| LAUN-04 | Phase 5 | Pending |
+| LAUN-05 | Phase 5 | Pending |
+| LAUN-06 | Phase 5 | Pending |
+| LAUN-07 | Phase 5 | Pending |
+| LAUN-08 | Phase 5 | Pending |
+| GROW-01 | Phase 6 | Pending |
+| GROW-02 | Phase 6 | Pending |
+| GROW-03 | Phase 6 | Pending |
+| GROW-04 | Phase 6 | Pending |
+| GROW-05 | Phase 6 | Pending |
+| GROW-06 | Phase 6 | Pending |
+| GROW-07 | Phase 6 | Pending |
 
 **Coverage:**
 - v1 requirements: 50 total
-- Mapped to phases: 0
-- Unmapped: 50 (roadmap pending)
+- Mapped to phases: 50
+- Unmapped: 0
+- Duplicate mappings: 0
 
 ---
 *Requirements defined: 2026-08-18*
-*Last updated: 2026-08-18 after initial definition*
+*Last updated: 2026-08-18 after roadmap creation*
