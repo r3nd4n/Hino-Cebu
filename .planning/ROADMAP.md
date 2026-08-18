@@ -49,9 +49,9 @@ Plans:
 
 - [x] 01-05-PLAN.md — Govern branch and contact routes
 - [x] 01-06-PLAN.md — Govern sales inquiry routes and shared form UI
-- [ ] 01-07-PLAN.md — Govern guide and promotion surfaces
-- [ ] 01-08-PLAN.md — Govern aftersales and legal routes
-- [ ] 01-09-PLAN.md — Govern products, finder, params, and JSON-LD
+- [x] 01-07-PLAN.md — Govern guide and promotion surfaces
+- [x] 01-08-PLAN.md — Govern aftersales and legal routes
+- [x] 01-09-PLAN.md — Govern products, finder, params, and JSON-LD
 - [ ] 01-15-PLAN.md — Govern delivery and business-application surfaces
 - [ ] 01-16-PLAN.md — Govern campaign route, params, metadata, and request semantics
 

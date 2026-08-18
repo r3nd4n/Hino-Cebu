@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 01-08-PLAN.md
-last_updated: "2026-08-18T16:58:11Z"
-last_activity: 2026-08-19 -- Completed Plan 01-08 governed aftersales and legal surfaces
+stopped_at: Completed 01-09-PLAN.md
+last_updated: "2026-08-18T17:12:07Z"
+last_activity: 2026-08-19 -- Completed Plan 01-09 governed product catalog and finder surfaces
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 16
-  completed_plans: 9
-  percent: 56
+  completed_plans: 10
+  percent: 63
 ---
 
 # Project State
@@ -26,30 +26,30 @@ See: .planning/PROJECT.md (updated 2026-08-18)
 ## Current Position
 
 Phase: 01 (Production Contracts and Executable Configuration) — EXECUTING
-Plan: 9 of 16
+Plan: 10 of 16
 Status: Executing Phase 01
-Last activity: 2026-08-19 -- Completed Plan 01-08 governed aftersales and legal surfaces
+Last activity: 2026-08-19 -- Completed Plan 01-09 governed product catalog and finder surfaces
 
-Progress: [██████░░░░] 56%
+Progress: [██████░░░░] 63%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 9
+- Total plans completed: 10
 - Average duration: 8 min
-- Total execution time: 1.2 hours
+- Total execution time: 1.3 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 01 | 9 | 70 min | 8 min |
+| 01 | 10 | 80 min | 8 min |
 
 **Recent Trend:**
 
-- Last 5 plans: 01-13 (7 min), 01-05 (4 min), 01-06 (7 min), 01-07 (6 min), 01-08 (6 min)
-- Trend: Selector-backed route, content, aftersales, and legal migrations continue to hold the fail-closed public boundary
+- Last 5 plans: 01-05 (4 min), 01-06 (7 min), 01-07 (6 min), 01-08 (6 min), 01-09 (10 min)
+- Trend: Selector-backed route, content, legal, and product migrations continue to hold the fail-closed public boundary
 
 *Updated after each plan completion*
 
@@ -90,6 +90,9 @@ Recent decisions affecting current work:
 - [01-08]: Parts and service require current aftersales-owned minimum-truth claims plus at least one canonical eligible contact action before rendering.
 - [01-08]: Privacy topics publish atomically only when the contract and all eight topic values have current privacy/legal and technical approval.
 - [01-08]: Terms expose no legal conclusions until an approved legal terms contract exists; only neutral framing and eligible canonical contact details render.
+- [01-09]: A truck is public only when the parent trucks route is eligible and every claim attached to that truck is approved and current.
+- [01-09]: Generated params, metadata, route rendering, cards, finder links, and product JSON-LD all consume the same eligible truck projection.
+- [01-09]: Client truck components receive narrowed model/card DTOs and never import governance records or selectors.
 
 ### Pending Todos
 
@@ -113,6 +116,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-08-18T16:58:11Z
-Stopped at: Completed 01-08-PLAN.md
+Last session: 2026-08-18T17:12:07Z
+Stopped at: Completed 01-09-PLAN.md
 Resume file: None
