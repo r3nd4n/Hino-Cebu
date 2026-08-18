@@ -67,7 +67,7 @@ test("navigation and contact DTOs are projected by the public server layout", ()
 
   assert.match(publicLayout, /getEligibleRoutes/);
   assert.match(publicLayout, /getEligibleContactActions/);
-  assert.match(publicLayout, /const navigation =/);
+  assert.match(publicLayout, /const navigation(?::[^=]+)? =/);
   assert.match(publicLayout, /<Header[^>]*navigation=\{navigation\}[^>]*contactActions=\{contactActions\}/s);
   assert.match(publicLayout, /<Footer[^>]*navigation=\{navigation\}[^>]*contactActions=\{contactActions\}/s);
   assert.match(publicLayout, /<StickyMobileActions[^>]*navigation=\{navigation\}[^>]*contactActions=\{contactActions\}/s);
