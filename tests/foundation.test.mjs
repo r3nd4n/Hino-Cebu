@@ -6,8 +6,8 @@ const routes = [
   "src/app/page.tsx", "src/app/trucks/page.tsx", "src/app/trucks/[slug]/page.tsx",
   "src/app/find-your-truck/page.tsx", "src/app/parts/page.tsx", "src/app/service/page.tsx",
   "src/app/fleet/page.tsx", "src/app/financing/page.tsx", "src/app/promotions/page.tsx",
-  "src/app/hino-cebu/page.tsx", "src/app/hino-cebu/customer-deliveries/page.tsx",
-  "src/app/guides/page.tsx", "src/app/contact/page.tsx", "src/app/quote/page.tsx",
+  "src/app/(public)/hino-cebu/page.tsx", "src/app/hino-cebu/customer-deliveries/page.tsx",
+  "src/app/guides/page.tsx", "src/app/(public)/contact/page.tsx", "src/app/quote/page.tsx",
   "src/app/privacy/page.tsx", "src/app/terms/page.tsx", "src/app/not-found.tsx", "src/app/sitemap.ts", "src/app/robots.ts",
 ];
 
