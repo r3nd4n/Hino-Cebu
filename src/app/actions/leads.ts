@@ -8,7 +8,7 @@ import { leadRouter } from "@/lib/leads/router";
 import type { LeadType } from "@/lib/leads/types";
 import { getRuntimeConfig } from "@/lib/runtime-config";
 
-export type LeadFormState = { status: "idle" | "success" | "error"; message: string; errors?: Record<string, string> };
+export type LeadFormState = { status: "idle" | "success" | "error"; message: string; durableReceipt?: boolean; errors?: Record<string, string> };
 export const initialLeadState: LeadFormState = { status: "idle", message: "" };
 
 const leadTypes: LeadType[] = ["sales", "parts", "service", "fleet", "financing"];
@@ -54,7 +54,7 @@ export async function submitLead(_: LeadFormState, formData: FormData): Promise<
   payload.consent = true;
   try {
     await leadRouter.submit({ type, sourcePage: values.sourcePage || "/", sourceCta: values.sourceCta || undefined, payload, attribution, submittedAt: new Date().toISOString() });
-    return { status: "success", message: "Thank you. Your request was validated and received for follow-up." };
+    return { status: "success", message: "Thank you. Your request was validated and received for follow-up.", durableReceipt: Boolean(leadContract && isLeadContractApproved(leadContract)) };
   } catch {
     return { status: "error", message: "We could not send your request right now. Please call Hino Cebu instead." };
   }

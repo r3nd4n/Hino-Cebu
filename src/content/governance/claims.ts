@@ -91,6 +91,18 @@ const claimCatalog: readonly GovernedClaim[] = [
   pendingClaim("CLAIM-SERVICE-SERVICE", "surface:service-service", "purpose", "Service requests", "aftersales"),
   pendingClaim("CLAIM-SERVICE-PARTS", "surface:service-parts", "purpose", "Parts inquiries", "aftersales"),
   pendingClaim("CLAIM-SERVICE-FLEET", "surface:service-fleet", "purpose", "Financing and fleet inquiries", "sales"),
+  pendingClaim("CLAIM-FINANCING-IDENTITY", "surface:financing", "identity", "Truck financing inquiry", "brand-content"),
+  pendingClaim("CLAIM-FINANCING-PURPOSE", "surface:financing", "purpose", "Share acquisition requirements for review", "sales"),
+  pendingClaim("CLAIM-FINANCING-REQUEST", "surface:financing", "request-semantics", "Request financing information", "sales"),
+  pendingClaim("CLAIM-FINANCING-CONTACT", "surface:financing", "contact-action", "Use an approved Hino Cebu contact option", "sales"),
+  pendingClaim("CLAIM-FLEET-IDENTITY", "surface:fleet", "identity", "Fleet inquiry", "brand-content"),
+  pendingClaim("CLAIM-FLEET-PURPOSE", "surface:fleet", "purpose", "Share fleet requirements for review", "sales"),
+  pendingClaim("CLAIM-FLEET-REQUEST", "surface:fleet", "request-semantics", "Request fleet information", "sales"),
+  pendingClaim("CLAIM-FLEET-CONTACT", "surface:fleet", "contact-action", "Use an approved Hino Cebu contact option", "sales"),
+  pendingClaim("CLAIM-QUOTE-IDENTITY", "surface:quote", "identity", "Truck sales inquiry", "brand-content"),
+  pendingClaim("CLAIM-QUOTE-PURPOSE", "surface:quote", "purpose", "Share truck requirements for review", "sales"),
+  pendingClaim("CLAIM-QUOTE-REQUEST", "surface:quote", "request-semantics", "Request sales information", "sales"),
+  pendingClaim("CLAIM-QUOTE-CONTACT", "surface:quote", "contact-action", "Use an approved Hino Cebu contact option", "sales"),
 ];
 
 const routeCatalog: readonly GovernedRoute[] = [
@@ -107,6 +119,23 @@ const routeCatalog: readonly GovernedRoute[] = [
     optionalClaimIds: ["CLAIM-HINO-200-DETAIL", "CLAIM-HINO-300-DETAIL", "CLAIM-HINO-500-DETAIL"],
     unavailablePage: true,
   }),
+  ...([
+    { routeId: "ROUTE-FINANCING", path: "/financing", surfaceId: "surface:financing", prefix: "CLAIM-FINANCING" },
+    { routeId: "ROUTE-FLEET", path: "/fleet", surfaceId: "surface:fleet", prefix: "CLAIM-FLEET" },
+    { routeId: "ROUTE-QUOTE", path: "/quote", surfaceId: "surface:quote", prefix: "CLAIM-QUOTE" },
+  ] as const).map(({ routeId, path, surfaceId, prefix }) => governedRouteSchema.parse({
+    routeId,
+    path,
+    surfaceId,
+    minimumTruth: {
+      identity: `${prefix}-IDENTITY`,
+      purpose: `${prefix}-PURPOSE`,
+      requestSemantics: `${prefix}-REQUEST`,
+      contactAction: `${prefix}-CONTACT`,
+    },
+    optionalClaimIds: [],
+    unavailablePage: true,
+  })),
 ];
 
 export function getGovernedClaims() {

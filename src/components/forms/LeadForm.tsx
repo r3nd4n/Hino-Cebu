@@ -7,6 +7,7 @@ import { leadFields } from "@/lib/leads/fields";
 import type { LeadType } from "@/lib/leads/types";
 import { readAttribution } from "@/lib/attribution";
 import { track, type AnalyticsEvent } from "@/lib/analytics";
+import type { InquiryContactAction } from "@/components/marketing/InquiryPage";
 
 const events: Record<LeadType, { start?: AnalyticsEvent; submitted: AnalyticsEvent }> = {
   sales: { start: "truck_quote_started", submitted: "truck_quote_submitted" },
@@ -15,12 +16,12 @@ const events: Record<LeadType, { start?: AnalyticsEvent; submitted: AnalyticsEve
   fleet: { submitted: "fleet_inquiry_submitted" }, financing: { submitted: "financing_inquiry_submitted" },
 };
 
-export function LeadForm({ type, title, submitLabel, sourceCta, compact = false, defaults = {} }: { type: LeadType; title: string; submitLabel: string; sourceCta?: string; compact?: boolean; defaults?: Record<string, string> }) {
+export function LeadForm({ type, title, submitLabel, contactActions = [], sourceCta, compact = false, defaults = {} }: { type: LeadType; title: string; submitLabel: string; contactActions?: readonly InquiryContactAction[]; sourceCta?: string; compact?: boolean; defaults?: Record<string, string> }) {
   const [state, action, pending] = useActionState(submitLead, initialLeadState);
   const started = useRef(false);
   const attributionRef = useRef<HTMLInputElement>(null);
   const pathname = usePathname();
-  useEffect(() => { if (state.status === "success") { track(events[type].submitted, { lead_type: type, page: pathname }); if (sourceCta?.startsWith("campaign:")) track("campaign_lead_submitted", { lead_type: type, campaign: sourceCta.slice(9) }); } }, [state.status, type, pathname, sourceCta]);
+  useEffect(() => { if (state.status === "success" && state.durableReceipt) { track(events[type].submitted, { lead_type: type, page: pathname }); if (sourceCta?.startsWith("campaign:")) track("campaign_lead_submitted", { lead_type: type, campaign: sourceCta.slice(9) }); } }, [state.status, state.durableReceipt, type, pathname, sourceCta]);
   const fields = compact ? leadFields[type].filter((field) => ["name", "mobile", "email", "modelInterest", "businessUse", "notes"].includes(field.name)) : leadFields[type];
   return <div className={`form-shell ${compact ? "compact" : ""}`}>
     <h2>{title}</h2><p className="form-intro">Fields marked * are required. Submission is a request for follow-up, not a confirmed quotation, appointment, stock status, or financing approval.</p>
@@ -38,7 +39,7 @@ export function LeadForm({ type, title, submitLabel, sourceCta, compact = false,
       <div className="upload-note"><strong>Photo attachments are currently unavailable.</strong> Secure storage and privacy handling must be approved before uploads are enabled.</div>
       <label className="consent"><input type="checkbox" name="consent" aria-invalid={!!state.errors?.consent} /> <span>I consent to Hino Cebu using these details to respond to this inquiry. *</span></label>
       {state.errors?.consent && <span className="field-error">{state.errors.consent}</span>}
-      {state.message && <div className={`form-status ${state.status}`} role="status">{state.message}</div>}
+      {state.message && <div className={`form-status ${state.status === "success" && state.durableReceipt ? "success" : "error"}`} role="status">{state.status === "success" && state.durableReceipt ? state.message : "Your request could not be confirmed. Please retry later or use an available contact option."}{state.status !== "success" || !state.durableReceipt ? <span className="hero-actions">{contactActions.map((contactAction) => <a href={contactAction.href} key={contactAction.actionId}>{contactAction.label}</a>)}</span> : null}</div>}
       <button className="button" disabled={pending}>{pending ? "Sending…" : submitLabel}</button>
     </form>
   </div>;
