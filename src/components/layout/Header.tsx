@@ -28,10 +28,11 @@ export function Header({ navigation, contactActions, branch }: HeaderProps) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const phoneAction = contactActions.find(({ kind }) => kind === "phone");
+  const homeNavigation = navigation.find(({ href }) => href === "/");
   return <header className="site-header">
     {phoneAction ? <div className="utility-bar"><div className="container utility-inner"><a href={phoneAction.href}>{phoneAction.label}</a></div></div> : null}
     <div className="container nav-row">
-      <Link className="brand" href="/" aria-label={branch.identity ? `${branch.identity} home` : "Site home"}><Image src="/images/official/hino-logo.png" alt="Hino" width={124} height={30} priority />{branch.identity ? <span className="brand-branch">{branch.identity}</span> : null}</Link>
+      {homeNavigation ? <Link className="brand" href={homeNavigation.href} aria-label={homeNavigation.label}><Image src="/images/official/hino-logo.png" alt="Hino" width={124} height={30} priority />{branch.identity ? <span className="brand-branch">{branch.identity}</span> : null}</Link> : <div className="brand"><Image src="/images/official/hino-logo.png" alt="Hino" width={124} height={30} priority />{branch.identity ? <span className="brand-branch">{branch.identity}</span> : null}</div>}
       <button className="menu-button" aria-expanded={open} aria-controls="primary-navigation" onClick={() => setOpen(!open)}><span className="sr-only">Toggle menu</span><span /><span /><span /></button>
       <nav id="primary-navigation" className={open ? "primary-nav is-open" : "primary-nav"} aria-label="Primary navigation">
         {navigation.map((item) => <Link key={item.navigationId} href={item.href} onClick={() => setOpen(false)} aria-current={pathname === item.href ? "page" : undefined}>{item.label}</Link>)}

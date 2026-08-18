@@ -49,5 +49,5 @@ export default function PublicLayout({ children }: Readonly<{ children: React.Re
     } : {}),
   };
 
-  return <><a className="skip-link" href="#main-content">Skip to main content</a><Header navigation={navigation} contactActions={contactActions} branch={branch} /><main id="main-content">{children}</main><Footer navigation={navigation} contactActions={contactActions} branch={branch} /><StickyMobileActions navigation={navigation} contactActions={contactActions} /><Suspense><AttributionCapture /></Suspense><MarketingTags /><JsonLd data={organizationSchema} /></>;
+  return <><a className="skip-link" href="#main-content">Skip to main content</a><Header navigation={navigation} contactActions={contactActions} branch={branch} /><main id="main-content">{children}</main><Footer navigation={navigation} contactActions={contactActions} branch={branch} /><StickyMobileActions navigation={navigation} contactActions={contactActions} /><Suspense><AttributionCapture /></Suspense><MarketingTags />{eligibleBranch.identity ? <JsonLd data={organizationSchema} /> : null}</>;
 }

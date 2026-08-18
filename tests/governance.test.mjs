@@ -43,6 +43,7 @@ test("organization schema is constructed only from the eligible branch DTO", () 
 
   assert.match(publicLayout, /getEligibleBranch/);
   assert.match(publicLayout, /const eligibleBranch = getEligibleBranch\(\)/);
+  assert.match(publicLayout, /eligibleBranch\.identity \? <JsonLd/);
   assert.doesNotMatch(publicLayout, /siteConfig\.(?:name|address|phoneDisplay|directionsUrl)/);
   assert.doesNotMatch(publicLayout, /expired branch|withheld branch/i);
 });
@@ -72,6 +73,7 @@ test("navigation and contact DTOs are projected by the public server layout", ()
   assert.match(publicLayout, /<Footer[^>]*navigation=\{navigation\}[^>]*contactActions=\{contactActions\}/s);
   assert.match(publicLayout, /<StickyMobileActions[^>]*navigation=\{navigation\}[^>]*contactActions=\{contactActions\}/s);
   assert.doesNotMatch(shellSources, /siteConfig|directionsHref|\/trucks|\/quote|\/contact/);
+  assert.doesNotMatch(shellSources, /<Link[^>]+href="\/"/);
   assert.doesNotMatch(shellSources, /review|provisional|diagnostic|withheld/i);
 });
 
