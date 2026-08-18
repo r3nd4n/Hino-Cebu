@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 01-05-PLAN.md
-last_updated: "2026-08-18T16:28:19Z"
-last_activity: 2026-08-19 -- Completed Plan 01-05 governed branch and contact routes
+stopped_at: Completed 01-06-PLAN.md
+last_updated: "2026-08-18T16:37:43Z"
+last_activity: 2026-08-19 -- Completed Plan 01-06 governed sales inquiry surfaces
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 16
-  completed_plans: 6
-  percent: 38
+  completed_plans: 7
+  percent: 44
 ---
 
 # Project State
@@ -28,27 +28,27 @@ See: .planning/PROJECT.md (updated 2026-08-18)
 Phase: 01 (Production Contracts and Executable Configuration) — EXECUTING
 Plan: 7 of 16
 Status: Executing Phase 01
-Last activity: 2026-08-19 -- Completed Plan 01-05 governed branch and contact routes
+Last activity: 2026-08-19 -- Completed Plan 01-06 governed sales inquiry surfaces
 
-Progress: [████░░░░░░] 38%
+Progress: [████░░░░░░] 44%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 6
-- Average duration: 9 min
-- Total execution time: 0.9 hours
+- Total plans completed: 7
+- Average duration: 8 min
+- Total execution time: 1.0 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 01 | 6 | 51 min | 9 min |
+| 01 | 7 | 58 min | 8 min |
 
 **Recent Trend:**
 
-- Last 5 plans: 01-02 (7 min), 01-03 (7 min), 01-04 (14 min), 01-13 (7 min), 01-05 (4 min)
+- Last 5 plans: 01-03 (7 min), 01-04 (14 min), 01-13 (7 min), 01-05 (4 min), 01-06 (7 min)
 - Trend: Selector-backed route migrations are completing quickly after the public shell boundary was established
 
 *Updated after each plan completion*
@@ -81,6 +81,9 @@ Recent decisions affecting current work:
 - [01-05]: Branch fields render independently from one eligible branch DTO, while absent fields remain omitted without public approval diagnostics.
 - [01-05]: Phone and directions links render only from the canonical contact-action selector; route components never reconstruct destinations.
 - [01-05]: Contact AutoDealer structured data requires eligible identity and contains only independently eligible branch fields.
+- [01-06]: Sales inquiry routes require eligible minimum-truth claims and at least one canonical contact action before rendering.
+- [01-06]: Public success copy and submitted analytics require an explicit durable-receipt confirmation from the server boundary.
+- [01-06]: Sales inquiry components receive narrowed claim/action DTOs and never reconstruct route-local claims or contact destinations.
 
 ### Pending Todos
 
@@ -104,6 +107,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-08-18T16:28:19Z
-Stopped at: Completed 01-05-PLAN.md
+Last session: 2026-08-18T16:37:43Z
+Stopped at: Completed 01-06-PLAN.md
 Resume file: None
