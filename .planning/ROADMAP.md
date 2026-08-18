@@ -42,7 +42,7 @@ Plans:
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 01-04-PLAN.md — Isolate the public shell and eligible navigation
+- [x] 01-04-PLAN.md — Isolate the public shell and eligible navigation
 - [ ] 01-13-PLAN.md — Publish executable operating procedures
 
 **Wave 4** *(blocked on Wave 3 completion)*
@@ -175,7 +175,7 @@ Plans:
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Production Contracts and Executable Configuration | 3/16 | In progress | - |
+| 1. Production Contracts and Executable Configuration | 4/16 | In progress | - |
 | 2. Lead Correctness, Durable Acceptance, and Recovery | 0/TBD | Not started | - |
 | 3. Truthful Publishing, Privacy, Measurement, and Security | 0/TBD | Not started | - |
 | 4. Behavioral Verification and Release Gate | 0/TBD | Not started | - |

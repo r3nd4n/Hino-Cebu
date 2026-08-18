@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 01-03-PLAN.md
-last_updated: "2026-08-18T15:53:54Z"
-last_activity: 2026-08-18 -- Completed Plan 01-03 canonical content eligibility
+stopped_at: Completed 01-04-PLAN.md
+last_updated: "2026-08-18T16:08:32Z"
+last_activity: 2026-08-19 -- Completed Plan 01-04 public shell and eligible navigation
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 16
-  completed_plans: 3
-  percent: 19
+  completed_plans: 4
+  percent: 25
 ---
 
 # Project State
@@ -26,29 +26,29 @@ See: .planning/PROJECT.md (updated 2026-08-18)
 ## Current Position
 
 Phase: 01 (Production Contracts and Executable Configuration) — EXECUTING
-Plan: 4 of 16
+Plan: 5 of 16
 Status: Executing Phase 01
-Last activity: 2026-08-18 -- Completed Plan 01-03 canonical content eligibility
+Last activity: 2026-08-19 -- Completed Plan 01-04 public shell and eligible navigation
 
-Progress: [██░░░░░░░░] 19%
+Progress: [███░░░░░░░] 25%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 3
-- Average duration: 9 min
-- Total execution time: 0.4 hours
+- Total plans completed: 4
+- Average duration: 10 min
+- Total execution time: 0.7 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 01 | 3 | 26 min | 9 min |
+| 01 | 4 | 40 min | 10 min |
 
 **Recent Trend:**
 
-- Last 5 plans: 01-01 (12 min), 01-02 (7 min), 01-03 (7 min)
+- Last 5 plans: 01-01 (12 min), 01-02 (7 min), 01-03 (7 min), 01-04 (14 min)
 - Trend: Selector and configuration plans completed faster than the governance foundation
 
 *Updated after each plan completion*
@@ -72,6 +72,9 @@ Recent decisions affecting current work:
 - [01-03]: Claims must match Cebu locality, fixed owner lane, active revision, current evidence-backed approval, and the consuming route surface.
 - [01-03]: Route selectors expose one final state and category identifiers only; withheld wording never crosses the public selector boundary.
 - [01-03]: Existing source-backed branch facts remain pending until their field-level approval envelopes are current.
+- [01-04]: The root layout owns only the document boundary; public navigation, marketing integrations, and structured data live exclusively in the public route group.
+- [01-04]: Eligibility selectors execute in the public Server Component and client islands receive only explicit allow-listed shell DTOs.
+- [01-04]: Brand links and organization schema fail closed when their governing route or branch identity is not eligible.
 
 ### Pending Todos
 
@@ -95,6 +98,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-08-18T15:53:54Z
-Stopped at: Completed 01-03-PLAN.md
+Last session: 2026-08-18T16:08:32Z
+Stopped at: Completed 01-04-PLAN.md
 Resume file: None
