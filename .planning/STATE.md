@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 1 UI-SPEC approved
-last_updated: "2026-08-18T15:31:22Z"
-last_activity: 2026-08-18 -- Completed Plan 01-01 governance record contracts
+stopped_at: Completed 01-02-PLAN.md
+last_updated: "2026-08-18T15:43:41Z"
+last_activity: 2026-08-18 -- Completed Plan 01-02 target-aware configuration and isolation
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 16
-  completed_plans: 1
-  percent: 6
+  completed_plans: 2
+  percent: 13
 ---
 
 # Project State
@@ -26,30 +26,30 @@ See: .planning/PROJECT.md (updated 2026-08-18)
 ## Current Position
 
 Phase: 01 (Production Contracts and Executable Configuration) — EXECUTING
-Plan: 2 of 16
+Plan: 3 of 16
 Status: Executing Phase 01
-Last activity: 2026-08-18 -- Completed Plan 01-01 governance record contracts
+Last activity: 2026-08-18 -- Completed Plan 01-02 target-aware configuration and isolation
 
-Progress: [█░░░░░░░░░] 6%
+Progress: [█░░░░░░░░░] 13%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 1
-- Average duration: 12 min
-- Total execution time: 0.2 hours
+- Total plans completed: 2
+- Average duration: 10 min
+- Total execution time: 0.3 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 01 | 1 | 12 min | 12 min |
+| 01 | 2 | 19 min | 10 min |
 
 **Recent Trend:**
 
-- Last 5 plans: 01-01 (12 min)
-- Trend: First plan completed
+- Last 5 plans: 01-01 (12 min), 01-02 (7 min)
+- Trend: Configuration plan completed faster than the governance foundation
 
 *Updated after each plan completion*
 
@@ -66,6 +66,9 @@ Recent decisions affecting current work:
 - [01-01]: Approval eligibility requires both the responsible fixed lane and technical release confirmation to be approved and current.
 - [01-01]: Unknown owners, providers, legal terms, and thresholds remain typed pending or proposal values that cannot satisfy readiness predicates.
 - [01-01]: Owner alerts are provider-neutral allow-listed records derived only from expiry or invalidation.
+- [01-02]: Only allow-listed environment keys enter runtime parsing; unrelated values cannot affect output or its fingerprint.
+- [01-02]: Development may default safely to localhost, but preview and production require explicit target-safe origins and profiles.
+- [01-02]: Production lead routing remains unavailable until the matching D-09 operating contract is approved and current.
 
 ### Pending Todos
 
@@ -89,6 +92,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-08-18T15:31:22Z
-Stopped at: Completed 01-01-PLAN.md
+Last session: 2026-08-18T15:43:41Z
+Stopped at: Completed 01-02-PLAN.md
 Resume file: None
