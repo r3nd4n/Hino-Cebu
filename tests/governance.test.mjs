@@ -112,6 +112,22 @@ test("owner alert creation is stable, bounded, redacted, and triggered only by e
   assert.equal(schemas.ownerAlertSchema.safeParse({ ...first, rawContent: "withheld wording" }).success, false);
   assert.equal(schemas.ownerAlertSchema.safeParse({ ...first, providerPayload: {} }).success, false);
   assert.throws(() => release.createOwnerAlert(governed, "pending", NOW));
+  assert.equal(release.createOwnerAlertForGovernanceChange(governed, NOW), null);
+  assert.equal(
+    release.createOwnerAlertForGovernanceChange(approvedEnvelope("brand-content", {
+      departmentApproval: approvedDecision("brand-content", { reviewAt: NOW.toISOString() }),
+    }), NOW)?.triggerCode,
+    "expired",
+  );
+  assert.equal(
+    release.createOwnerAlertForGovernanceChange(approvedEnvelope("brand-content", {
+      departmentApproval: approvedDecision("brand-content", {
+        invalidatedAt: "2026-08-17T00:00:00.000Z",
+        invalidationCode: "source-changed",
+      }),
+    }), NOW)?.triggerCode,
+    "invalidated",
+  );
 });
 
 test("release policy records encode ordinary, emergency, rollback, and closeout authority as blockers", () => {
