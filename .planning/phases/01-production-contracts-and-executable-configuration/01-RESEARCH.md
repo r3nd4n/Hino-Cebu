@@ -516,37 +516,39 @@ Source: project App Router patterns plus Vercel Deployment Protection. The route
 
 All technical claims used for planning were verified from the codebase, registry, or official primary documentation. No unresolved business, provider, threshold, owner, credential, domain, or legal value is treated as an assumption; each is an open approval dependency.
 
-## Open Questions
+## Open Questions (RESOLVED)
+
+The six questions below are resolved as planning dispositions, not as invented business answers. Unknown production values remain blocking inputs to the typed approval register and the final human checkpoints. No provider, person, threshold, legal conclusion, external evidence system, domain, or account is selected by this research.
 
 1. **What are the approved production estate identifiers and authorities?**
    - What we know: The register must identify domain, commercial Vercel account/project, DNS owner, deployment owner, rollback owner, and backup roles.
    - What's unclear: Actual domain, account/project, plan approval, named people/roles, DNS control, and Git/Vercel permissions.
-   - Recommendation: Make these a blocking stakeholder checkpoint; record non-secret IDs/references only.
+   - Resolved disposition: Represent every value as a pending production-estate record, require non-secret IDs/references, and keep production blocked until the authorized stakeholder checkpoint approves them.
 
 2. **Which branch fields and local claims are approved?**
    - What we know: The existing source register supports the display name, address, and phone; hours, direct GBP URL, local model availability, service/parts/fleet/financing wording, asset rights, and response expectations remain unapproved. [VERIFIED: SOURCE_REGISTER.md/BUSINESS_INPUTS_REQUIRED.md]
    - What's unclear: Final locally applicable public wording and field-level approval evidence.
-   - Recommendation: Seed records as `pending`; do not copy current public text into `approved` status automatically.
+   - Resolved disposition: Seed independently publishable field groups and claims as `pending`; migrate every public and discovery consumer to fail-closed selectors; do not infer approval from current copy.
 
 3. **What is the approved privacy operating contract?**
    - What we know: Required topics include controller/contact, purposes, recipients/processors, retention/deletion, rights, incidents, and marketing-consent policy. NPC law/rules establish transparency, purpose, proportionality, retention, safeguards, rights, and accountability principles. [CITED: https://privacy.gov.ph/data-privacy-act/] [CITED: https://privacy.gov.ph/implementing-rules-regulations-data-privacy-act-2012/]
    - What's unclear: Every project-specific legal/business answer.
-   - Recommendation: Privacy/legal approves the complete record; engineering supplies fields and fail-closed behavior only.
+   - Resolved disposition: Engineering supplies the complete typed pending contract and fail-closed public behavior; Privacy/legal approval remains a blocking register/checkpoint input.
 
 4. **Which provider satisfies durable acceptance?**
    - What we know: The current webhook/development adapter does not prove D-09 durability or recovery. [VERIFIED: codebase grep]
    - What's unclear: Approved candidate set, provider documentation, auth, data location, retention, cost, routing, replay, and secondary intake.
-   - Recommendation: Run a candidate scorecard and sandbox proof after stakeholders supply candidates; no production selection by inference.
+   - Resolved disposition: Provide a provider-neutral scorecard and require primary evidence plus sandbox proof at the blocking checkpoint; production remains blocked and Phase 1 selects no provider by inference.
 
 5. **What numeric review, response, escalation, and rollback thresholds are approved?**
    - What we know: D-04/D-11/D-15 require review dates, response windows, escalation, and predefined rollback triggers.
    - What's unclear: Exact durations/thresholds and named approvers.
-   - Recommendation: Store proposals separately from approvals; production policy must not consume proposal values.
+   - Resolved disposition: Store proposed values separately from approved policy and make selectors/configuration reject proposal values; authorized owners must approve exact values at the blocking checkpoint.
 
 6. **Where will sensitive evidence and closeout documents live?**
    - What we know: Sensitive material cannot live in Git; the repository needs stable references.
    - What's unclear: Approved external system, retention/access policy, and reference format.
-   - Recommendation: Choose an existing approved business document system; do not add a new platform solely for this phase.
+   - Resolved disposition: Keep only opaque references in Git and require stakeholders to identify an approved existing external system, access policy, retention rule, and reference format at the blocking checkpoint; add no platform in Phase 1.
 
 ## Environment Availability
 
