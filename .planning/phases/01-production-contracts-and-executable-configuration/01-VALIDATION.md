@@ -1,53 +1,66 @@
 ---
 phase: 1
 slug: production-contracts-and-executable-configuration
-status: draft
-nyquist_compliant: false
-wave_0_complete: false
+status: complete
+nyquist_compliant: true
+wave_0_complete: true
 created: 2026-08-18
+updated: 2026-08-19
 ---
 
 # Phase 1 — Validation Strategy
 
-> Per-phase validation contract for feedback sampling during execution.
-
----
+> Executable verification and manual-gate map for every Phase 1 task. Nyquist completion means the checks exist and are mapped; it does not approve external evidence, hosting access, or promotion authority.
 
 ## Test Infrastructure
 
 | Property | Value |
 |----------|-------|
 | **Framework** | Node.js built-in `node:test` and `node:assert/strict` |
-| **Config file** | None — test discovery is defined by `package.json`; Wave 0 adds focused test files and fixtures |
+| **Config file** | None — test discovery is defined by `package.json`; fixture compilation is isolated under `tests/fixtures/governance/` |
 | **Quick run command** | `node --test tests/governance.test.mjs tests/configuration.test.mjs` |
 | **Full suite command** | `npm run check` |
-| **Estimated runtime** | Quick target: <10 seconds; full target: <60 seconds on the supported local/CI runtime |
+| **Measured runtime** | Plan 12 owner/regression suite: 5.4 seconds; full local gate: 113.2 seconds on 2026-08-19 |
 
----
+The focused suite meets the 10-second target. The full local gate exceeds 60 seconds because it includes lint, strict type checking, 89 native tests (including a nested invalid-production build smoke), and another production build. This measured exception is recorded instead of misrepresenting the target as passed.
 
 ## Sampling Rate
 
-- **After every task commit:** Run `node --test tests/governance.test.mjs tests/configuration.test.mjs`
-- **After every plan wave:** Run `npm run check`
-- **Before `$gsd-verify-work`:** Full suite must be green; protected preview must be reviewed; every production-blocking decision must be approved; a deliberately invalid production configuration must be proven to fail before the Next.js build completes.
-- **Max feedback latency:** 10 seconds for the focused suite; 60 seconds for the full local gate.
-
----
+- **After every task commit:** Run the task-owned focused segment below.
+- **After every plan wave:** Run the final/regression smoke segments, including `npm run check` where owned by the plan.
+- **Before `$gsd-verify-work`:** The full suite must be green; protected preview, external evidence, and release authority remain blocking Plan 01-14 manual gates.
+- **No watch mode:** Every command terminates and is suitable for CI.
 
 ## Per-Task Verification Map
 
-| Task ID | Plan | Wave | Requirement | Threat Ref | Secure Behavior | Test Type | Automated Command | File Exists | Status |
-|---------|------|------|-------------|------------|-----------------|-----------|-------------------|-------------|--------|
-| 01-W0-01 | TBD | 0 | PROD-01 | T-01, T-02 | Required estate and authority decisions are evidence-backed; pending/missing decisions block production | unit/schema | `node --test --test-name-pattern="production estate" tests/governance.test.mjs` | ❌ W0 | ⬜ pending |
-| 01-W0-02 | TBD | 0 | PROD-02 | T-01, T-02 | Public branch fields come from one approved/current selector and omit ineligible values | unit | `node --test --test-name-pattern="branch" tests/governance.test.mjs` | ❌ W0 | ⬜ pending |
-| 01-W0-03 | TBD | 0 | PROD-03 | T-02, T-06 | Unapproved, expired, invalidated, or nationally inapplicable claims cannot reach public surfaces | unit/integration | `node --test --test-name-pattern="eligibility|route" tests/governance.test.mjs` | ❌ W0 | ⬜ pending |
-| 01-W0-04 | TBD | 0 | PROD-04 | T-01, T-02, T-04 | Privacy contract requires all approved topics and contains no secrets or sensitive evidence | schema | `node --test --test-name-pattern="privacy" tests/governance.test.mjs` | ❌ W0 | ⬜ pending |
-| 01-W0-05 | TBD | 0 | PROD-05 | T-04, T-06, T-07 | Every lead type has a complete approved operating contract; optimistic or missing-provider profiles fail production | schema/contract | `node --test --test-name-pattern="lead contract" tests/governance.test.mjs` | ❌ W0 | ⬜ pending |
-| 01-W0-06 | TBD | 0 | PROD-06 | T-04, T-06, T-09 | Production configuration fails before build on missing/malformed/mismatched values and errors never echo values | unit/build smoke | `node --test --test-name-pattern="production" tests/configuration.test.mjs` | ❌ W0 | ⬜ pending |
-| 01-W0-07 | TBD | 0 | PROD-07 | T-03, T-05, T-08 | Preview rejects production profiles and production rejects preview/test profiles; review route is absent in production | matrix/integration | `node --test --test-name-pattern="isolation|review" tests/configuration.test.mjs` | ❌ W0 | ⬜ pending |
-| 01-W0-08 | TBD | 0 | PROD-03 | T-02, T-04 | Expiry/invalidation creates a redacted provider-neutral owner-alert record with lane/owner reference, acknowledgement evidence, and retry/escalation disposition | unit/contract | `node --test --test-name-pattern="owner alert" tests/governance.test.mjs` | ❌ W0 | ⬜ pending |
+“Owner” is the task-owned focused suite; “regression” is a cross-owner suite or typecheck; “final smoke” is `npm run check`. Commands are copied exactly from their owning PLAN.
 
-### Threat Reference Index
+| Task ID | Plan | Wave | Requirements | Threats | Automated command | Classification | Status |
+|---------|------|------|--------------|---------|-------------------|----------------|--------|
+| 01-01-1 | 01-01 | 1 | PROD-01, PROD-03, PROD-04, PROD-05 | T-01, T-02, T-04, T-07 | <code>node --test --test-name-pattern="production estate&#124;privacy&#124;lead contract&#124;approval&#124;owner alert" tests/governance.test.mjs && npm run typecheck</code> | Owner: governance; regression: typecheck | Passed; assertions exist |
+| 01-02-1 | 01-02 | 2 | PROD-06, PROD-07 | T-04–T-09 | <code>node --test --test-name-pattern="production&#124;isolation" tests/configuration.test.mjs && npm run typecheck</code> | Owner: configuration/build gate; regression: typecheck | Passed; assertions exist |
+| 01-02-2 | 01-02 | 2 | PROD-06, PROD-07 | T-04–T-09 | `node --test tests/configuration.test.mjs && node --test tests/governance.test.mjs && npm run check` | Owner: configuration; regression: governance; final smoke | Passed; assertions exist |
+| 01-03-1 | 01-03 | 2 | PROD-02, PROD-03 | T-01, T-02, T-04, T-06 | <code>node --test --test-name-pattern="branch&#124;eligibility&#124;route&#124;owner alert" tests/governance.test.mjs && npm run typecheck</code> | Owner: selectors; regression: typecheck | Passed; assertions exist |
+| 01-04-1 | 01-04 | 3 | PROD-02, PROD-03, PROD-07 | T-02, T-03, T-04 | <code>node --test --test-name-pattern="public layout&#124;organization&#124;public 404" tests/governance.test.mjs && npm run typecheck</code> | Owner: shell boundary; regression: typecheck | Passed; assertions exist |
+| 01-04-2 | 01-04 | 3 | PROD-02, PROD-03, PROD-07 | T-02, T-03, T-04 | <code>node --test --test-name-pattern="navigation&#124;surface" tests/governance.test.mjs && npm run check</code> | Owner: shell DTO/discovery; final smoke | Passed; assertions exist |
+| 01-13-1 | 01-13 | 3 | PROD-01, PROD-03, PROD-04, PROD-05, PROD-07 | T-01, T-04, T-07, T-08 | `node --test tests/operations.test.mjs && node --test tests/governance.test.mjs tests/configuration.test.mjs && npm run check` | Owner: operations; regression: governance/configuration; final smoke | Passed; assertions exist |
+| 01-05-1 | 01-05 | 4 | PROD-02, PROD-03 | T-02, T-06 | <code>node --test --test-name-pattern="branch&#124;contact" tests/branch-surfaces.test.mjs && npm run check</code> | Owner: branch/contact; final smoke | Passed; assertions exist |
+| 01-06-1 | 01-06 | 4 | PROD-03, PROD-05 | T-04, T-07 | <code>node --test --test-name-pattern="sales&#124;inquiry" tests/sales-surfaces.test.mjs && npm run check</code> | Owner: sales/inquiry; final smoke | Passed; assertions exist |
+| 01-07-1 | 01-07 | 4 | PROD-03 | T-02, T-04 | <code>node --test --test-name-pattern="guide&#124;promotion" tests/editorial-surfaces.test.mjs && npm run check</code> | Owner: editorial; final smoke | Passed; assertions exist |
+| 01-08-1 | 01-08 | 4 | PROD-02, PROD-03, PROD-04, PROD-05 | T-01, T-04 | <code>node --test --test-name-pattern="aftersales&#124;legal&#124;privacy" tests/legal-aftersales-surfaces.test.mjs && npm run check</code> | Owner: aftersales/legal; final smoke | Passed; assertions exist |
+| 01-09-1 | 01-09 | 4 | PROD-03 | T-02, T-04 | <code>node --test --test-name-pattern="truck&#124;finder&#124;generated params" tests/product-surfaces.test.mjs && npm run check</code> | Owner: product/finder; final smoke | Passed; assertions exist |
+| 01-15-1 | 01-15 | 4 | PROD-03 | T-02, T-04 | <code>node --test --test-name-pattern="delivery&#124;application&#124;expired" tests/delivery-surfaces.test.mjs && npm run check</code> | Owner: delivery/application; final smoke | Passed; assertions exist |
+| 01-16-1 | 01-16 | 4 | PROD-03, PROD-05 | T-02, T-04, T-07 | <code>node --test --test-name-pattern="campaign&#124;generated params&#124;metadata" tests/campaign-surfaces.test.mjs && npm run check</code> | Owner: campaigns; final smoke | Passed; assertions exist |
+| 01-10-1 | 01-10 | 5 | PROD-02, PROD-03, PROD-06, PROD-07 | T-02, T-03, T-04, T-06 | `node --test tests/surface-coherence.test.mjs && node --test tests/governance.test.mjs tests/configuration.test.mjs tests/branch-surfaces.test.mjs tests/sales-surfaces.test.mjs tests/editorial-surfaces.test.mjs tests/delivery-surfaces.test.mjs tests/legal-aftersales-surfaces.test.mjs tests/product-surfaces.test.mjs tests/campaign-surfaces.test.mjs && npm run check` | Owner: discovery coherence; regression: upstream suites; final smoke | Passed; assertions exist |
+| 01-11-1 | 01-11 | 6 | PROD-01–PROD-07 | T-03, T-04, T-05, T-09 | `node --test tests/review-report.test.mjs && node --test tests/governance.test.mjs tests/configuration.test.mjs tests/surface-coherence.test.mjs && npm run check` | Owner: report DTO; regression: governance/config/discovery; final smoke | Passed; assertions exist |
+| 01-12-1 | 01-12 | 7 | PROD-01–PROD-07 | T-03, T-04, T-09 | `node --test tests/report-ui.test.mjs tests/review-report.test.mjs && npm run check` | Owner: report UI; regression: report DTO; final smoke | Passed 2026-08-19 |
+| 01-12-2 | 01-12 | 7 | PROD-01–PROD-07 | T-03, T-04, T-09 | `node --test tests/governance.test.mjs tests/configuration.test.mjs tests/branch-surfaces.test.mjs tests/sales-surfaces.test.mjs tests/editorial-surfaces.test.mjs tests/delivery-surfaces.test.mjs tests/legal-aftersales-surfaces.test.mjs tests/product-surfaces.test.mjs tests/campaign-surfaces.test.mjs tests/surface-coherence.test.mjs tests/review-report.test.mjs tests/report-ui.test.mjs && npm run check` | Owner: complete phase map; final smoke | Passed 2026-08-19 |
+| 01-14-1 | 01-14 | 8 | PROD-01–PROD-07 | T-01–T-09 | `node --test tests/governance.test.mjs tests/configuration.test.mjs tests/branch-surfaces.test.mjs tests/sales-surfaces.test.mjs tests/editorial-surfaces.test.mjs tests/delivery-surfaces.test.mjs tests/legal-aftersales-surfaces.test.mjs tests/product-surfaces.test.mjs tests/campaign-surfaces.test.mjs tests/surface-coherence.test.mjs tests/review-report.test.mjs tests/report-ui.test.mjs tests/operations.test.mjs && npm run check` | Regression: complete phase suite; final smoke | **Blocking human-action evidence gate**; automation retained |
+| 01-14-2 | 01-14 | 8 | PROD-01–PROD-07 | T-01–T-09 | <code>npm run check && node --test --test-name-pattern="production&#124;isolation&#124;review" tests/configuration.test.mjs tests/report-ui.test.mjs</code> | Final smoke; focused protection/isolation regression | **Blocking human-verification Vercel/protection/authority gate**; automation retained |
+
+All 20 task rows are present. Every command references an existing script/test file, and every focused pattern has matching native-test assertions.
+
+## Threat Reference Index
 
 - **T-01:** An unapproved actor changes approval state.
 - **T-02:** A governed fact is altered without evidence, revision history, or reapproval.
@@ -59,79 +72,70 @@ created: 2026-08-18
 - **T-08:** Rollback leaves incompatible runtime configuration active.
 - **T-09:** Configuration errors disclose environment values.
 
----
-
 ## Required Test Matrices
 
 ### Approval Matrix
 
-- Pending
-- Approved and current
-- Approved without evidence
-- Review due exactly at the evaluation instant
-- Expired
-- Explicitly invalidated
-- Wrong approval lane
-- National source without Cebu applicability
-- Superseded revision
-- Malformed evidence-reference shape
+The governance suite covers pending, approved/current, approved without evidence, review due at the evaluation instant, expired, invalidated, wrong lane, wrong locality, superseded revision, and malformed evidence-reference shape.
 
 ### Environment Matrix
 
-Exercise development, preview, and production against:
-
-- Missing origin
-- HTTP versus HTTPS
-- Localhost versus approved or wrong origin
-- Crawl blocked versus allowed
-- Disabled, sandbox, and production lead profiles
-- Disabled, test, and production analytics profiles
-- Matching and mismatching `VERCEL_ENV`
+The configuration suite covers development, preview, and production; missing/HTTP/local/wrong origins; crawl policy; disabled/sandbox/production lead profiles; disabled/test/production analytics profiles; and matching/mismatching `VERCEL_ENV`.
 
 ### Surface Coherence
 
-A withheld claim or route must be absent from its page selector, navigation, internal-link registry, metadata/JSON-LD, sitemap, and public review route. Reduced-form publication must satisfy the minimum viable truth predicate.
+The surface suites prove withheld claims/routes are absent from selectors, navigation, internal discovery, metadata/JSON-LD, sitemap, and public shell. Reduced-form publication must pass minimum viable truth.
 
 ### Security Assertions
 
-- Governance exports and review DTOs contain no secret-like keys.
-- No raw `process.env` object is serialized.
-- Production review route returns 404 and is absent from public discovery surfaces.
-- Error snapshots contain stable codes and variable names but never values.
-- URL-bearing configuration allows only approved HTTPS schemes and hosts; evidence URLs are never server-fetched by the review report.
+- Governance exports and review DTOs reject secret-like keys and forbidden values recursively.
+- No raw `process.env` object is serialized; report output uses classifications and stable safe code/key diagnostics.
+- The production report route invokes `notFound()` before `getReviewReport()` and is absent from discovery surfaces.
+- URL-bearing configuration accepts only target-safe origins; the report never fetches evidence references.
+- D-08 alert UI displays only stable IDs, lane/opaque owner reference, acknowledgement state, attempt state, and retry/escalation disposition.
 
----
+## Wave 0 Completion Evidence
 
-## Wave 0 Requirements
-
-- [ ] `tests/governance.test.mjs` — synthetic approval, branch, privacy, lead-contract, eligibility, and route tests for PROD-01 through PROD-05.
-- [ ] `tests/configuration.test.mjs` — pure environment parser, value-redaction, review-route, and target-isolation matrix for PROD-06 and PROD-07.
-- [ ] `tests/fixtures/governance/` — synthetic records containing no real secrets, personal data, unapproved business facts, or externally sensitive evidence.
-- [ ] `src/lib/runtime-config.ts` — testable pure parser export; avoid module-load-only parsing in unit tests.
-- [ ] A build-time invocation path that proves invalid production configuration fails before `next build` completes.
-- [ ] Redaction and source-contract assertions for the protected review report and its DTO.
-- [ ] No framework installation is required; reuse the native Node test runner and existing Zod dependency.
-
----
+- [x] `tests/governance.test.mjs` covers approval, branch, privacy, lead-contract, eligibility, route, and owner-alert contracts.
+- [x] `tests/configuration.test.mjs` covers pure parsing, redaction, build gate, and target isolation.
+- [x] `tests/fixtures/governance/` contains synthetic records without real secrets, PII, or sensitive evidence.
+- [x] `src/lib/runtime-config.ts` exports testable parsing and conservative deployment-target classification.
+- [x] Invalid production configuration is proven to fail before compilation completes.
+- [x] `tests/review-report.test.mjs` and `tests/report-ui.test.mjs` cover redaction, allow-listing, production/discovery absence, accessibility, and responsive contracts.
+- [x] No new framework or package was introduced.
 
 ## Manual-Only Verifications
 
-| Behavior | Requirement | Why Manual | Test Instructions |
-|----------|-------------|------------|-------------------|
-| Protected preview access | PROD-01, PROD-07 | Vercel Deployment Protection and account permissions require the approved live project | Open the protected preview while signed out and verify access is denied; sign in with an authorized reviewer and verify the report is accessible; verify the equivalent production URL returns 404. |
-| Approval evidence validity | PROD-01–PROD-05 | External evidence and named approvers cannot be proven from repository fixtures | For each blocking decision, verify the approver role, date, next-review/expiry, revision, and external evidence reference against the authoritative system without copying sensitive material into the repository. |
-| Manual promotion and rollback authority | PROD-01, PROD-07 | Hosting permissions and named operational roles are external controls | Verify only the named release owner/backup can promote or roll back; execute a preview promotion rehearsal and record the closeout evidence without changing live customer-facing facts. |
+| Gate | Requirement | Why manual | Test instructions | State |
+|------|-------------|------------|-------------------|-------|
+| Plan 12 responsive/accessibility review | PROD-01–PROD-07 | Browser reflow, zoom, and visual hierarchy are not established by source contracts | In protected preview inspect 320px, 800px, and desktop; verify keyboard traversal/focus; one H1 and ordered headings; visible captions/scoped headers and equivalent mobile definitions; at 200% zoom verify no loss, overlap, clipping, or two-dimensional scrolling. | Required before Plan 01-14 completion |
+| Protected preview access | PROD-01, PROD-07 | Vercel Deployment Protection/account permissions require the approved project | Signed out, verify preview denial. Signed in as an authorized reviewer, verify report access. Verify the production URL returns the shared shell-free 404 without report title/data. | Blocking 01-14-2 human-verification gate |
+| Approval evidence validity | PROD-01–PROD-05 | External evidence and named approvers cannot be proven from fixtures | Verify role, date, next review/expiry, revision, and opaque reference in the authoritative system without copying sensitive content into Git. | Blocking 01-14-1 human-action gate |
+| Promotion and rollback authority | PROD-01, PROD-07 | Hosting permissions and roles are external controls | Verify only the named owner/backup can promote or roll back; rehearse preview promotion and record closeout evidence without changing unapproved facts. | Blocking 01-14-2 human-verification gate |
 
----
+## Requirements and Threat Coverage
+
+| Requirement | Automated owners | Manual dependency |
+|-------------|------------------|-------------------|
+| PROD-01 | 01-01, 01-11, 01-12 | Evidence and release authority |
+| PROD-02 | 01-03–01-05, 01-08, 01-10–01-12 | Branch-fact verification |
+| PROD-03 | 01-01, 01-03–01-13, 01-15, 01-16 | Evidence authority and visual review |
+| PROD-04 | 01-01, 01-08, 01-11–01-13 | Privacy/legal approval |
+| PROD-05 | 01-01, 01-06, 01-08, 01-11–01-13, 01-16 | Provider/operating approval |
+| PROD-06 | 01-02, 01-10–01-12 | Approved live values |
+| PROD-07 | 01-02, 01-04, 01-10–01-13 | Vercel protection and authority |
+
+T-01 through T-09 are assigned to executable task rows and retained on both Plan 01-14 release gates.
 
 ## Validation Sign-Off
 
-- [ ] All tasks have `<automated>` verification or explicit Wave 0 dependencies.
-- [ ] Sampling continuity: no three consecutive tasks lack automated verification.
-- [ ] Wave 0 covers all missing references above.
-- [ ] No watch-mode flags are used.
-- [ ] Focused feedback latency is below 10 seconds and the full gate is below 60 seconds in CI or any measured exceptions are documented.
-- [ ] Every plan threat model cites the relevant T-IDs and blocks unresolved HIGH-severity threats.
-- [ ] `wave_0_complete: true` and `nyquist_compliant: true` are set after all Wave 0 tests and task mappings exist.
+- [x] All 20 tasks have exact automated commands and owner/regression/final-smoke classification.
+- [x] Sampling continuity has no three consecutive tasks without automation.
+- [x] Wave 0 files, fixtures, parser/build gate, and report tests exist.
+- [x] No watch-mode flags are used.
+- [x] Focused feedback is below 10 seconds; the 113.2-second full-gate exception is documented.
+- [x] T-01–T-09 and PROD-01–PROD-07 have executable traceability.
+- [x] External Vercel, evidence, visual, and authority checks remain manual and blocking.
+- [x] `wave_0_complete: true` and `nyquist_compliant: true` describe complete executable mapping, not external approval.
 
-**Approval:** pending
+**Nyquist approval:** complete. **Production approval:** pending Plan 01-14 manual gates.
