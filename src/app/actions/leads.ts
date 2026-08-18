@@ -1,10 +1,12 @@
 "use server";
 
 import { z } from "zod";
+import { leadOperatingContracts, isLeadContractApproved } from "@/content/governance/leads";
 import { attributionKeys } from "@/lib/attribution";
 import { leadFields } from "@/lib/leads/fields";
 import { leadRouter } from "@/lib/leads/router";
 import type { LeadType } from "@/lib/leads/types";
+import { getRuntimeConfig } from "@/lib/runtime-config";
 
 export type LeadFormState = { status: "idle" | "success" | "error"; message: string; errors?: Record<string, string> };
 export const initialLeadState: LeadFormState = { status: "idle", message: "" };
@@ -32,6 +34,14 @@ export async function submitLead(_: LeadFormState, formData: FormData): Promise<
     const errors: Record<string, string> = {};
     for (const issue of result.error.issues) errors[String(issue.path[0])] ??= issue.message;
     return { status: "error", message: "Please review the highlighted fields.", errors };
+  }
+
+  const runtimeConfig = getRuntimeConfig();
+  const leadContract = leadOperatingContracts.find((contract) => contract.leadType === type);
+  if (runtimeConfig.target === "production" && (
+    !leadContract || !isLeadContractApproved(leadContract)
+  )) {
+    return { status: "error", message: "We could not send your request right now. Please call Hino Cebu instead." };
   }
 
   let attribution: Record<string, string> = {};
