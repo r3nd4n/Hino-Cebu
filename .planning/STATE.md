@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 01-02-PLAN.md
-last_updated: "2026-08-18T15:43:41Z"
-last_activity: 2026-08-18 -- Completed Plan 01-02 target-aware configuration and isolation
+stopped_at: Completed 01-03-PLAN.md
+last_updated: "2026-08-18T15:53:54Z"
+last_activity: 2026-08-18 -- Completed Plan 01-03 canonical content eligibility
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 16
-  completed_plans: 2
-  percent: 13
+  completed_plans: 3
+  percent: 19
 ---
 
 # Project State
@@ -26,30 +26,30 @@ See: .planning/PROJECT.md (updated 2026-08-18)
 ## Current Position
 
 Phase: 01 (Production Contracts and Executable Configuration) — EXECUTING
-Plan: 3 of 16
+Plan: 4 of 16
 Status: Executing Phase 01
-Last activity: 2026-08-18 -- Completed Plan 01-02 target-aware configuration and isolation
+Last activity: 2026-08-18 -- Completed Plan 01-03 canonical content eligibility
 
-Progress: [█░░░░░░░░░] 13%
+Progress: [██░░░░░░░░] 19%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 2
-- Average duration: 10 min
-- Total execution time: 0.3 hours
+- Total plans completed: 3
+- Average duration: 9 min
+- Total execution time: 0.4 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 01 | 2 | 19 min | 10 min |
+| 01 | 3 | 26 min | 9 min |
 
 **Recent Trend:**
 
-- Last 5 plans: 01-01 (12 min), 01-02 (7 min)
-- Trend: Configuration plan completed faster than the governance foundation
+- Last 5 plans: 01-01 (12 min), 01-02 (7 min), 01-03 (7 min)
+- Trend: Selector and configuration plans completed faster than the governance foundation
 
 *Updated after each plan completion*
 
@@ -69,6 +69,9 @@ Recent decisions affecting current work:
 - [01-02]: Only allow-listed environment keys enter runtime parsing; unrelated values cannot affect output or its fingerprint.
 - [01-02]: Development may default safely to localhost, but preview and production require explicit target-safe origins and profiles.
 - [01-02]: Production lead routing remains unavailable until the matching D-09 operating contract is approved and current.
+- [01-03]: Claims must match Cebu locality, fixed owner lane, active revision, current evidence-backed approval, and the consuming route surface.
+- [01-03]: Route selectors expose one final state and category identifiers only; withheld wording never crosses the public selector boundary.
+- [01-03]: Existing source-backed branch facts remain pending until their field-level approval envelopes are current.
 
 ### Pending Todos
 
@@ -92,6 +95,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-08-18T15:43:41Z
-Stopped at: Completed 01-02-PLAN.md
+Last session: 2026-08-18T15:53:54Z
+Stopped at: Completed 01-03-PLAN.md
 Resume file: None

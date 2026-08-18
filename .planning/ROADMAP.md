@@ -38,7 +38,7 @@ Plans:
 **Wave 2** *(blocked on Wave 1 completion)*
 
 - [x] 01-02-PLAN.md — Enforce target-aware configuration and isolation
-- [ ] 01-03-PLAN.md — Build canonical branch, claim, and route selectors
+- [x] 01-03-PLAN.md — Build canonical branch, claim, and route selectors
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
@@ -175,7 +175,7 @@ Plans:
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Production Contracts and Executable Configuration | 2/16 | In progress | - |
+| 1. Production Contracts and Executable Configuration | 3/16 | In progress | - |
 | 2. Lead Correctness, Durable Acceptance, and Recovery | 0/TBD | Not started | - |
 | 3. Truthful Publishing, Privacy, Measurement, and Security | 0/TBD | Not started | - |
 | 4. Behavioral Verification and Release Gate | 0/TBD | Not started | - |
