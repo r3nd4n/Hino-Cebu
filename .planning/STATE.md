@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 01-10-PLAN.md
-last_updated: "2026-08-18T17:41:41Z"
-last_activity: 2026-08-19 -- Completed Plan 01-10 governed home and search discovery surfaces
+stopped_at: Completed 01-11-PLAN.md
+last_updated: "2026-08-18T17:53:19Z"
+last_activity: 2026-08-19 -- Completed Plan 01-11 integrated redacted review DTO
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 16
-  completed_plans: 13
-  percent: 81
+  completed_plans: 14
+  percent: 88
 ---
 
 # Project State
@@ -26,30 +26,30 @@ See: .planning/PROJECT.md (updated 2026-08-18)
 ## Current Position
 
 Phase: 01 (Production Contracts and Executable Configuration) — EXECUTING
-Plan: 13 of 16
+Plan: 14 of 16
 Status: Executing Phase 01
-Last activity: 2026-08-19 -- Completed Plan 01-10 governed home and search discovery surfaces
+Last activity: 2026-08-19 -- Completed Plan 01-11 integrated redacted review DTO
 
-Progress: [████████░░] 81%
+Progress: [█████████░] 88%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 13
+- Total plans completed: 14
 - Average duration: 8 min
-- Total execution time: 1.7 hours
+- Total execution time: 1.8 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 01 | 13 | 100 min | 8 min |
+| 01 | 14 | 108 min | 8 min |
 
 **Recent Trend:**
 
-- Last 5 plans: 01-08 (6 min), 01-09 (10 min), 01-15 (6 min), 01-16 (5 min), 01-10 (9 min)
-- Trend: Selector-backed route migrations now close the homepage, metadata, sitemap, and crawl boundary around final eligible output
+- Last 5 plans: 01-09 (10 min), 01-15 (6 min), 01-16 (5 min), 01-10 (9 min), 01-11 (8 min)
+- Trend: Final eligibility and runtime classifications now feed one redacted, deterministic review boundary
 
 *Updated after each plan completion*
 
@@ -102,6 +102,9 @@ Recent decisions affecting current work:
 - [01-10]: Home aggregation renders only final eligible route, branch, action, product, editorial, service, delivery, and campaign projections.
 - [01-10]: Sitemap, shared metadata, breadcrumbs, and robots fail closed from the same final eligible-route result.
 - [01-10]: Preview and production share identical content omission; runtime target and crawl policy only determine index permission.
+- [01-11]: The review report consumes final route eligibility and parsed runtime classifications without importing raw environment values or governed wording into its DTO.
+- [01-11]: Non-current deployment targets remain explicitly not evaluated rather than being represented by fabricated runtime state.
+- [01-11]: D-08 owner-alert rows expose only stable IDs, ownership references, acknowledgement state, and retry/escalation disposition.
 
 ### Pending Todos
 
@@ -125,6 +128,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-08-18T17:41:41Z
-Stopped at: Completed 01-10-PLAN.md
+Last session: 2026-08-18T17:53:19Z
+Stopped at: Completed 01-11-PLAN.md
 Resume file: None
