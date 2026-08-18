@@ -77,7 +77,7 @@ test("approval report has one main, six descriptive anchors, and semantic data v
     assert.match(source, new RegExp(`href="#${id}"`));
     assert.match(source, new RegExp(`id="${id}"`));
   }
-  assert.equal((source.match(/className="report-section-link"/g) ?? []).length, 6);
+  assert.equal((source.match(/className="report-section-link(?: [^"]+)?"/g) ?? []).length, 6);
   assert.match(source, /<caption>/);
   assert.match(source, /<th scope="col">/);
   assert.match(source, /<th scope="row">/);

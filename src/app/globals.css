@@ -123,11 +123,69 @@ p { margin: 0 0 1rem; }
 .footer-grid address { font-style: normal; }.footer-brand { color: var(--brand); font-size: 1.7rem; font-weight: 900; }.footer-brand span { color: white; }
 .footer-bottom { border-top: 1px solid #34383b; margin-top: 3rem; padding-top: 1rem; display: flex; justify-content: space-between; gap: 1rem; font-size: .74rem; color: #9da1a4; }
 .mobile-actions { display: none; }
+.approval-report { min-height: 100vh; overflow-x: clip; background: var(--paper); color: var(--ink); font-size: 16px; font-weight: 400; line-height: 1.5; }
+.approval-report h1 { max-width: none; font-size: 32px; font-weight: 700; line-height: 1.2; letter-spacing: -.02em; }
+.approval-report h2, .approval-report h3 { font-size: 22px; font-weight: 700; line-height: 1.2; letter-spacing: -.015em; }
+.approval-report h3 { margin-top: 2rem; }
+.approval-report p { max-width: 72ch; }
+.report-header { padding: 3rem 0 2rem; background: var(--surface-dark); color: var(--paper); }
+.report-eyebrow { display: block; margin-bottom: .5rem; color: var(--brand); font-size: 14px; font-weight: 700; line-height: 1.4; }
+.report-intro { color: #d9dcde; }
+.report-header-meta { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; margin: 1.5rem 0; }
+.report-header-meta div { display: flex; gap: .5rem; }
+.report-header-meta dt, .report-mobile-card dt, .report-blocker-list dt, .report-owner-alerts dt { font-size: 14px; font-weight: 700; line-height: 1.4; }
+.report-header-meta dd, .report-mobile-card dd, .report-blocker-list dd, .report-owner-alerts dd { margin: 0; overflow-wrap: anywhere; }
+.report-section-nav { display: flex; flex-wrap: wrap; gap: .5rem; }
+.report-section-link { display: inline-flex; min-height: 44px; align-items: center; padding: .5rem .75rem; border: 1px solid #62676b; border-radius: var(--radius-sm); color: var(--paper); font-size: 14px; font-weight: 700; line-height: 1.4; text-decoration: none; }
+.report-section-link-primary { border-color: var(--brand); background: var(--brand); }
+.report-content { padding-block: 4rem; }
+.report-section { padding-block: 2rem; scroll-margin-top: 1rem; border-bottom: 1px solid var(--border); }
+.report-section:first-child { padding-top: 0; }
+.report-section:last-child { border-bottom: 0; }
+.report-summary-copy, .report-blocked-summary { margin: 1rem 0 2rem; padding: 1rem; background: var(--surface); }
+.report-blocked-summary { border-left: 4px solid var(--brand); color: #a40d14; font-weight: 700; }
+.review-summary { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 1rem; }
+.review-summary article { min-width: 0; padding: 1rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
+.review-summary span, .review-summary strong { display: block; overflow-wrap: anywhere; }
+.review-summary span, .review-summary p { font-size: 14px; line-height: 1.4; }
+.review-summary span { font-weight: 700; }
+.review-summary strong { margin-block: .5rem; font-size: 22px; font-weight: 700; line-height: 1.2; }
+.review-summary p { margin: 0; color: var(--muted); }
+.report-generation-error { margin: 1.5rem 0; padding: 1rem; border: 1px solid #a40d14; border-left-width: 4px; background: var(--paper); color: var(--ink); }
+.report-generation-error h2, .report-generation-error p { color: #a40d14; }
+.report-record-id { overflow-wrap: anywhere; }
+.status-label { display: inline-flex; min-height: 44px; align-items: center; gap: .5rem; color: var(--ink); font-size: 14px; font-weight: 700; line-height: 1.4; overflow-wrap: anywhere; }
+.status-dot { width: .5rem; height: .5rem; flex: none; border-radius: 50%; background: var(--muted); }
+.status-approved .status-dot, .status-eligible .status-dot, .status-pass .status-dot { background: var(--success); }
+.status-pending .status-dot, .status-eligible-reduced .status-dot { background: var(--warning); }
+.status-expired, .status-invalidated, .status-withheld, .status-block { color: #a40d14; }
+.status-expired .status-dot, .status-invalidated .status-dot, .status-withheld .status-dot, .status-block .status-dot { background: #a40d14; }
+.report-blocker-group { margin-top: 1.5rem; }
+.report-blocker-list, .report-owner-alerts ul { display: grid; gap: 1rem; margin: 0; padding: 0; list-style: none; }
+.report-blocker-list li { padding: 1rem; border-left: 4px solid #a40d14; background: var(--surface); }
+.report-blocker-list dl, .report-owner-alerts dl { display: grid; grid-template-columns: minmax(8rem, .5fr) 1.5fr; gap: .25rem 1rem; margin: .75rem 0 0; }
+.report-empty { margin-top: 1.5rem; padding: 1.5rem; border: 1px dashed #a8adaf; border-radius: var(--radius); background: var(--surface); }
+.report-empty h3 { margin-top: 0; }
+.report-approval-group { padding-top: 1rem; }
+.report-approval-group h3 span { color: var(--muted); }
+.report-table-wrap { max-width: 100%; }
+.approval-report table { width: 100%; table-layout: fixed; border-collapse: collapse; }
+.approval-report caption { padding: 1rem 0 .5rem; color: var(--ink); font-size: 14px; font-weight: 700; line-height: 1.4; text-align: left; }
+.approval-report th, .approval-report td { padding: 1rem; border: 1px solid var(--border); overflow-wrap: anywhere; text-align: left; vertical-align: top; }
+.approval-report th { font-size: 14px; font-weight: 700; line-height: 1.4; background: var(--surface); }
+.approval-report th span { display: block; }
+.report-check-list { margin: 0; padding-left: 1rem; }
+.report-mobile-cards { display: none; }
+.report-owner-alerts { margin-top: 2rem; padding: 1.5rem; background: var(--surface); }
+.report-owner-alerts h3 { margin-top: 0; }
+.report-owner-alerts li { padding: 1rem; background: var(--paper); border: 1px solid var(--border); overflow-wrap: anywhere; }
 @media (max-width: 1060px) {
   .menu-button { display: block; }
   .primary-nav { display: none; position: absolute; left: 0; right: 0; top: 106px; background: white; padding: 1rem; border-bottom: 1px solid var(--border); box-shadow: var(--shadow); align-items: stretch; flex-direction: column; }
   .primary-nav.is-open { display: flex; }.primary-nav a { padding: .55rem; }.primary-nav .button { margin-top: .4rem; }
   .grid-4 { grid-template-columns: repeat(2, 1fr); }.footer-grid { grid-template-columns: repeat(2, 1fr); }
+  .review-summary { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .approval-report th, .approval-report td { padding: .5rem; }
 }
 @media (max-width: 720px) {
   :root { --space-6: 3.4rem; }
@@ -137,5 +195,18 @@ p { margin: 0 0 1rem; }
   .mobile-actions { display: grid; grid-template-columns: repeat(3, 1fr); position: fixed; z-index: 60; bottom: 0; left: 0; right: 0; height: 66px; background: var(--ink); color: white; box-shadow: 0 -4px 16px rgb(0 0 0 / 20%); }
   .mobile-actions a { display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; font-size: .75rem; font-weight: 800; border-right: 1px solid #3a3d40; }.mobile-actions a:nth-child(2) { background: var(--brand); }
   .mobile-actions span { font-size: 1.1rem; line-height: 1; }.detail-row { grid-template-columns: 1fr; gap: .2rem; }
+  .approval-report { padding-bottom: 0; }
+  .report-header { padding: 2rem 0; }
+  .report-content { padding-block: 3rem; }
+  .report-section { padding-block: 1.5rem; }
+  .report-section-nav { display: grid; grid-template-columns: 1fr; }
+  .review-summary { grid-template-columns: 1fr; }
+  .report-table-wrap { display: none; }
+  .report-mobile-cards { display: grid; gap: 1.5rem; }
+  .report-mobile-card { display: grid; grid-template-columns: 1fr; gap: .25rem; margin: 0; padding: 1rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--paper); }
+  .report-mobile-card dd { margin-bottom: .75rem; }
+  .report-mobile-card dd:last-child { margin-bottom: 0; }
+  .report-blocker-list dl, .report-owner-alerts dl { grid-template-columns: 1fr; }
+  .report-blocker-list dd, .report-owner-alerts dd { margin-bottom: .75rem; }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *:before, *:after { transition: none !important; animation: none !important; } }

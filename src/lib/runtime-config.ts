@@ -166,3 +166,14 @@ export function getRuntimeConfig(): RuntimeConfig {
   };
   return parseRuntimeConfig(environment);
 }
+
+export function getDeploymentTarget(): DeploymentTarget {
+  const environment: RuntimeEnvironment = {
+    DEPLOYMENT_ENV: process.env.DEPLOYMENT_ENV,
+    VERCEL_ENV: process.env.VERCEL_ENV,
+  };
+  if (environment.DEPLOYMENT_ENV === "production" || environment.VERCEL_ENV === "production") {
+    return "production";
+  }
+  return parseTarget(environment);
+}
