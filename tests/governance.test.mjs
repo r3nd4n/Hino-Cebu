@@ -2,13 +2,14 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import {
   NOW,
+  approvedClaim,
   approvedDecision,
   approvedEnvelope,
   loadGovernanceModules,
 } from "./fixtures/governance/records.mjs";
 
 const modules = loadGovernanceModules();
-const { schemas, decisions, privacy, leads, release } = modules;
+const { schemas, decisions, privacy, leads, release, eligibility, claims, site, trucks, campaigns, services } = modules;
 
 test("approval requires two tiers, the correct fixed lane, evidence, and a current review", () => {
   const current = approvedEnvelope();
@@ -147,4 +148,83 @@ test("governance registry schema parses authoritative repository records", () =>
     releaseAuthority: release.releaseAuthorityRecord,
   });
   assert.equal(result.success, true, result.error?.message);
+});
+
+test("eligibility rejects due, pending, invalidated, wrong-lane, wrong-locality, malformed-evidence, and superseded claims", () => {
+  const eligible = approvedClaim();
+  const blocked = [
+    approvedClaim({ claimId: "CLAIM-PENDING", approval: { ...approvedEnvelope("sales"), departmentApproval: { status: "pending", lane: "sales" } } }),
+    approvedClaim({ claimId: "CLAIM-DUE", approval: approvedEnvelope("sales", { departmentApproval: approvedDecision("sales", { reviewAt: NOW.toISOString() }) }) }),
+    approvedClaim({ claimId: "CLAIM-INVALID", approval: approvedEnvelope("sales", { departmentApproval: approvedDecision("sales", { invalidatedAt: "2026-08-17T00:00:00.000Z", invalidationCode: "source-changed" }) }) }),
+    approvedClaim({ claimId: "CLAIM-LANE", ownerLane: "aftersales" }),
+    approvedClaim({ claimId: "CLAIM-LOCALITY", locality: "national" }),
+    approvedClaim({ claimId: "CLAIM-EVIDENCE", approval: approvedEnvelope("sales", { departmentApproval: approvedDecision("sales", { evidence: { reference: "https://example.invalid/evidence" } }) }) }),
+    approvedClaim({ claimId: "CLAIM-SUPERSEDED", activeRevision: 2 }),
+  ];
+
+  assert.deepEqual(eligibility.getEligibleClaims("surface:synthetic", NOW, [eligible, ...blocked]), [{
+    claimId: eligible.claimId,
+    category: "purpose",
+    value: eligible.value,
+  }]);
+});
+
+test("branch field groups and contact actions are independently eligible", () => {
+  const branch = {
+    recordId: "BRANCH-HINO-CEBU",
+    revision: 1,
+    fields: {
+      identity: approvedClaim({ claimId: "CLAIM-BRANCH-IDENTITY", category: "identity", value: "Hino Cebu", ownerLane: "brand-content", approval: approvedEnvelope("brand-content") }),
+      address: approvedClaim({ claimId: "CLAIM-BRANCH-ADDRESS", category: "identity", value: "377 P. Almendras Extension, Cebu City, Central Visayas", ownerLane: "brand-content", approval: approvedEnvelope("brand-content") }),
+      phone: approvedClaim({ claimId: "CLAIM-BRANCH-PHONE", category: "contact-action", value: "+63 32 346 3322", ownerLane: "sales", approval: approvedEnvelope("sales") }),
+      hours: approvedClaim({ claimId: "CLAIM-BRANCH-HOURS", category: "purpose", value: "Weekdays", approval: { ...approvedEnvelope("sales"), departmentApproval: { status: "pending", lane: "sales" } } }),
+      directions: approvedClaim({ claimId: "CLAIM-BRANCH-DIRECTIONS", category: "contact-action", value: "https://www.google.com/maps/search/?api=1&query=Hino%20Cebu", ownerLane: "brand-content", approval: approvedEnvelope("brand-content") }),
+    },
+  };
+
+  assert.deepEqual(site.getEligibleBranch(NOW, branch), {
+    identity: "Hino Cebu",
+    address: "377 P. Almendras Extension, Cebu City, Central Visayas",
+    phone: "+63 32 346 3322",
+    directions: "https://www.google.com/maps/search/?api=1&query=Hino%20Cebu",
+  });
+  assert.deepEqual(site.getEligibleContactActions(NOW, branch), [
+    { actionId: "branch-phone", kind: "phone", label: "Call Hino Cebu", href: "tel:+63323463322" },
+    { actionId: "branch-directions", kind: "directions", label: "Directions", href: "https://www.google.com/maps/search/?api=1&query=Hino%20Cebu" },
+  ]);
+});
+
+test("route eligibility emits one final state and category IDs without withheld wording", () => {
+  const four = [
+    approvedClaim({ claimId: "CLAIM-ROUTE-IDENTITY", category: "identity", value: "Sales" }),
+    approvedClaim({ claimId: "CLAIM-ROUTE-PURPOSE", category: "purpose", value: "Compare model families" }),
+    approvedClaim({ claimId: "CLAIM-ROUTE-REQUEST", category: "request-semantics", value: "Request a consultation" }),
+    approvedClaim({ claimId: "CLAIM-ROUTE-CONTACT", category: "contact-action", value: "Contact sales" }),
+  ];
+  const optional = approvedClaim({ claimId: "CLAIM-ROUTE-OFFER", category: "offer", value: "Secret withheld offer", approval: { ...approvedEnvelope("sales"), departmentApproval: { status: "pending", lane: "sales" } } });
+  const routes = [
+    { routeId: "ROUTE-FULL", path: "/full", surfaceId: "surface:route", requiredClaimIds: four.map(({ claimId }) => claimId), optionalClaimIds: [], unavailablePage: false },
+    { routeId: "ROUTE-REDUCED", path: "/reduced", surfaceId: "surface:route", requiredClaimIds: four.map(({ claimId }) => claimId), optionalClaimIds: [optional.claimId], unavailablePage: false },
+    { routeId: "ROUTE-WITHHELD", path: "/withheld", surfaceId: "surface:route", requiredClaimIds: [...four.slice(0, 3).map(({ claimId }) => claimId), "CLAIM-MISSING-CONTACT"], optionalClaimIds: [optional.claimId], unavailablePage: true },
+  ];
+
+  const result = eligibility.getEligibleRoutes(NOW, routes, [...four, optional]);
+  assert.deepEqual(result.map(({ routeId, status }) => [routeId, status]), [
+    ["ROUTE-FULL", "eligible"],
+    ["ROUTE-REDUCED", "eligible-reduced"],
+    ["ROUTE-WITHHELD", "withheld"],
+  ]);
+  assert.deepEqual(result[1].retainedCategories, ["identity", "purpose", "request-semantics", "contact-action"]);
+  assert.deepEqual(result[1].withheldCategories, ["offer"]);
+  assert.equal(result[2].serveUnavailablePage, true);
+  assert.equal(JSON.stringify(result).includes("Secret withheld offer"), false);
+});
+
+test("canonical content entries carry stable claim and route IDs while unapproved repository facts fail closed", () => {
+  assert.ok(trucks.trucks.every(({ claimIds, routeId }) => claimIds.length > 0 && routeId.startsWith("ROUTE-")));
+  assert.ok(campaigns.campaigns.every(({ claimIds, routeId }) => claimIds.length > 0 && routeId.startsWith("ROUTE-")));
+  assert.ok(services.supportServices.every(({ claimIds, routeId }) => claimIds.length > 0 && routeId.startsWith("ROUTE-")));
+  assert.deepEqual(site.getEligibleBranch(NOW), {});
+  assert.deepEqual(site.getEligibleContactActions(NOW), []);
+  assert.equal(claims.getClaimCatalogSize() > 0, true);
 });

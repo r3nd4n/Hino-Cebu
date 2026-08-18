@@ -15,6 +15,11 @@
   },
   "include": [
     "../../../src/lib/governance/schemas.ts",
+    "../../../src/lib/governance/eligibility.ts",
+    "../../../src/content/site.ts",
+    "../../../src/content/trucks.ts",
+    "../../../src/content/campaigns.ts",
+    "../../../src/content/services.ts",
     "../../../src/content/governance/*.ts"
   ]
 }
