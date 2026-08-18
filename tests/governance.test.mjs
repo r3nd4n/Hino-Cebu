@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import test from "node:test";
 import {
   NOW,
@@ -10,6 +11,42 @@ import {
 
 const modules = loadGovernanceModules();
 const { schemas, decisions, privacy, leads, release, eligibility, claims, site, trucks, campaigns, services } = modules;
+
+function readSource(path) {
+  return readFileSync(path, "utf8");
+}
+
+test("public layout structurally owns the public shell and root layout stays minimal", () => {
+  const rootLayout = readSource("src/app/layout.tsx");
+  const publicLayout = readSource("src/app/(public)/layout.tsx");
+
+  assert.doesNotMatch(rootLayout, /Header|Footer|StickyMobileActions|AttributionCapture|MarketingTags|JsonLd/);
+  assert.match(publicLayout, /Header/);
+  assert.match(publicLayout, /Footer/);
+  assert.match(publicLayout, /StickyMobileActions/);
+  assert.match(publicLayout, /AttributionCapture/);
+  assert.match(publicLayout, /MarketingTags/);
+  assert.doesNotMatch(publicLayout, /usePathname|"use client"|redirect\(|review|provisional|diagnostic/i);
+});
+
+test("organization schema is constructed only from the eligible branch DTO", () => {
+  const publicLayout = readSource("src/app/(public)/layout.tsx");
+
+  assert.match(publicLayout, /getEligibleBranch/);
+  assert.match(publicLayout, /const eligibleBranch = getEligibleBranch\(\)/);
+  assert.doesNotMatch(publicLayout, /siteConfig\.(?:name|address|phoneDisplay|directionsUrl)/);
+  assert.doesNotMatch(publicLayout, /expired branch|withheld branch/i);
+});
+
+test("public 404 uses final selectors while root 404 remains shell-free", () => {
+  const rootNotFound = readSource("src/app/not-found.tsx");
+  const publicNotFound = readSource("src/app/(public)/not-found.tsx");
+
+  assert.doesNotMatch(rootNotFound, /Header|Footer|StickyMobileActions|MarketingTags|getEligible/);
+  assert.match(publicNotFound, /getEligibleRoutes/);
+  assert.match(publicNotFound, /getEligibleContactActions/);
+  assert.doesNotMatch(publicNotFound, /siteConfig|\/withheld|expired branch|provisional|diagnostic/i);
+});
 
 test("approval requires two tiers, the correct fixed lane, evidence, and a current review", () => {
   const current = approvedEnvelope();
