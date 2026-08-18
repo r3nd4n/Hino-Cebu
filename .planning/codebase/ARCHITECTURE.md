@@ -40,7 +40,7 @@ The application is a content-driven marketing and lead-generation site. Next.js 
 | Component | Responsibility | File |
 |-----------|----------------|------|
 | Root layout | Applies global shell, metadata base, organization JSON-LD, navigation, attribution capture, marketing tags, and mobile actions | `src/app/layout.tsx` |
-| Static route pages | Compose content and reusable components for each public URL | `src/app/page.tsx`, `src/app/contact/page.tsx`, `src/app/quote/page.tsx` |
+| Static route pages | Compose content and reusable components for each public URL | `src/app/page.tsx`, `src/app/(public)/contact/page.tsx`, `src/app/quote/page.tsx` |
 | Truck route template | Statically enumerates truck slugs, resolves typed truck content, builds SEO/product schema, and renders details | `src/app/trucks/[slug]/page.tsx` |
 | Campaign route template | Statically enumerates campaign slugs, controls indexability, and renders a compact campaign lead form | `src/app/lp/[slug]/page.tsx` |
 | Inquiry page composition | Provides the shared presentation for sales, parts, service, fleet, and financing routes | `src/components/marketing/InquiryPage.tsx` |
@@ -171,7 +171,7 @@ The application is a content-driven marketing and lead-generation site. Next.js 
 - Responsibilities: Aggregate the primary tasks, truck catalog, support services, guides, promotions, deliveries, contact actions, and home metadata.
 
 **Static Route Pages:**
-- Location: `src/app/{contact,financing,find-your-truck,fleet,guides,hino-cebu,parts,privacy,promotions,quote,service,terms,trucks}/page.tsx`
+- Location: `src/app/(public)/{contact,hino-cebu}/page.tsx` and the remaining static routes under `src/app/**/page.tsx`
 - Triggers: Their corresponding public route paths.
 - Responsibilities: Compose page-specific content and shared components; keep business integration logic outside route modules.
 

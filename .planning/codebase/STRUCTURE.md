@@ -13,12 +13,14 @@ HINO-CEBU Jay Project/
 ├── src/
 │   ├── app/                        # Next.js App Router, metadata, styles, server action
 │   │   ├── actions/leads.ts        # Lead validation and routing server action
-│   │   ├── contact/page.tsx        # Static `/contact` route
+│   │   ├── (public)/                # Public-shell route group
+│   │   │   ├── contact/page.tsx    # Governed `/contact` route
+│   │   │   └── hino-cebu/page.tsx  # Governed `/hino-cebu` route
 │   │   ├── financing/page.tsx      # Shared inquiry route
 │   │   ├── find-your-truck/page.tsx# Truck finder route
 │   │   ├── fleet/page.tsx          # Shared inquiry route
 │   │   ├── guides/page.tsx         # Guide listing route
-│   │   ├── hino-cebu/              # About and customer-delivery routes
+│   │   ├── hino-cebu/              # Customer-delivery routes
 │   │   ├── lp/[slug]/page.tsx      # Data-driven campaign route template
 │   │   ├── parts/page.tsx          # Shared inquiry route
 │   │   ├── promotions/page.tsx     # Active-promotion listing route

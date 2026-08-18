@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 01-13-PLAN.md
-last_updated: "2026-08-18T16:19:01Z"
-last_activity: 2026-08-19 -- Completed Plan 01-13 executable production operations
+stopped_at: Completed 01-05-PLAN.md
+last_updated: "2026-08-18T16:28:19Z"
+last_activity: 2026-08-19 -- Completed Plan 01-05 governed branch and contact routes
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 16
-  completed_plans: 5
-  percent: 31
+  completed_plans: 6
+  percent: 38
 ---
 
 # Project State
@@ -26,30 +26,30 @@ See: .planning/PROJECT.md (updated 2026-08-18)
 ## Current Position
 
 Phase: 01 (Production Contracts and Executable Configuration) — EXECUTING
-Plan: 6 of 16
+Plan: 7 of 16
 Status: Executing Phase 01
-Last activity: 2026-08-19 -- Completed Plan 01-13 executable production operations
+Last activity: 2026-08-19 -- Completed Plan 01-05 governed branch and contact routes
 
-Progress: [███░░░░░░░] 31%
+Progress: [████░░░░░░] 38%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 5
+- Total plans completed: 6
 - Average duration: 9 min
-- Total execution time: 0.8 hours
+- Total execution time: 0.9 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 01 | 5 | 47 min | 9 min |
+| 01 | 6 | 51 min | 9 min |
 
 **Recent Trend:**
 
-- Last 5 plans: 01-01 (12 min), 01-02 (7 min), 01-03 (7 min), 01-04 (14 min), 01-13 (7 min)
-- Trend: Documentation and configuration plans completed faster than route-boundary work
+- Last 5 plans: 01-02 (7 min), 01-03 (7 min), 01-04 (14 min), 01-13 (7 min), 01-05 (4 min)
+- Trend: Selector-backed route migrations are completing quickly after the public shell boundary was established
 
 *Updated after each plan completion*
 
@@ -78,6 +78,9 @@ Recent decisions affecting current work:
 - [01-13]: Operational Markdown defines procedures and checkpoints while typed GOV-* records remain the sole source of decision values.
 - [01-13]: Provider selection requires primary evidence, sandbox proof, and current approval across all five durable lead contracts.
 - [01-13]: Owner alerts and recovery records retain only typed status fields and opaque references; sensitive channel and evidence content stays outside Git.
+- [01-05]: Branch fields render independently from one eligible branch DTO, while absent fields remain omitted without public approval diagnostics.
+- [01-05]: Phone and directions links render only from the canonical contact-action selector; route components never reconstruct destinations.
+- [01-05]: Contact AutoDealer structured data requires eligible identity and contains only independently eligible branch fields.
 
 ### Pending Todos
 
@@ -101,6 +104,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-08-18T16:19:01Z
-Stopped at: Completed 01-13-PLAN.md
+Last session: 2026-08-18T16:28:19Z
+Stopped at: Completed 01-05-PLAN.md
 Resume file: None
