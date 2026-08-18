@@ -103,6 +103,17 @@ const claimCatalog: readonly GovernedClaim[] = [
   pendingClaim("CLAIM-QUOTE-PURPOSE", "surface:quote", "purpose", "Share truck requirements for review", "sales"),
   pendingClaim("CLAIM-QUOTE-REQUEST", "surface:quote", "request-semantics", "Request sales information", "sales"),
   pendingClaim("CLAIM-QUOTE-CONTACT", "surface:quote", "contact-action", "Use an approved Hino Cebu contact option", "sales"),
+  pendingClaim("CLAIM-GUIDES-IDENTITY", "surface:guides", "identity", "Cebu Truck Guide", "brand-content"),
+  pendingClaim("CLAIM-GUIDES-PURPOSE", "surface:guides", "purpose", "Review practical commercial-truck guidance", "brand-content"),
+  pendingClaim("CLAIM-GUIDES-REQUEST", "surface:guides", "request-semantics", "Read approved guide content", "brand-content"),
+  pendingClaim("CLAIM-GUIDES-CONTACT", "surface:guides", "contact-action", "Use an approved Hino Cebu contact option", "sales"),
+  pendingClaim("CLAIM-GUIDE-CHOOSING", "surface:guides", "purpose", "Questions to Ask Before Choosing a Business Truck", "brand-content"),
+  pendingClaim("CLAIM-GUIDE-MAINTENANCE", "surface:guides", "purpose", "Planning Commercial Truck Maintenance", "brand-content"),
+  pendingClaim("CLAIM-GUIDE-DUTY-CLASS", "surface:guides", "purpose", "Light-Duty or Medium-Duty: Where to Start", "brand-content"),
+  pendingClaim("CLAIM-PROMOTIONS-IDENTITY", "surface:promotions", "identity", "Hino Cebu promotions", "brand-content"),
+  pendingClaim("CLAIM-PROMOTIONS-PURPOSE", "surface:promotions", "purpose", "Review current verified offers", "sales"),
+  pendingClaim("CLAIM-PROMOTIONS-REQUEST", "surface:promotions", "request-semantics", "Ask about an approved offer", "sales"),
+  pendingClaim("CLAIM-PROMOTIONS-CONTACT", "surface:promotions", "contact-action", "Use an approved Hino Cebu contact option", "sales"),
 ];
 
 const routeCatalog: readonly GovernedRoute[] = [
@@ -123,6 +134,8 @@ const routeCatalog: readonly GovernedRoute[] = [
     { routeId: "ROUTE-FINANCING", path: "/financing", surfaceId: "surface:financing", prefix: "CLAIM-FINANCING" },
     { routeId: "ROUTE-FLEET", path: "/fleet", surfaceId: "surface:fleet", prefix: "CLAIM-FLEET" },
     { routeId: "ROUTE-QUOTE", path: "/quote", surfaceId: "surface:quote", prefix: "CLAIM-QUOTE" },
+    { routeId: "ROUTE-GUIDES", path: "/guides", surfaceId: "surface:guides", prefix: "CLAIM-GUIDES" },
+    { routeId: "ROUTE-PROMOTIONS", path: "/promotions", surfaceId: "surface:promotions", prefix: "CLAIM-PROMOTIONS" },
   ] as const).map(({ routeId, path, surfaceId, prefix }) => governedRouteSchema.parse({
     routeId,
     path,
@@ -133,7 +146,9 @@ const routeCatalog: readonly GovernedRoute[] = [
       requestSemantics: `${prefix}-REQUEST`,
       contactAction: `${prefix}-CONTACT`,
     },
-    optionalClaimIds: [],
+    optionalClaimIds: routeId === "ROUTE-GUIDES"
+      ? ["CLAIM-GUIDE-CHOOSING", "CLAIM-GUIDE-MAINTENANCE", "CLAIM-GUIDE-DUTY-CLASS"]
+      : [],
     unavailablePage: true,
   })),
 ];

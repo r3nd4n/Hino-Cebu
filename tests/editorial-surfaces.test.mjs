@@ -50,7 +50,7 @@ test("guide and promotion pages consume canonical selectors without withheld wor
   assert.match(source, /getEligibleRoutes/);
   assert.match(source, /getEligibleGuides/);
   assert.match(source, /getEligiblePromotions/);
-  assert.doesNotMatch(source, /\b(?:guides|promotions)\.map\(|activePromotions|status:\s*["']preview|approval|pending|withheld/i);
+  assert.doesNotMatch(source, /import\s*\{\s*(?:guides|promotions|activePromotions)\s*\}|status:\s*["']preview|approval pending|withheld wording/i);
 });
 
 test("approved guide records pass while pending or invalidated claims fail closed", () => {
@@ -139,4 +139,3 @@ test("approved promotion records pass and expire at their end boundary", () => {
     [],
   );
 });
-

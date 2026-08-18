@@ -22,6 +22,8 @@ export function loadGovernanceModules() {
     trucks: require(resolve(outputDirectory, "src/content/trucks.js")),
     campaigns: require(resolve(outputDirectory, "src/content/campaigns.js")),
     services: require(resolve(outputDirectory, "src/content/services.js")),
+    guides: require(resolve(outputDirectory, "src/content/guides.js")),
+    promotions: require(resolve(outputDirectory, "src/content/promotions.js")),
     decisions: require(resolve(outputDirectory, "src/content/governance/decisions.js")),
     privacy: require(resolve(outputDirectory, "src/content/governance/privacy.js")),
     leads: require(resolve(outputDirectory, "src/content/governance/leads.js")),

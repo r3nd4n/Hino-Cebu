@@ -20,6 +20,8 @@
     "../../../src/content/trucks.ts",
     "../../../src/content/campaigns.ts",
     "../../../src/content/services.ts",
+    "../../../src/content/guides.ts",
+    "../../../src/content/promotions.ts",
     "../../../src/content/governance/*.ts"
   ]
 }
