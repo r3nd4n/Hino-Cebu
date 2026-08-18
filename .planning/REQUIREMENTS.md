@@ -9,11 +9,11 @@ Requirements for the production-readiness milestone and its first measured post-
 
 ### Production Contracts and Configuration
 
-- [ ] **PROD-01**: A release operator can identify the approved production domain, Vercel account, DNS owner, deployment approvers, and rollback owner from a versioned decision register.
+- [x] **PROD-01**: A release operator can identify the approved production domain, Vercel account, DNS owner, deployment approvers, and rollback owner from a versioned decision register.
 - [ ] **PROD-02**: A content editor can use one approved branch record for the business name, address, phone, operating hours, directions target, and department contact actions shown across pages and structured data.
-- [ ] **PROD-03**: A visitor sees only stakeholder-approved descriptions of locally applicable trucks, service, parts, fleet support, financing participation, request outcomes, and response expectations.
-- [ ] **PROD-04**: A privacy or business owner can identify the approved controller identity, privacy contact, processing purposes, recipients/processors, retention and deletion rules, rights process, incident process, and marketing-consent policy.
-- [ ] **PROD-05**: An operations owner can identify the approved destination, authentication method, department routing, durable-acceptance rule, retry/replay policy, retention rule, and escalation owner for every lead type.
+- [x] **PROD-03**: A visitor sees only stakeholder-approved descriptions of locally applicable trucks, service, parts, fleet support, financing participation, request outcomes, and response expectations.
+- [x] **PROD-04**: A privacy or business owner can identify the approved controller identity, privacy contact, processing purposes, recipients/processors, retention and deletion rules, rights process, incident process, and marketing-consent policy.
+- [x] **PROD-05**: An operations owner can identify the approved destination, authentication method, department routing, durable-acceptance rule, retry/replay policy, retention rule, and escalation owner for every lead type.
 - [ ] **PROD-06**: A release fails before deployment when a production-critical environment value is missing, malformed, unsafe for the target environment, or inconsistent with the approved decision register.
 - [ ] **PROD-07**: Development, preview, and production deployments use isolated origins, secrets, lead destinations, analytics identifiers, and crawl policies so test activity cannot contaminate live operations.
 
@@ -115,11 +115,11 @@ Every v1 requirement is assigned to exactly one roadmap phase.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| PROD-01 | Phase 1 | Pending |
+| PROD-01 | Phase 1 | Complete |
 | PROD-02 | Phase 1 | Pending |
-| PROD-03 | Phase 1 | Pending |
-| PROD-04 | Phase 1 | Pending |
-| PROD-05 | Phase 1 | Pending |
+| PROD-03 | Phase 1 | Complete |
+| PROD-04 | Phase 1 | Complete |
+| PROD-05 | Phase 1 | Complete |
 | PROD-06 | Phase 1 | Pending |
 | PROD-07 | Phase 1 | Pending |
 | LEAD-01 | Phase 2 | Pending |

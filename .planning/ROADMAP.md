@@ -33,7 +33,7 @@ This roadmap turns the validated Next.js MVP into a production-ready commercial 
 Plans:
 **Wave 1**
 
-- [ ] 01-01-PLAN.md — Define validated approval, privacy, lead, and release records
+- [x] 01-01-PLAN.md — Define validated approval, privacy, lead, and release records
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -175,7 +175,7 @@ Plans:
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Production Contracts and Executable Configuration | 0/TBD | Not started | - |
+| 1. Production Contracts and Executable Configuration | 1/16 | In progress | - |
 | 2. Lead Correctness, Durable Acceptance, and Recovery | 0/TBD | Not started | - |
 | 3. Truthful Publishing, Privacy, Measurement, and Security | 0/TBD | Not started | - |
 | 4. Behavioral Verification and Release Gate | 0/TBD | Not started | - |
