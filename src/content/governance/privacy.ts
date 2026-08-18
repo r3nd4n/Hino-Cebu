@@ -1,4 +1,5 @@
 import {
+  isApprovedPolicyValue,
   isApprovalCurrent,
   privacyContractSchema,
 } from "../../lib/governance/schemas";
@@ -27,7 +28,19 @@ export const privacyContract = privacyContractSchema.parse({
   ],
 });
 
+export function getEligiblePrivacyTopics(
+  now = new Date(),
+  contract: typeof privacyContract = privacyContract,
+) {
+  if (!isApprovalCurrent(contract.approval, "privacy-legal", now)) return [];
+  const topics = contract.topics.flatMap(({ key, value }) => (
+    isApprovedPolicyValue(value, "privacy-legal", now) && typeof value.value === "string"
+      ? [{ key, value: value.value }]
+      : []
+  ));
+  return topics.length === privacyContract.topics.length ? topics : [];
+}
+
 export function isPrivacyContractApproved(now = new Date()) {
-  return isApprovalCurrent(privacyContract.approval, "privacy-legal", now)
-    && privacyContract.topics.every(({ value }) => value.status === "approved");
+  return getEligiblePrivacyTopics(now).length === privacyContract.topics.length;
 }
