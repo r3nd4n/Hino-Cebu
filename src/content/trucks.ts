@@ -1,3 +1,11 @@
+import {
+  getGovernedClaims,
+  getGovernedRoutes,
+  type GovernedClaim,
+  type GovernedRoute,
+} from "./governance/claims";
+import { evaluateApproval, getEligibleRoutes } from "../lib/governance/eligibility";
+
 export type Truck = {
   routeId: string;
   claimIds: string[];
@@ -35,7 +43,7 @@ const commonFaqs = (name: string) => [
   },
 ];
 
-export const trucks: Truck[] = [
+const truckCatalog: readonly Truck[] = [
   {
     routeId: "ROUTE-TRUCK-HINO-200",
     claimIds: ["CLAIM-TRUCKS-IDENTITY", "CLAIM-TRUCKS-PURPOSE", "CLAIM-TRUCKS-REQUEST", "CLAIM-TRUCKS-CONTACT", "CLAIM-HINO-200-DETAIL"],
@@ -101,4 +109,34 @@ export const trucks: Truck[] = [
   },
 ];
 
-export const getTruck = (slug: string) => trucks.find((truck) => truck.slug === slug);
+export function getEligibleTrucks(
+  now = new Date(),
+  records: readonly Truck[] = truckCatalog,
+  routes: readonly GovernedRoute[] = getGovernedRoutes(),
+  claims: readonly GovernedClaim[] = getGovernedClaims(),
+) {
+  const trucksRoute = getEligibleRoutes(now, routes, claims)
+    .find(({ path, status }) => path === "/trucks" && status.startsWith("eligible"));
+  if (!trucksRoute) return [];
+
+  const eligibleClaimIds = new Set(
+    claims.filter((claim) => evaluateApproval(claim, now)).map(({ claimId }) => claimId),
+  );
+
+  return records.filter(({ claimIds }) => (
+    claimIds.length > 0
+    && claimIds.every((claimId) => eligibleClaimIds.has(claimId))
+  ));
+}
+
+export function getEligibleTruck(
+  slug: string,
+  now = new Date(),
+  records: readonly Truck[] = truckCatalog,
+  routes: readonly GovernedRoute[] = getGovernedRoutes(),
+  claims: readonly GovernedClaim[] = getGovernedClaims(),
+) {
+  return getEligibleTrucks(now, records, routes, claims).find((truck) => truck.slug === slug);
+}
+
+export const trucks = getEligibleTrucks();

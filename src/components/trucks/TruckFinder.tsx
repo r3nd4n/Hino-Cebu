@@ -6,6 +6,7 @@ import { track } from "@/lib/analytics";
 
 type Answers = { industry: string; cargo: string; payload: string; body: string; environment: string; fleetSize: string; timeline: string };
 type Rule = { id: string; match: Partial<Record<keyof Answers, string[]>>; models: string[]; reason: string };
+export type FinderModel = { slug: string; name: string };
 
 const initial: Answers = { industry: "", cargo: "", payload: "", body: "", environment: "", fleetSize: "", timeline: "" };
 const rules: Rule[] = [
@@ -25,20 +26,23 @@ const questions: { key: keyof Answers; label: string; options: [string, string][
   { key: "timeline", label: "Purchase timeline", options: [["0-3", "Within 3 months"], ["3-6", "3–6 months"], ["6-plus", "6+ months"], ["research", "Researching"]] },
 ];
 
-export function recommend(answers: Answers) {
+export function recommend(answers: Answers, models: readonly FinderModel[]) {
+  const eligibleSlugs = new Set(models.map(({ slug }) => slug));
   const scored = rules.map((rule) => ({ rule, score: Object.entries(rule.match).reduce((score, [key, values]) => score + (values?.includes(answers[key as keyof Answers]) ? 1 : 0), 0) })).sort((a, b) => b.score - a.score);
   const best = scored[0];
-  return best?.score ? best.rule : { id: "consult", match: {}, models: ["hino-200", "hino-300", "hino-500"], reason: "Your answers are a useful starting point. Comparing model families with Hino Cebu will help account for cargo, body, payload, and route details." };
+  const selected = best?.score ? best.rule : { id: "consult", match: {}, models: models.map(({ slug }) => slug), reason: "Your answers are a useful starting point. Comparing model families with Hino Cebu will help account for cargo, body, payload, and route details." };
+  return { ...selected, models: selected.models.filter((slug) => eligibleSlugs.has(slug)) };
 }
 
-export function TruckFinder() {
+export function TruckFinder({ models, consultationHref }: { models: readonly FinderModel[]; consultationHref?: string }) {
   const [answers, setAnswers] = useState(initial); const [result, setResult] = useState<ReturnType<typeof recommend> | null>(null);
   const complete = Object.values(answers).every(Boolean);
+  const modelsBySlug = new Map(models.map((model) => [model.slug, model]));
   return <div className="finder">
-    <form onSubmit={(event) => { event.preventDefault(); const next = recommend(answers); setResult(next); track("truck_finder_completed", { recommendation: next.models.join(",") }); }} onFocus={() => track("truck_finder_started", { page: "/find-your-truck" })}>
+    <form onSubmit={(event) => { event.preventDefault(); const next = recommend(answers, models); setResult(next); track("truck_finder_completed", { recommendation: next.models.join(",") }); }} onFocus={() => track("truck_finder_started", { page: "/find-your-truck" })}>
       <div className="finder-grid">{questions.map((question) => <div className="field" key={question.key}><label htmlFor={question.key}>{question.label}</label><select id={question.key} value={answers[question.key]} onChange={(e) => setAnswers({ ...answers, [question.key]: e.target.value })} required><option value="">Select an option</option>{question.options.map(([value, label]) => <option value={value} key={value}>{label}</option>)}</select></div>)}</div>
       <button className="button" disabled={!complete}>Show my starting point</button>
     </form>
-    {result && <section className="finder-result" aria-live="polite"><span className="eyebrow">Preliminary recommendation</span><h2>{result.models.map((slug) => slug.replace("hino-", "Hino ")).join(" and ")}</h2><p>{result.reason}</p><div className="recommendation-links">{result.models.map((slug) => <Link className="button button-outline" href={`/trucks/${slug}`} key={slug}>View {slug.replace("hino-", "Hino ")}</Link>)}<Link className="button" href="/quote?source=truck-finder">Request a consultation</Link></div><small>This is a preliminary model-family suggestion, not confirmation of payload, body, regulatory, or technical suitability. Final configuration requires consultation and verified specifications.</small></section>}
+    {result && <section className="finder-result" aria-live="polite"><span className="eyebrow">Preliminary recommendation</span><h2>{result.models.map((slug) => modelsBySlug.get(slug)?.name).filter(Boolean).join(" and ")}</h2><p>{result.reason}</p><div className="recommendation-links">{result.models.map((slug) => { const model = modelsBySlug.get(slug); return model ? <Link className="button button-outline" href={`/trucks/${slug}`} key={slug}>View {model.name}</Link> : null; })}{consultationHref ? <Link className="button" href={consultationHref}>Request a consultation</Link> : null}</div><small>This is a preliminary model-family suggestion, not confirmation of payload, body, regulatory, or technical suitability. Final configuration requires consultation and verified specifications.</small></section>}
   </div>;
 }

@@ -4,7 +4,7 @@ import { mkdirSync, rmSync } from "node:fs";
 import { resolve } from "node:path";
 
 const require = createRequire(import.meta.url);
-const outputDirectory = resolve("node_modules/.cache/hino-governance-tests");
+const outputDirectory = resolve("node_modules/.cache/hino-governance-tests", String(process.pid));
 const tsc = resolve("node_modules/typescript/bin/tsc");
 
 export function loadGovernanceModules() {
