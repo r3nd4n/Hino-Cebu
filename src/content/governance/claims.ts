@@ -122,6 +122,17 @@ const claimCatalog: readonly GovernedClaim[] = [
   pendingClaim("CLAIM-PROMOTIONS-PURPOSE", "surface:promotions", "purpose", "Review current verified offers", "sales"),
   pendingClaim("CLAIM-PROMOTIONS-REQUEST", "surface:promotions", "request-semantics", "Ask about an approved offer", "sales"),
   pendingClaim("CLAIM-PROMOTIONS-CONTACT", "surface:promotions", "contact-action", "Use an approved Hino Cebu contact option", "sales"),
+  pendingClaim("CLAIM-DELIVERIES-IDENTITY", "surface:customer-deliveries", "identity", "Customer delivery updates", "brand-content"),
+  pendingClaim("CLAIM-DELIVERIES-PURPOSE", "surface:customer-deliveries", "purpose", "Review approved customer delivery stories", "brand-content"),
+  pendingClaim("CLAIM-DELIVERIES-REQUEST", "surface:customer-deliveries", "request-semantics", "Read approved customer delivery information", "brand-content"),
+  pendingClaim("CLAIM-DELIVERIES-CONTACT", "surface:customer-deliveries", "contact-action", "Use an approved Hino Cebu contact option", "sales"),
+  pendingClaim("CLAIM-APPLICATION-LOGISTICS", "surface:business-applications", "purpose", "Logistics application guidance", "sales"),
+  pendingClaim("CLAIM-APPLICATION-CONSTRUCTION", "surface:business-applications", "purpose", "Construction application guidance", "sales"),
+  pendingClaim("CLAIM-APPLICATION-DELIVERY", "surface:business-applications", "purpose", "Delivery application guidance", "sales"),
+  pendingClaim("CLAIM-APPLICATION-FOOD-BEVERAGE", "surface:business-applications", "purpose", "Food and beverage application guidance", "sales"),
+  pendingClaim("CLAIM-APPLICATION-AGRICULTURE", "surface:business-applications", "purpose", "Agriculture application guidance", "sales"),
+  pendingClaim("CLAIM-APPLICATION-RETAIL-WHOLESALE", "surface:business-applications", "purpose", "Retail and wholesale application guidance", "sales"),
+  pendingClaim("CLAIM-APPLICATION-FLEET", "surface:business-applications", "purpose", "Fleet application guidance", "sales"),
 ];
 
 const routeCatalog: readonly GovernedRoute[] = [
@@ -146,6 +157,7 @@ const routeCatalog: readonly GovernedRoute[] = [
     { routeId: "ROUTE-SERVICE", path: "/service", surfaceId: "surface:service", prefix: "CLAIM-SERVICE" },
     { routeId: "ROUTE-GUIDES", path: "/guides", surfaceId: "surface:guides", prefix: "CLAIM-GUIDES" },
     { routeId: "ROUTE-PROMOTIONS", path: "/promotions", surfaceId: "surface:promotions", prefix: "CLAIM-PROMOTIONS" },
+    { routeId: "ROUTE-CUSTOMER-DELIVERIES", path: "/hino-cebu/customer-deliveries", surfaceId: "surface:customer-deliveries", prefix: "CLAIM-DELIVERIES" },
   ] as const).map(({ routeId, path, surfaceId, prefix }) => governedRouteSchema.parse({
     routeId,
     path,

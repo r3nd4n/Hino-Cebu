@@ -6,7 +6,7 @@ const routes = [
   "src/app/page.tsx", "src/app/(public)/trucks/page.tsx", "src/app/(public)/trucks/[slug]/page.tsx",
   "src/app/(public)/find-your-truck/page.tsx", "src/app/(public)/parts/page.tsx", "src/app/(public)/service/page.tsx",
   "src/app/(public)/fleet/page.tsx", "src/app/(public)/financing/page.tsx", "src/app/(public)/promotions/page.tsx",
-  "src/app/(public)/hino-cebu/page.tsx", "src/app/hino-cebu/customer-deliveries/page.tsx",
+  "src/app/(public)/hino-cebu/page.tsx", "src/app/(public)/hino-cebu/customer-deliveries/page.tsx",
   "src/app/(public)/guides/page.tsx", "src/app/(public)/contact/page.tsx", "src/app/(public)/quote/page.tsx",
   "src/app/(public)/privacy/page.tsx", "src/app/(public)/terms/page.tsx", "src/app/not-found.tsx", "src/app/sitemap.ts", "src/app/robots.ts",
 ];
@@ -23,7 +23,7 @@ test("site origin is environment driven", () => {
 
 test("unverified promotions and deliveries start empty", () => {
   assert.match(readFileSync("src/content/promotions.ts", "utf8"), /promotionCatalog: readonly Promotion\[\] = \[\]/);
-  assert.match(readFileSync("src/content/deliveries.ts", "utf8"), /deliveries: DeliveryStory\[\] = \[\]/);
+  assert.match(readFileSync("src/content/deliveries.ts", "utf8"), /deliveryCatalog: readonly DeliveryStory\[\] = \[\]/);
 });
 
 test("uploads are presented as disabled", () => {
