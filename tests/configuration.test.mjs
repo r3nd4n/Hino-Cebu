@@ -124,3 +124,21 @@ test("production configuration is allow-listed at the build boundary", () => {
   assert.match(source, /getRuntimeConfig\(\)/);
   assert.doesNotMatch(source, /\.\.\.process\.env/);
 });
+
+test("isolation crawl boundary consumes parsed target readiness", () => {
+  const source = readFileSync("src/app/robots.ts", "utf8");
+  assert.match(source, /getRuntimeConfig\(\)/);
+  assert.match(source, /target === "production"/);
+  assert.match(source, /crawlPolicy === "allowed"/);
+  assert.doesNotMatch(source, /Boolean\(process\.env\.NEXT_PUBLIC_SITE_URL\)/);
+});
+
+test("production lead boundary checks durable contract before router submission", () => {
+  const source = readFileSync("src/app/actions/leads.ts", "utf8");
+  assert.match(source, /getRuntimeConfig\(\)/);
+  assert.match(source, /isLeadContractApproved/);
+  const guard = source.indexOf("isLeadContractApproved");
+  const submit = source.indexOf("leadRouter.submit");
+  assert.ok(guard >= 0 && submit > guard, "durable readiness guard must precede leadRouter.submit");
+  assert.match(source.slice(guard, submit), /We could not send your request right now\. Please call Hino Cebu instead\./);
+});
