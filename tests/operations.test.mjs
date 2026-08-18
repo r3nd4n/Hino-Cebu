@@ -40,7 +40,7 @@ test("provider scorecard keeps selection blocked behind primary evidence and san
   assert.match(source, /retry\/replay/i);
   assert.match(source, /retention/i);
   assert.match(source, /secondary intake/i);
-  assert.doesNotMatch(source, /winner:\s*(?!pending|none)/i);
+  assert.match(source, /^Winner: (?:pending|none)\.?$/im);
 });
 
 test("release runbook separates promotion, emergency, rollback, restoration, and drift closeout", () => {

@@ -100,3 +100,7 @@ Before connecting the final domain, set `NEXT_PUBLIC_SITE_URL` to its exact HTTP
 ## Production readiness
 
 Review [BUSINESS_INPUTS_REQUIRED.md](BUSINESS_INPUTS_REQUIRED.md), [ASSET_REQUIREMENTS.md](ASSET_REQUIREMENTS.md), [SOURCE_REGISTER.md](SOURCE_REGISTER.md), and [IMPLEMENTATION_PLAN.md](IMPLEMENTATION_PLAN.md). The checked-in privacy and terms pages are Cebu-specific drafts adapted from Hino Philippines material and still require final business/legal approval.
+
+Operator procedures are in `docs/operations/production-decisions.md`, `docs/operations/lead-provider-scorecard.md`, `docs/operations/release-runbook.md`, and `docs/operations/records/README.md`. They explain how to execute approvals, provider evaluation, promotion, alerts, recovery, and closeout while the authoritative typed governance records under `src/content/governance` remain the only source of decision values.
+
+Run `node --test tests/operations.test.mjs` for the operations documentation contracts, then `npm run check` before requesting promotion. The procedures intentionally keep unknown providers, owners, thresholds, destinations, and approvals pending.
