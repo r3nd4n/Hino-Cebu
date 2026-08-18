@@ -40,6 +40,15 @@ const production = {
   REVIEW_ACCESS: "disabled",
 };
 
+const productionHolding = {
+  ...production,
+  NEXT_PUBLIC_SITE_URL: "https://holding.example",
+  LEAD_PROFILE: "disabled",
+  ANALYTICS_PROFILE: "disabled",
+  CRAWL_POLICY: "blocked",
+  PRODUCTION_HOLDING_MODE: "enabled",
+};
+
 test("isolation matrix accepts only target-safe profiles", () => {
   assert.equal(parseRuntimeConfig(development).target, "development");
   assert.equal(parseRuntimeConfig(preview).target, "preview");
@@ -80,6 +89,31 @@ test("production origin and target checks fail closed without leaking values", (
       return true;
     });
   }
+});
+
+test("production holding mode allows only a non-indexed integration-disabled shell", () => {
+  assert.equal(parseRuntimeConfig(productionHolding).target, "production");
+
+  const unsafe = [
+    { LEAD_PROFILE: "production" },
+    { ANALYTICS_PROFILE: "production" },
+    { CRAWL_POLICY: "allowed" },
+  ];
+  for (const override of unsafe) {
+    assert.throws(
+      () => parseRuntimeConfig({ ...productionHolding, ...override }),
+      /CFG_HOLDING_MODE_UNSAFE/,
+    );
+  }
+
+  assert.throws(
+    () => parseRuntimeConfig({ ...preview, PRODUCTION_HOLDING_MODE: "enabled" }),
+    /CFG_HOLDING_MODE_TARGET_MISMATCH: PRODUCTION_HOLDING_MODE/,
+  );
+  assert.throws(
+    () => parseRuntimeConfig({ ...productionHolding, PRODUCTION_HOLDING_MODE: "yes" }),
+    /CFG_HOLDING_MODE_INVALID: PRODUCTION_HOLDING_MODE/,
+  );
 });
 
 test("isolation output contains classifications and a non-secret fingerprint", () => {

@@ -58,6 +58,7 @@ Truck detail pages use one template at `src/app/trucks/[slug]/page.tsx`. Paid ca
 | `NEXT_PUBLIC_META_PIXEL_ID` | Loads Meta Pixel | Optional |
 | `LEAD_ROUTING_WEBHOOK_URL` | Approved server-side lead webhook | Production forms |
 | `ENABLE_UPLOADS` | Reserved future upload flag; uploads remain disabled | No |
+| `PRODUCTION_HOLDING_MODE` | Set to `enabled` only for a temporary non-indexed Production shell with leads, analytics, and review access disabled | No |
 
 Google Ads conversion tags should be configured through the single GTM container to keep tags centralized and prevent duplicate tracking. IDs load only when configured. Consent requirements must be approved before marketing IDs are enabled.
 
@@ -96,6 +97,8 @@ This repository-first workflow avoids a CMS subscription. The presentation reads
 No `vercel.json` is required. Import the repository, set environment variables separately for Preview and Production, and use a Vercel plan approved for commercial production. Preview URLs work without hardcoded domains; preview deployments remain non-indexable when `NEXT_PUBLIC_SITE_URL` is not set.
 
 Before connecting the final domain, set `NEXT_PUBLIC_SITE_URL` to its exact HTTPS origin, verify generated canonical/sitemap/robots URLs, configure DNS, and validate Search Console ownership.
+
+For a temporary visual-only Production release while governance records remain pending, set `PRODUCTION_HOLDING_MODE=enabled`, `LEAD_PROFILE=disabled`, `ANALYTICS_PROFILE=disabled`, `CRAWL_POLICY=blocked`, and `REVIEW_ACCESS=disabled`. Holding mode does not approve or publish governed facts: selectors continue withholding them, forms cannot establish durable delivery, marketing tags remain off, robots disallows crawling, and the approval report remains unavailable in Production. Remove holding mode and complete the normal approval contract before enabling integrations or indexing.
 
 ## Production readiness
 

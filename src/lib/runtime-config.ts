@@ -15,7 +15,8 @@ export type RuntimeEnvironment = Partial<Record<
   | "LEAD_PROFILE"
   | "ANALYTICS_PROFILE"
   | "CRAWL_POLICY"
-  | "REVIEW_ACCESS",
+  | "REVIEW_ACCESS"
+  | "PRODUCTION_HOLDING_MODE",
   string
 >>;
 
@@ -85,6 +86,13 @@ function readProfile<T extends string>(
   return value as T;
 }
 
+function readHoldingMode(value: string | undefined, target: DeploymentTarget) {
+  if (!value) return false;
+  if (value !== "enabled") return fail("CFG_HOLDING_MODE_INVALID", "PRODUCTION_HOLDING_MODE");
+  if (target !== "production") return fail("CFG_HOLDING_MODE_TARGET_MISMATCH", "PRODUCTION_HOLDING_MODE");
+  return true;
+}
+
 function repositoryRuntimeDecisions(now = new Date()): RuntimeDecisions {
   const productionDomain = productionEstateRecord.decisions.find(({ key }) => key === "production-domain")?.value;
   const productionOrigin = productionDomain?.status === "approved" && typeof productionDomain.value === "string"
@@ -133,15 +141,24 @@ export function parseRuntimeConfig(
     "REVIEW_ACCESS",
     target === "production" ? ["disabled"] : ["disabled", "protected"],
   );
+  const holdingMode = readHoldingMode(environment.PRODUCTION_HOLDING_MODE, target);
 
   if (target === "preview" && decisions.productionOrigin === siteOrigin) {
     return fail("CFG_ORIGIN_TARGET_MISMATCH", "NEXT_PUBLIC_SITE_URL");
   }
   if (target === "production") {
-    if (!decisions.productionEstateApproved || !decisions.productionOrigin) {
+    if (holdingMode && (
+      leadProfile !== "disabled"
+      || analyticsProfile !== "disabled"
+      || crawlPolicy !== "blocked"
+      || reviewAccess !== "disabled"
+    )) {
+      return fail("CFG_HOLDING_MODE_UNSAFE");
+    }
+    if (!holdingMode && (!decisions.productionEstateApproved || !decisions.productionOrigin)) {
       return fail("CFG_PRODUCTION_ESTATE_UNAPPROVED");
     }
-    if (siteOrigin !== decisions.productionOrigin) {
+    if (!holdingMode && siteOrigin !== decisions.productionOrigin) {
       return fail("CFG_ORIGIN_APPROVAL_MISMATCH", "NEXT_PUBLIC_SITE_URL");
     }
   }
@@ -163,6 +180,7 @@ export function getRuntimeConfig(): RuntimeConfig {
     ANALYTICS_PROFILE: process.env.ANALYTICS_PROFILE,
     CRAWL_POLICY: process.env.CRAWL_POLICY,
     REVIEW_ACCESS: process.env.REVIEW_ACCESS,
+    PRODUCTION_HOLDING_MODE: process.env.PRODUCTION_HOLDING_MODE,
   };
   return parseRuntimeConfig(environment);
 }
