@@ -16,6 +16,7 @@ type ReviewReport = ReturnType<typeof getReviewReport>;
 type ApprovalRecord = ReviewReport["approvalGroups"][number]["records"][number];
 type RouteRecord = ReviewReport["routes"][number];
 type EnvironmentRecord = ReviewReport["environments"][number];
+type BlockerRecord = ReviewReport["blockers"][number];
 
 const approvalStatusLabels = {
   approved: "Approved / current",
@@ -122,7 +123,12 @@ function EnvironmentCard({ environment }: { environment: EnvironmentRecord }) {
 export default function ApprovalReviewPage() {
   if (getDeploymentTarget() === "production") notFound();
   const report = getReviewReport();
-  const blockerGroups = Map.groupBy(report.blockers, ({ blockerCode }) => blockerCode);
+  const blockerGroups = report.blockers.reduce((groups, blocker) => {
+    const group = groups.get(blocker.blockerCode);
+    if (group) group.push(blocker);
+    else groups.set(blocker.blockerCode, [blocker]);
+    return groups;
+  }, new Map<string, BlockerRecord[]>());
   const blocked = report.summary.overall === "Production blocked";
   const summaryCopy = blocked
     ? "Production blocked — resolve every listed blocker and record the required approval evidence before promotion."
