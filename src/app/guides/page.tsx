@@ -1,0 +1,6 @@
+import Link from "next/link";
+import { Breadcrumbs, Container, CtaBand, PageHero } from "@/components/ui/Shared";
+import { guides } from "@/content/guides";
+import { createMetadata } from "@/lib/seo";
+export const metadata = createMetadata({ title: "Cebu Truck Guide | Buying & Maintenance Topics", description: "Browse practical starting points for choosing, operating, and maintaining commercial trucks for Cebu business.", path: "/guides" });
+export default function GuidesPage() { return <><Container><Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Guides" }]} /></Container><PageHero eyebrow="Cebu Truck Guide" title="Practical information for better truck decisions" description="Initial editorial previews avoid unverified technical claims. Full articles should be reviewed against approved materials and branch expertise before publishing." /><section className="section"><Container><div className="grid grid-3">{guides.map((guide) => <article className="card card-body" key={guide.slug}><span className="card-kicker">{guide.category}</span><h2>{guide.title}</h2><p>{guide.summary}</p><div className="list-panel"><small>Full reviewed article pending</small></div></article>)}</div><p>Need help now? <Link className="text-link" href="/find-your-truck">Use the truck finder →</Link></p></Container></section><CtaBand /></>; }

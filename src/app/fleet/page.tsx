@@ -1,0 +1,4 @@
+import { InquiryPage } from "@/components/marketing/InquiryPage";
+import { createMetadata } from "@/lib/seo";
+export const metadata = createMetadata({ title: "Hino Fleet Support Cebu | Hino Cebu", description: "Discuss fleet acquisition, replacement, parts, maintenance, or operational truck requirements with Hino Cebu.", path: "/fleet" });
+export default function FleetPage() { return <InquiryPage type="fleet" eyebrow="Business support" title="Fleet support for Cebu operations" description="Start a focused conversation about fleet acquisition, replacement, maintenance, parts, or account requirements." formTitle="Fleet inquiry" submitLabel="Request Fleet Support" points={["Describe your current or planned fleet", "Share the operational requirement", "Add procurement or replacement timing"]} note="Specific account support, service coverage, product availability, and commercial terms require confirmation by Hino Cebu." />; }

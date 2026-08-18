@@ -1,0 +1,3 @@
+import Link from "next/link";
+import { Container } from "@/components/ui/Shared";
+export default function NotFound() { return <section className="section"><Container><span className="eyebrow">404</span><h1>That page is not on this route.</h1><p className="lead">The page may have moved, or the address may be incomplete. Continue with the main business paths below.</p><div className="hero-actions"><Link className="button" href="/">Return Home</Link><Link className="button button-outline" href="/trucks">Explore Trucks</Link><Link className="text-link" href="/contact">Contact Hino Cebu</Link></div></Container></section>; }

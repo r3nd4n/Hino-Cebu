@@ -1,0 +1,43 @@
+# Business Inputs Required
+
+Status updated August 18, 2026. Checked items have a usable source; final operational/legal approval may still be required where noted.
+
+- [x] Official Hino logo asset sourced from Hino Motors Philippines per stakeholder instruction
+- [ ] Confirm trademark/brand usage approval for the Cebu production domain
+- [x] Confirm branch-name formatting: Hino Cebu
+- [x] Verify address from supplied business-listing image: 377 P. Almendras Extension, Cebu City, Central Visayas
+- [x] Verify phone from supplied business-listing image: +63 32 346 3322
+- [ ] Confirm operating hours
+- [ ] Provide the direct Google Business Profile URL (address-based Maps directions work in the interim)
+- [ ] Select production domain and complete DNS setup
+- [x] Official Hino Motors Philippines social profile URLs sourced from hino.com.ph
+- [x] National Hino 200, 300, and 500 lineups sourced from official product pages
+- [x] National series-level specifications and variants sourced from official product pages
+- [x] Official brochure links sourced from hino.com.ph
+- [ ] Confirm which national models and configurations are currently offered through Hino Cebu
+- [ ] Confirm service offerings and request-handling process
+- [ ] Confirm parts inquiry and availability process
+- [x] National Hino Financial Services program sourced from hino.com.ph
+- [ ] Confirm current Hino Cebu participation and locally applicable financing products
+- [ ] Confirm fleet support offering and approved wording
+- [ ] Promotions, dates, and terms — intentionally pending per stakeholder
+- [x] Official national product/service/parts/finance imagery sourced from hino.com.ph
+- [ ] Real Hino Cebu branch, staff, and local vehicle photography
+- [ ] Customer-delivery stories and releases — intentionally pending per stakeholder
+- [x] Cebu-specific privacy and site-disclaimer drafts based on Hino Philippines policy
+- [ ] Business/legal approval of controller identity, privacy contact, retention, rights process, and final legal drafts
+- [ ] Provide sales lead-routing destination
+- [ ] Provide parts lead-routing destination
+- [ ] Provide service lead-routing destination
+- [ ] Provide fleet lead-routing destination
+- [ ] Provide financing lead-routing destination
+- [ ] Choose spam-protection/rate-limit policy for production forms
+- [ ] Decide whether secure photo uploads are required and approve storage/privacy handling
+- [ ] Google Tag Manager ID — intentionally pending
+- [ ] GA4 Measurement ID — intentionally pending
+- [ ] Google Ads conversion IDs/labels — intentionally pending
+- [ ] Meta Pixel ID — intentionally pending
+- [ ] Confirm Search Console ownership/status
+- [ ] Confirm CRM, spreadsheet, email, or webhook lead destination
+- [ ] Approve cookie/consent requirements for configured marketing tags
+- [ ] Confirm Vercel commercial production plan and deployment owner

@@ -1,0 +1,5 @@
+import { Breadcrumbs, Container, PageHero } from "@/components/ui/Shared";
+import { deliveries } from "@/content/deliveries";
+import { createMetadata } from "@/lib/seo";
+export const metadata = createMetadata({ title: "Hino Cebu Customer Deliveries", description: "Approved Hino Cebu truck delivery stories will document real local business applications and link to relevant support.", path: "/hino-cebu/customer-deliveries" });
+export default function DeliveriesPage() { return <><Container><Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Hino Cebu", href: "/hino-cebu" }, { label: "Customer Deliveries" }]} /></Container><PageHero eyebrow="Real branch activity" title="Customer deliveries" description="This area is reserved for useful, permission-cleared Hino Cebu delivery stories—not fabricated proof." /><section className="section"><Container>{deliveries.length === 0 && <div className="empty-state"><h2>No approved delivery stories published yet</h2><p>Customer identity, vehicle details, photos, location, and story content require explicit approval. The publishing structure is ready when that content is supplied.</p></div>}</Container></section></>; }
