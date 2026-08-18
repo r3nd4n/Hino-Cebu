@@ -1,5 +1,23 @@
 import type { MetadataRoute } from "next";
-import { campaigns } from "@/content/campaigns";
-import { trucks } from "@/content/trucks";
+import { getEligibleCampaignRoutes } from "@/content/campaigns";
+import { getEligibleTrucks } from "@/content/trucks";
+import { getEligibleRoutes } from "@/lib/governance/eligibility";
 import { absoluteUrl } from "@/lib/site-url";
-export default function sitemap(): MetadataRoute.Sitemap { const routes = ["", "/trucks", ...trucks.map((truck) => `/trucks/${truck.slug}`), "/find-your-truck", "/parts", "/service", "/fleet", "/financing", "/promotions", "/hino-cebu", "/hino-cebu/customer-deliveries", "/guides", "/contact", "/quote", "/privacy", "/terms", ...campaigns.filter((campaign) => campaign.index).map((campaign) => `/lp/${campaign.slug}`)]; return routes.map((route) => ({ url: absoluteUrl(route || "/"), changeFrequency: route === "" ? "weekly" : "monthly", priority: route === "" ? 1 : route.startsWith("/trucks") ? .8 : .6 })); }
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  const eligibleRoutes = getEligibleRoutes()
+    .filter(({ status }) => status.startsWith("eligible"));
+  const paths = new Set(eligibleRoutes.map(({ path }) => path));
+
+  if (eligibleRoutes.length > 0) paths.add("/");
+  for (const truck of getEligibleTrucks()) paths.add(`/trucks/${truck.slug}`);
+  for (const campaign of getEligibleCampaignRoutes()) {
+    if (campaign.index) paths.add(`/lp/${campaign.slug}`);
+  }
+
+  return Array.from(paths, (path) => ({
+    url: absoluteUrl(path),
+    changeFrequency: path === "/" ? "weekly" : "monthly",
+    priority: path === "/" ? 1 : path.startsWith("/trucks") ? 0.8 : 0.6,
+  }));
+}

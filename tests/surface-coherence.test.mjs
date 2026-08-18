@@ -7,7 +7,7 @@ import {
   loadGovernanceModules,
 } from "./fixtures/governance/records.mjs";
 
-const { eligibility } = loadGovernanceModules();
+const { eligibility, services } = loadGovernanceModules();
 const readSource = (path) => readFileSync(path, "utf8");
 
 function syntheticRoute(routeId, path, contactClaimId) {
@@ -80,6 +80,44 @@ test("withheld synthetic routes cannot enter the discovery projection", () => {
 
   assert.deepEqual(discoveryPaths, ["/synthetic-public"]);
   assert.equal(discoveryPaths.includes("/synthetic-withheld"), false);
+});
+
+test("home support records require both final route and attached claim eligibility", () => {
+  const routeClaims = [
+    approvedClaim({ claimId: "CLAIM-SYNTHETIC-IDENTITY", category: "identity" }),
+    approvedClaim({ claimId: "CLAIM-SYNTHETIC-PURPOSE", category: "purpose" }),
+    approvedClaim({ claimId: "CLAIM-SYNTHETIC-REQUEST", category: "request-semantics" }),
+    approvedClaim({ claimId: "CLAIM-SYNTHETIC-CONTACT", category: "contact-action" }),
+  ];
+  const serviceClaim = approvedClaim({
+    claimId: "CLAIM-SYNTHETIC-SERVICE",
+    surfaceId: "surface:synthetic-service",
+    category: "purpose",
+  });
+  const route = syntheticRoute("ROUTE-SYNTHETIC-SERVICE", "/synthetic-service", "CLAIM-SYNTHETIC-CONTACT");
+  const service = {
+    routeId: route.routeId,
+    claimIds: [serviceClaim.claimId],
+    title: "Synthetic service",
+    description: "Approved service wording",
+    href: route.path,
+    cta: "View service",
+  };
+
+  assert.deepEqual(
+    services.getEligibleSupportServices(NOW, [service], [route], [...routeClaims, serviceClaim]),
+    [service],
+  );
+  assert.deepEqual(
+    services.getEligibleSupportServices(NOW, [service], [route], routeClaims),
+    [],
+  );
+  assert.deepEqual(
+    services.getEligibleSupportServices(NOW, [service], [
+      { ...route, minimumTruth: { ...route.minimumTruth, contactAction: "CLAIM-MISSING-CONTACT" } },
+    ], [...routeClaims, serviceClaim]),
+    [],
+  );
 });
 
 test("shared metadata and robots use final eligibility and parsed runtime configuration", () => {
