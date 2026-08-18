@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 01-15-PLAN.md
-last_updated: "2026-08-18T17:21:04Z"
-last_activity: 2026-08-19 -- Completed Plan 01-15 governed delivery and business-application surfaces
+stopped_at: Completed 01-16-PLAN.md
+last_updated: "2026-08-18T17:29:49Z"
+last_activity: 2026-08-19 -- Completed Plan 01-16 governed campaign route and discovery hooks
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 16
-  completed_plans: 11
-  percent: 69
+  completed_plans: 12
+  percent: 75
 ---
 
 # Project State
@@ -26,30 +26,30 @@ See: .planning/PROJECT.md (updated 2026-08-18)
 ## Current Position
 
 Phase: 01 (Production Contracts and Executable Configuration) — EXECUTING
-Plan: 11 of 16
+Plan: 12 of 16
 Status: Executing Phase 01
-Last activity: 2026-08-19 -- Completed Plan 01-15 governed delivery and business-application surfaces
+Last activity: 2026-08-19 -- Completed Plan 01-16 governed campaign route and discovery hooks
 
-Progress: [███████░░░] 69%
+Progress: [████████░░] 75%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 11
+- Total plans completed: 12
 - Average duration: 8 min
-- Total execution time: 1.4 hours
+- Total execution time: 1.5 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 01 | 11 | 86 min | 8 min |
+| 01 | 12 | 91 min | 8 min |
 
 **Recent Trend:**
 
-- Last 5 plans: 01-06 (7 min), 01-07 (6 min), 01-08 (6 min), 01-09 (10 min), 01-15 (6 min)
-- Trend: Selector-backed route, content, legal, product, delivery, and application migrations continue to hold the fail-closed public boundary
+- Last 5 plans: 01-07 (6 min), 01-08 (6 min), 01-09 (10 min), 01-15 (6 min), 01-16 (5 min)
+- Trend: Selector-backed route, content, product, delivery, application, and campaign migrations continue to hold the fail-closed public boundary
 
 *Updated after each plan completion*
 
@@ -96,6 +96,9 @@ Recent decisions affecting current work:
 - [01-15]: A delivery story or business application is public only when its parent route is eligible and every attached stable claim ID is approved and current.
 - [01-15]: Customer identity, story wording, and asset references stay within the private delivery catalog and cross the public boundary only as one fully eligible record.
 - [01-15]: The delivery URL retains a truthful unavailable page while its minimum-truth route claims remain pending.
+- [01-16]: Campaign params, metadata, lookup, and rendering consume the same final eligible campaign-route projection.
+- [01-16]: Eligible-reduced campaigns retain approved minimum-truth content while omitting optional offer benefits.
+- [01-16]: Campaign request outcomes remain governed by the shared durable-receipt boundary and receive only eligible contact alternatives.
 
 ### Pending Todos
 
@@ -119,6 +122,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-08-18T17:21:04Z
-Stopped at: Completed 01-15-PLAN.md
+Last session: 2026-08-18T17:29:49Z
+Stopped at: Completed 01-16-PLAN.md
 Resume file: None
