@@ -28,6 +28,7 @@ export function loadGovernanceModules() {
     privacy: require(resolve(outputDirectory, "src/content/governance/privacy.js")),
     leads: require(resolve(outputDirectory, "src/content/governance/leads.js")),
     release: require(resolve(outputDirectory, "src/content/governance/release.js")),
+    report: require(resolve(outputDirectory, "src/lib/governance/report.js")),
   };
 }
 
