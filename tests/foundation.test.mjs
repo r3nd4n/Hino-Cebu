@@ -3,7 +3,7 @@ import { existsSync, readFileSync } from "node:fs";
 import test from "node:test";
 
 const routes = [
-  "src/app/page.tsx", "src/app/(public)/trucks/page.tsx", "src/app/(public)/trucks/[slug]/page.tsx",
+  "src/app/(public)/page.tsx", "src/app/(public)/trucks/page.tsx", "src/app/(public)/trucks/[slug]/page.tsx",
   "src/app/(public)/find-your-truck/page.tsx", "src/app/(public)/parts/page.tsx", "src/app/(public)/service/page.tsx",
   "src/app/(public)/fleet/page.tsx", "src/app/(public)/financing/page.tsx", "src/app/(public)/promotions/page.tsx",
   "src/app/(public)/hino-cebu/page.tsx", "src/app/(public)/hino-cebu/customer-deliveries/page.tsx",
