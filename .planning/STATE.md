@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 01.1-02-PLAN.md
-last_updated: "2026-08-22T10:45:30.137Z"
+stopped_at: Completed 01.1-03-PLAN.md
+last_updated: "2026-08-22T10:55:43.915Z"
 last_activity: 2026-08-22
 progress:
   total_phases: 7
   completed_phases: 0
   total_plans: 25
-  completed_plans: 17
-  percent: 0
+  completed_plans: 18
+  percent: 72
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-08-18)
 ## Current Position
 
 Phase: 01.1 (Public website visual polish and engagement) — EXECUTING
-Plan: 3 of 9
+Plan: 4 of 9
 Status: Ready to execute
 Last activity: 2026-08-22
 
-Progress: 64%
+Progress: 72%
 
 ## Performance Metrics
 
@@ -54,6 +54,7 @@ Progress: 64%
 *Updated after each plan completion*
 | Phase 01.1 P01 | 15 min | 2 tasks | 3 files |
 | Phase 01.1 P02 | 6 min | 2 tasks | 3 files |
+| Phase 01.1 P03 | 15 min | 3 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -113,6 +114,8 @@ Recent decisions affecting current work:
 - [Phase 01.1]: Manual observations remain explicitly pending and are supporting evidence only; Phase 4 retains QUAL-03 and QUAL-04 ownership.
 - [Phase 01.1]: Unverified and withheld social states expose no href; verified profiles require current brand-content approval, HTTPS, and an exact platform host.
 - [Phase 01.1]: Find Your Truck requires eligible Trucks plus an eligible truck; Hino Cebu requires eligible identity plus a public branch action.
+- [Phase 01.1]: Barlow is instantiated once at the root with only Latin normal 400/700 assets and exposed through a CSS variable with Arial and sans-serif fallbacks.
+- [Phase 01.1]: PageHero remains a named Server Component and renders media only when a narrow eligible DTO is supplied; text-only output remains complete.
 
 ### Pending Todos
 
@@ -143,6 +146,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-08-22T10:45:29.881Z
-Stopped at: Completed 01.1-02-PLAN.md
+Last session: 2026-08-22T10:55:43.901Z
+Stopped at: Completed 01.1-03-PLAN.md
 Resume file: None
