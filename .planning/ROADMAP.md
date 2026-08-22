@@ -84,9 +84,9 @@ Plans:
   1. Visitors see a premium-industrial Hino-first visual system with subordinate Cebu identity, lean self-hosted typography, purposeful approved imagery, stable responsive layouts, and no misleading local inventory, facility, staff, customer, or availability implication.
   2. Desktop and mobile visitors receive one canonical eligible task-first navigation, a keyboard-safe disclosure menu, a conversion-focused governed footer, and up to three canonical sticky actions without withheld destinations or reconstructed contact links.
   3. Social profiles remain honest non-interactive shells until approved; verified links can render only after HTTPS/platform-host validation and use accessible new-tab labeling plus `noopener noreferrer`, with no feeds, embeds, SDKs, or third-party social scripts.
-  4. Focused automated source/DTO contracts and a completed desktop/mobile manual evidence record support later release verification by documenting responsive fit, media truthfulness, navigation and social-shell behavior, keyboard/focus/screen-reader observations, contrast, reduced motion, touch targets, safe-area spacing, and the full production build without claiming completion of QUAL-03 or QUAL-04.
+  4. Focused automated source/DTO contracts, strict consent-gate fixtures, explicit dependency-free source/build-output budgets, and a completed desktop/mobile manual evidence record support later release verification by documenting responsive fit, media truthfulness, navigation and social-shell behavior, absent optional-provider requests without consent, keyboard/focus/screen-reader observations, contrast, reduced motion, touch targets, safe-area spacing, and the full production build without claiming completion of Phase 3 GOV-05/GOV-06 or Phase 4 QUAL-03/QUAL-04.
 
-**Plans:** 7 plans
+**Plans:** 9 plans
 **UI hint:** yes
 
 Plans:
@@ -106,9 +106,14 @@ Plans:
 - [ ] 01.1-05-PLAN.md — Polish the homepage and truck media surfaces
 - [ ] 01.1-06-PLAN.md — Add eligible support media and a truthful text-led branch surface
 
-**Wave 4** *(blocked on Wave 3 completion)*
+**Wave 4** *(blocked on relevant Wave 3 completion)*
 
-- [ ] 01.1-07-PLAN.md — Complete automated and human responsive/accessibility verification
+- [ ] 01.1-07-PLAN.md — Enforce fail-closed granular consent at the optional marketing-tag boundary
+- [ ] 01.1-08-PLAN.md — Add explicit dependency-free source and production-build performance budgets
+
+**Wave 5** *(blocked on Wave 4 completion)*
+
+- [ ] 01.1-09-PLAN.md — Complete automated and human responsive/accessibility verification
 
 ### Phase 2: Lead Correctness, Durable Acceptance, and Recovery
 
@@ -214,7 +219,7 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Production Contracts and Executable Configuration | 15/16 | In progress | - |
-| 01.1 Public website visual polish and engagement | 0/7 | Planned | - |
+| 01.1 Public website visual polish and engagement | 0/9 | Planned | - |
 | 2. Lead Correctness, Durable Acceptance, and Recovery | 0/TBD | Not started | - |
 | 3. Truthful Publishing, Privacy, Measurement, and Security | 0/TBD | Not started | - |
 | 4. Behavioral Verification and Release Gate | 0/TBD | Not started | - |
