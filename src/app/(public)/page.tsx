@@ -41,9 +41,13 @@ export default function Home() {
   ));
   const primaryPurpose = primaryClaims.find(({ category }) => category === "purpose")?.value;
   const hasPublicContent = eligibleRoutes.length > 0 || Boolean(branch.identity) || contactActions.length > 0;
+  const heroActions = [
+    { path: "/trucks", label: "Explore Trucks" },
+    { path: "/quote", label: "Get a Quote" },
+  ].filter(({ path }) => routePaths.has(path));
 
   return <>
-    <section className="section dark home-hero"><Container className="split"><div><span className="eyebrow">Hino Cebu · Cebu City</span><h1>{hasPublicContent ? primaryPurpose ?? "Built for Cebu business." : "Public information is being verified."}</h1><p className="lead">{hasPublicContent ? "Find the right Hino truck and support pathway for the work ahead." : "Approved product, support, and contact details will appear here when they are ready."}</p>{eligibleRoutes.length > 0 ? <div className="hero-actions">{eligibleRoutes.slice(0, 2).map((route) => <Link className="button" href={route.path} key={route.routeId}>View available information</Link>)}</div> : null}</div><div className="home-hero-image"><Image src="/images/official/hino-300.jpg" alt="Hino 300 Series truck in an urban business setting" fill priority sizes="(max-width: 720px) 100vw, 50vw" /></div></Container></section>
+    <section className="section dark home-hero"><Container className="split"><div><span className="eyebrow">Hino Cebu</span><h1>{hasPublicContent ? primaryPurpose ?? "Built for Cebu business." : "Public information is being verified."}</h1><p className="lead">{hasPublicContent ? "Find the right Hino truck and support pathway for the work ahead." : "Approved product, support, and contact details will appear here when they are ready."}</p>{heroActions.length > 0 ? <div className="hero-actions">{heroActions.map((action) => <Link className="button" href={action.path} key={action.path}>{action.label}</Link>)}</div> : null}</div><div className="home-hero-image"><Image src="/images/official/hino-300.jpg" alt="Hino 300 Series official Hino Motors Philippines product image" fill preload sizes="(max-width: 719px) 100vw, (max-width: 1059px) 58vw, 58vw" /></div></Container></section>
     {!hasPublicContent ? null : <>
     {trucks.length > 0 ? <section className="section alt"><Container><SectionHeading eyebrow="Truck lineup" title="Eligible model families" /><div className="grid grid-3">{trucks.map((truck) => <TruckCard truck={truck} key={truck.slug} />)}</div></Container></section> : null}
     {applications.length > 0 ? <section className="section dark"><Container><SectionHeading eyebrow="Built around the job" title="Business applications" /><div className="grid grid-4">{applications.map((item) => <article className="card card-body" key={item.title}><h3>{item.title}</h3><p>{item.description}</p></article>)}</div></Container></section> : null}
