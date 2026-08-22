@@ -86,14 +86,14 @@ Plans:
   3. Social profiles remain honest non-interactive shells until approved; verified links can render only after HTTPS/platform-host validation and use accessible new-tab labeling plus `noopener noreferrer`, with no feeds, embeds, SDKs, or third-party social scripts.
   4. Focused automated source/DTO contracts, strict consent-gate fixtures, explicit dependency-free source/build-output budgets, and a completed desktop/mobile manual evidence record support later release verification by documenting responsive fit, media truthfulness, navigation and social-shell behavior, absent optional-provider requests without consent, keyboard/focus/screen-reader observations, contrast, reduced motion, touch targets, safe-area spacing, and the full production build without claiming completion of Phase 3 GOV-05/GOV-06 or Phase 4 QUAL-03/QUAL-04.
 
-**Plans:** 9 plans
+**Plans:** 1/9 plans executed
 **UI hint:** yes
 
 Plans:
 
 **Wave 1**
 
-- [ ] 01.1-01-PLAN.md — Create Wave 0 automated contracts and manual evidence matrix
+- [x] 01.1-01-PLAN.md — Create Wave 0 automated contracts and manual evidence matrix
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -219,7 +219,7 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Production Contracts and Executable Configuration | 15/16 | In progress | - |
-| 01.1 Public website visual polish and engagement | 0/9 | Planned | - |
+| 01.1 Public website visual polish and engagement | 1/9 | In Progress | - |
 | 2. Lead Correctness, Durable Acceptance, and Recovery | 0/TBD | Not started | - |
 | 3. Truthful Publishing, Privacy, Measurement, and Security | 0/TBD | Not started | - |
 | 4. Behavioral Verification and Release Gate | 0/TBD | Not started | - |

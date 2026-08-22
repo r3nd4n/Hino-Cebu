@@ -40,8 +40,8 @@ Requirements for the production-readiness milestone and its first measured post-
 - [ ] **GOV-06**: Analytics and advertising tags remain absent when identifiers or required consent are missing and load through one approved tag-control path when enabled.
 - [ ] **GOV-07**: Conversion and engagement events contain allow-listed operational context but never names, phone numbers, email addresses, free-text messages, or other lead payload data.
 - [ ] **GOV-08**: Security headers, including a tuned Content Security Policy, protect production pages while allowing only approved first- and third-party origins needed by the site's verified features.
-- [ ] **GOV-09**: Production images and fonts use authorized, optimized, responsive assets with useful alternative text, fixed dimensions, and no unapproved customer or trademark use.
-- [ ] **GOV-10**: Performance budgets and consent-aware third-party loading protect critical mobile journeys from excessive JavaScript, network cost, layout shift, and slow interaction.
+- [x] **GOV-09**: Production images and fonts use authorized, optimized, responsive assets with useful alternative text, fixed dimensions, and no unapproved customer or trademark use.
+- [x] **GOV-10**: Performance budgets and consent-aware third-party loading protect critical mobile journeys from excessive JavaScript, network cost, layout shift, and slow interaction.
 
 ### Behavioral Verification and Release Gate
 
@@ -140,8 +140,8 @@ Every v1 requirement is assigned to exactly one roadmap phase.
 | GOV-06 | Phase 3 | Pending |
 | GOV-07 | Phase 3 | Pending |
 | GOV-08 | Phase 3 | Pending |
-| GOV-09 | Phase 01.1 | Pending |
-| GOV-10 | Phase 01.1 | Pending |
+| GOV-09 | Phase 01.1 | Complete |
+| GOV-10 | Phase 01.1 | Complete |
 | QUAL-01 | Phase 4 | Pending |
 | QUAL-02 | Phase 4 | Pending |
 | QUAL-03 | Phase 4 | Pending |
@@ -167,6 +167,7 @@ Every v1 requirement is assigned to exactly one roadmap phase.
 | GROW-07 | Phase 6 | Pending |
 
 **Coverage:**
+
 - v1 requirements: 50 total
 - Mapped to phases: 50
 - Unmapped: 0

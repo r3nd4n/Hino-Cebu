@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 01.1 UI-SPEC approved
-last_updated: "2026-08-22T10:24:04.648Z"
-last_activity: 2026-08-22 -- Phase 01.1 planning complete
+stopped_at: Completed 01.1-01-PLAN.md
+last_updated: "2026-08-22T10:35:03.925Z"
+last_activity: 2026-08-22 -- Completed Phase 01.1 Plan 01 Wave 0 evidence contracts
 progress:
   total_phases: 7
   completed_phases: 0
   total_plans: 25
-  completed_plans: 15
-  percent: 0
+  completed_plans: 16
+  percent: 64
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-08-18)
 
 **Core value:** Qualified Cebu prospects can confidently find the right Hino product or support service and complete a reliable, attributable inquiry that reaches the appropriate Hino Cebu team.
-**Current focus:** Phase 01 — Production Contracts and Executable Configuration
+**Current focus:** Phase 01.1 — Public website visual polish and engagement
 
 ## Current Position
 
-Phase: 01 (Production Contracts and Executable Configuration) — EXECUTING
-Plan: 14 of 16
+Phase: 01.1 (Public website visual polish and engagement) — EXECUTING
+Plan: 2 of 9
 Status: Ready to execute
-Last activity: 2026-08-22 -- Phase 01.1 planning complete
+Last activity: 2026-08-22 -- Completed Phase 01.1 Plan 01 Wave 0 evidence contracts
 
-Progress: 94%
+Progress: 64%
 
 ## Performance Metrics
 
@@ -52,6 +52,7 @@ Progress: 94%
 - Trend: The redacted review boundary now has a protected responsive UI and complete executable validation map
 
 *Updated after each plan completion*
+| Phase 01.1 P01 | 15 min | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -107,6 +108,8 @@ Recent decisions affecting current work:
 - [01-11]: D-08 owner-alert rows expose only stable IDs, ownership references, acknowledgement state, and retry/escalation disposition.
 - [01-12]: Any production target signal hard-404s the review route before report DTO construction, including mismatched deployment metadata.
 - [01-12]: Nyquist completion records executable coverage while evidence, Vercel protection, visual review, and release authority remain blocking Plan 01-14 manual gates.
+- [Phase 01.1]: The Wave 0 meta-gate compares complete failing test names exactly and is never rerun after the manual-template contract turns green.
+- [Phase 01.1]: Manual observations remain explicitly pending and are supporting evidence only; Phase 4 retains QUAL-03 and QUAL-04 ownership.
 
 ### Pending Todos
 
@@ -137,6 +140,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-08-22T04:37:31.912Z
-Stopped at: Phase 01.1 UI-SPEC approved
-Resume file: .planning/phases/01.1-public-website-visual-polish-and-engagement/01.1-UI-SPEC.md
+Last session: 2026-08-22T10:34:55.063Z
+Stopped at: Completed 01.1-01-PLAN.md
+Resume file: None
