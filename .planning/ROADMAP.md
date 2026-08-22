@@ -7,6 +7,7 @@ This roadmap turns the validated Next.js MVP into a production-ready commercial 
 ## Phases
 
 - [ ] **Phase 1: Production Contracts and Executable Configuration** - Establish approved production facts, owners, accounts, integration contracts, and fail-closed environment rules.
+- [ ] **Phase 01.1: Public website visual polish and engagement** - Deliver governed responsive media, task-first engagement, accessible interaction, and recorded browser evidence.
 - [ ] **Phase 2: Lead Correctness, Durable Acceptance, and Recovery** - Make every existing inquiry journey accurate, abuse-resistant, durably accepted, observable, and recoverable.
 - [ ] **Phase 3: Truthful Publishing, Privacy, Measurement, and Security** - Enforce approved content, consent-aware measurement, PII-safe telemetry, hardened delivery, and mobile performance.
 - [ ] **Phase 4: Behavioral Verification and Release Gate** - Prove critical behavior in automation and protected preview before production promotion is possible.
@@ -75,14 +76,39 @@ Plans:
 
 ### Phase 01.1: Public website visual polish and engagement (INSERTED)
 
-**Goal:** [Urgent work - to be planned]
-**Requirements**: TBD
+**Goal:** Cebu truck buyers and owners can confidently understand and act on a polished, responsive, accessible Hino-first public website that serves only governed content and authorized media.
 **Depends on:** Phase 1
-**Plans:** 0 plans
+**Requirements:** GOV-09, GOV-10, QUAL-03, QUAL-04
+**Success Criteria** (what must be TRUE):
+
+  1. Visitors see a premium-industrial Hino-first visual system with subordinate Cebu identity, lean self-hosted typography, purposeful approved imagery, stable responsive layouts, and no misleading local inventory, facility, staff, customer, or availability implication.
+  2. Desktop and mobile visitors receive one canonical eligible task-first navigation, a keyboard-safe disclosure menu, a conversion-focused governed footer, and up to three canonical sticky actions without withheld destinations or reconstructed contact links.
+  3. Social profiles remain honest non-interactive shells until approved; verified links can render only after HTTPS/platform-host validation and use accessible new-tab labeling plus `noopener noreferrer`, with no feeds, embeds, SDKs, or third-party social scripts.
+  4. Focused automated contracts and completed desktop/mobile browser evidence verify critical inquiry journeys, finder and attribution behavior, accessible errors/status, contact/recovery paths, responsive fit, media truthfulness, keyboard/focus/screen-reader behavior, contrast, reduced motion, touch targets, safe-area spacing, and the full production build.
+
+**Plans:** 7 plans
+**UI hint:** yes
 
 Plans:
 
-- [ ] TBD (run /gsd:plan-phase 01.1 to break down)
+**Wave 1**
+
+- [ ] 01.1-01-PLAN.md — Create Wave 0 automated contracts and manual evidence matrix
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 01.1-02-PLAN.md — Define canonical shell eligibility and governed social states
+- [ ] 01.1-03-PLAN.md — Establish typography, visual tokens, focus, motion, and shared primitives
+
+**Wave 3** *(blocked on relevant Wave 2 foundations)*
+
+- [ ] 01.1-04-PLAN.md — Deliver the governed responsive header, footer, social shell, and mobile actions
+- [ ] 01.1-05-PLAN.md — Polish the homepage and truck media surfaces
+- [ ] 01.1-06-PLAN.md — Add eligible support media and a truthful text-led branch surface
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
+- [ ] 01.1-07-PLAN.md — Complete automated and human responsive/accessibility verification
 
 ### Phase 2: Lead Correctness, Durable Acceptance, and Recovery
 
@@ -103,17 +129,17 @@ Plans:
 
 ### Phase 3: Truthful Publishing, Privacy, Measurement, and Security
 
-**Goal**: Public content and marketing technology operate only with approved evidence, consent, origins, assets, privacy safeguards, and performance limits.
+**Goal**: Public content and marketing technology operate only with approved evidence, consent, origins, privacy safeguards, and security controls.
 **Mode:** mvp
 **Depends on**: Phase 2
-**Requirements**: GOV-01, GOV-02, GOV-03, GOV-04, GOV-05, GOV-06, GOV-07, GOV-08, GOV-09, GOV-10
+**Requirements**: GOV-01, GOV-02, GOV-03, GOV-04, GOV-05, GOV-06, GOV-07, GOV-08
 **Success Criteria** (what must be TRUE):
 
   1. An editor can publish a business, product, promotion, delivery, guide, or campaign record only with required source, ownership, approval, Cebu applicability, review/expiry, rights, and release evidence; unsafe publishable records fail the build.
   2. Withheld or ineligible content is absent consistently from pages, navigation, links, metadata, structured data, and the sitemap.
   3. A visitor can read the approved privacy notice and make, revisit, or withdraw granular optional analytics and advertising consent without blocking an essential inquiry.
   4. Optional tags stay absent without valid identifiers and required consent, use one approved control path when enabled, and emit allow-listed journey context without lead PII.
-  5. Production pages enforce approved security headers and mobile performance budgets while serving only authorized, optimized, responsive fonts and images with appropriate alternative text and dimensions.
+  5. Production pages enforce approved security headers and allow only verified first- and third-party origins required by enabled features.
 
 **Plans**: TBD
 **UI hint**: yes
@@ -123,14 +149,12 @@ Plans:
 **Goal**: A release candidate cannot advance unless automated and human evidence proves critical commercial, accessibility, SEO, security, configuration, and recovery behavior.
 **Mode:** mvp
 **Depends on**: Phase 3
-**Requirements**: QUAL-01, QUAL-02, QUAL-03, QUAL-04, QUAL-05, QUAL-06, QUAL-07, QUAL-08
+**Requirements**: QUAL-01, QUAL-02, QUAL-05, QUAL-06, QUAL-07, QUAL-08
 **Success Criteria** (what must be TRUE):
 
   1. Deterministic unit and integration tests exercise environment, publication, origin, attribution, finder, and every lead type/variant across acceptance, rejection, timeout, transport, retry, idempotency, and replay behavior.
-  2. Desktop and mobile browser journeys prove navigation, inquiry flows, finder behavior, attribution, accessible status/errors, verified contact actions, and failure recovery.
-  3. Automated and documented human checks provide WCAG 2.2 AA evidence for keyboard, focus, screen-reader, contrast, reduced-motion, touch-target, and responsive behavior.
-  4. SEO checks prove canonical, index/noindex, robots, sitemap, redirect, social, breadcrumb, and structured-data behavior for each environment.
-  5. CI and protected-preview promotion stop when code quality, build, dependency/security, secret/configuration, accessibility, performance, critical-journey, approval, or operational-runbook evidence is missing or failing.
+  2. SEO checks prove canonical, index/noindex, robots, sitemap, redirect, social, breadcrumb, and structured-data behavior for each environment.
+  3. CI and protected-preview promotion stop when code quality, build, dependency/security, secret/configuration, accessibility, performance, critical-journey, approval, or operational-runbook evidence is missing or failing.
 
 **Plans**: TBD
 **UI hint**: yes
@@ -175,8 +199,9 @@ Plans:
 |----------|--------------|-------|-------|
 | Production Contracts and Configuration | PROD-01–PROD-07 | Phase 1 | 7 |
 | Lead Correctness and Delivery | LEAD-01–LEAD-10 | Phase 2 | 10 |
-| Publishing, Privacy, Measurement, and Security | GOV-01–GOV-10 | Phase 3 | 10 |
-| Behavioral Verification and Release Gate | QUAL-01–QUAL-08 | Phase 4 | 8 |
+| Public Visual Polish and Engagement | GOV-09, GOV-10, QUAL-03, QUAL-04 | Phase 01.1 | 4 |
+| Publishing, Privacy, Measurement, and Security | GOV-01–GOV-08 | Phase 3 | 8 |
+| Behavioral Verification and Release Gate | QUAL-01, QUAL-02, QUAL-05–QUAL-08 | Phase 4 | 6 |
 | Production Launch and Operations | LAUN-01–LAUN-08 | Phase 5 | 8 |
 | Evidence-Led Local Authority Growth | GROW-01–GROW-07 | Phase 6 | 7 |
 
@@ -187,6 +212,7 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Production Contracts and Executable Configuration | 15/16 | In progress | - |
+| 01.1 Public website visual polish and engagement | 0/7 | Planned | - |
 | 2. Lead Correctness, Durable Acceptance, and Recovery | 0/TBD | Not started | - |
 | 3. Truthful Publishing, Privacy, Measurement, and Security | 0/TBD | Not started | - |
 | 4. Behavioral Verification and Release Gate | 0/TBD | Not started | - |
