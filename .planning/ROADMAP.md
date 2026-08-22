@@ -73,6 +73,17 @@ Plans:
 
 **UI hint**: yes
 
+### Phase 01.1: Public website visual polish and engagement (INSERTED)
+
+**Goal:** [Urgent work - to be planned]
+**Requirements**: TBD
+**Depends on:** Phase 1
+**Plans:** 0 plans
+
+Plans:
+
+- [ ] TBD (run /gsd:plan-phase 01.1 to break down)
+
 ### Phase 2: Lead Correctness, Durable Acceptance, and Recovery
 
 **Goal**: Visitors can complete every existing inquiry journey with honest outcomes while operators can reliably deliver, reconcile, and recover each accepted lead.
