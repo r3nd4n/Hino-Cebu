@@ -1,6 +1,11 @@
 import { governedClaimSchema, type GovernedClaim } from "./governance/claims";
 import { evaluateApproval } from "../lib/governance/eligibility";
-import { approvalSchema, type ApprovalLane } from "../lib/governance/schemas";
+import {
+  approvalSchema,
+  isApprovalCurrent,
+  type Approval,
+  type ApprovalLane,
+} from "../lib/governance/schemas";
 
 export type BranchField = "identity" | "address" | "phone" | "hours" | "directions";
 export type BranchRecord = {
@@ -8,6 +13,53 @@ export type BranchRecord = {
   revision: number;
   fields: Record<BranchField, GovernedClaim>;
 };
+
+export type SocialPlatform = "facebook" | "youtube" | "instagram";
+export type PublicSocialProfile =
+  | { platform: SocialPlatform; label: string; status: "verified"; href: string }
+  | { platform: SocialPlatform; label: string; status: "unverified" }
+  | { platform: SocialPlatform; label: string; status: "withheld" };
+export type SocialProfileStatus = "unverified" | "verified" | "withheld";
+
+export type SocialProfileRecord = {
+  platform: SocialPlatform;
+  label: string;
+} & (
+  | { status: "unverified" | "withheld" }
+  | { status: "verified"; pendingUrl: string; approval: Approval }
+);
+
+const socialProfileHosts: Readonly<Record<SocialPlatform, readonly string[]>> = {
+  facebook: ["facebook.com", "www.facebook.com"],
+  youtube: ["youtube.com", "www.youtube.com"],
+  instagram: ["instagram.com", "www.instagram.com"],
+};
+
+const socialProfileRecords: readonly SocialProfileRecord[] = [
+  { platform: "facebook", label: "Facebook", status: "unverified" },
+  { platform: "youtube", label: "YouTube", status: "unverified" },
+  { platform: "instagram", label: "Instagram", status: "unverified" },
+];
+
+export function getEligibleSocialProfiles(
+  now = new Date(),
+  records: readonly SocialProfileRecord[] = socialProfileRecords,
+): PublicSocialProfile[] {
+  return records.flatMap((record): PublicSocialProfile[] => {
+    const { platform, label, status } = record;
+    if (status === "verified") {
+      if (!isApprovalCurrent(record.approval, "brand-content", now)) return [];
+      try {
+        const href = new URL(record.pendingUrl);
+        if (href.protocol !== "https:" || !socialProfileHosts[platform].includes(href.hostname)) return [];
+        return [{ platform, label, status: "verified", href: href.toString() }];
+      } catch {
+        return [];
+      }
+    }
+    return [{ platform, label, status }];
+  });
+}
 
 export const siteConfig = {
   name: "Hino Cebu",
