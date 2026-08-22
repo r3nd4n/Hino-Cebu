@@ -1,6 +1,8 @@
 import assert from "node:assert/strict";
-import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { spawnSync } from "node:child_process";
 import test from "node:test";
 import vm from "node:vm";
 import ts from "typescript";
@@ -314,13 +316,21 @@ test("P07-T02: public layout and analytics wire optional providers through one f
 test("P08-T01: dependency-free performance checker enforces numeric source and gzip build budgets in check", () => {
   const packageJson = JSON.parse(readSource("package.json"));
   assert.match(packageJson.scripts["performance:budget"] ?? "", /node/);
-  assert.match(packageJson.scripts.check, /next build|npm run build/);
-  assert.match(packageJson.scripts.check, /performance:budget/);
-  const checkerPath = "scripts/check-performance-budget.mjs";
+  assert.match(packageJson.scripts.check, /npm run build\s*&&\s*npm run performance:budget/);
+  const checkerPath = "scripts/check-performance-budgets.mjs";
   assert.equal(existsSync(checkerPath), true);
   const checker = readSource(checkerPath);
-  for (const budget of [260000, 90000, 20000, 5, 1, 1050000]) assert.match(checker, new RegExp(`\\b${budget}\\b`));
+  const budgets = JSON.parse(readSource("performance-budgets.json"));
+  assert.deepEqual(budgets, {
+    maxTotalClientJsGzipBytes: 260000,
+    maxLargestClientJsChunkGzipBytes: 90000,
+    maxTotalClientCssGzipBytes: 20000,
+    maxClientModules: 5,
+    exactImagePreloadCount: 1,
+    maxOfficialRasterSourceBytes: 1050000,
+  });
   assert.match(checker, /gzip/i);
+  assert.doesNotMatch(checker, /lighthouse|playwright|puppeteer/i);
   const dependencies = { ...packageJson.dependencies, ...packageJson.devDependencies };
   assert.deepEqual(Object.keys(dependencies).sort(), [
     "@types/node", "@types/react", "@types/react-dom", "eslint", "eslint-config-next", "next", "react", "react-dom", "typescript", "zod",
@@ -329,5 +339,63 @@ test("P08-T01: dependency-free performance checker enforces numeric source and g
   assert.equal(sourceFiles("src").filter((path) => /social-feed|instagram-media|facebook-post|tiktok-embed/i.test(readSource(path))).length, 0);
   for (const path of readdirSync("public/images/official").map((name) => join("public/images/official", name))) {
     if (/\.(?:png|jpe?g|webp)$/i.test(path)) assert.ok(statSync(path).size <= 1050000, path);
+  }
+
+  const fixtureBudgets = {
+    maxTotalClientJsGzipBytes: 1000,
+    maxLargestClientJsChunkGzipBytes: 1000,
+    maxTotalClientCssGzipBytes: 1000,
+    maxClientModules: 1,
+    exactImagePreloadCount: 1,
+    maxOfficialRasterSourceBytes: 100,
+  };
+  const runFixture = ({ budgetOverrides = {}, mutate, rawConfig } = {}) => {
+    const root = mkdtempSync(join(tmpdir(), "hino-performance-budget-"));
+    try {
+      mkdirSync(join(root, ".next/static/chunks"), { recursive: true });
+      mkdirSync(join(root, "src/app"), { recursive: true });
+      mkdirSync(join(root, "public/images/official"), { recursive: true });
+      writeFileSync(join(root, ".next/static/chunks/app.js"), "console.log('fixture');\n");
+      writeFileSync(join(root, ".next/static/chunks/app.css"), ".fixture{display:block}\n");
+      writeFileSync(join(root, "src/app/page.tsx"), "export default () => <Image preload />;\n");
+      writeFileSync(join(root, "public/images/official/truck.jpg"), "x");
+      writeFileSync(
+        join(root, "performance-budgets.json"),
+        rawConfig ?? JSON.stringify({ ...fixtureBudgets, ...budgetOverrides }),
+      );
+      mutate?.(root);
+      return spawnSync(process.execPath, [checkerPath, root], { encoding: "utf8" });
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  };
+
+  assert.equal(runFixture().status, 0);
+  const failures = [
+    ["total client JavaScript gzip", { budgetOverrides: { maxTotalClientJsGzipBytes: 1 } }],
+    ["largest client JavaScript chunk gzip", { budgetOverrides: { maxLargestClientJsChunkGzipBytes: 1 } }],
+    ["total client CSS gzip", { budgetOverrides: { maxTotalClientCssGzipBytes: 1 } }],
+    ["client modules", {
+      mutate(root) {
+        writeFileSync(join(root, "src/app/client-one.tsx"), '"use client";\n');
+        writeFileSync(join(root, "src/app/client-two.tsx"), '"use client";\n');
+      },
+    }],
+    ["image preload", {
+      mutate(root) {
+        writeFileSync(join(root, "src/app/page.tsx"), "export default () => <><Image preload /><Image preload /></>;\n");
+      },
+    }],
+    ["official raster source bytes", {
+      budgetOverrides: { maxOfficialRasterSourceBytes: 1 },
+      mutate(root) { writeFileSync(join(root, "public/images/official/truck.jpg"), "xx"); },
+    }],
+    ["configuration", { rawConfig: "{malformed" }],
+    ["production output", { mutate(root) { rmSync(join(root, ".next"), { recursive: true, force: true }); } }],
+  ];
+  for (const [metric, options] of failures) {
+    const result = runFixture(options);
+    assert.notEqual(result.status, 0, metric);
+    assert.match(`${result.stdout}${result.stderr}`, new RegExp(metric, "i"), metric);
   }
 });
