@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 01.1-07-PLAN.md
-last_updated: "2026-08-22T14:46:40.271Z"
-last_activity: 2026-08-22
+stopped_at: Completed 01.1-08-PLAN.md
+last_updated: "2026-08-22T17:56:45.764Z"
+last_activity: 2026-08-23
 progress:
   total_phases: 7
   completed_phases: 0
   total_plans: 25
-  completed_plans: 22
-  percent: 88
+  completed_plans: 23
+  percent: 92
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-08-18)
 ## Current Position
 
 Phase: 01.1 (Public website visual polish and engagement) — EXECUTING
-Plan: 8 of 9
+Plan: 9 of 9
 Status: Ready to execute
-Last activity: 2026-08-22
+Last activity: 2026-08-23
 
-Progress: 88%
+Progress: 92%
 
 ## Performance Metrics
 
@@ -59,6 +59,7 @@ Progress: 88%
 | Phase 01.1 P05 | 5 min | 2 tasks | 4 files |
 | Phase 01.1 P06 | 12 min | 2 tasks | 5 files |
 | Phase 01.1 P07 | 9 min | 2 tasks | 4 files |
+| Phase 01.1 P08 | 15min | 1 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -129,6 +130,8 @@ Recent decisions affecting current work:
 - [Phase 01.1-07]: Analytics and advertising remain separate grants; GA4 requires analytics, Meta requires advertising, and generic GTM conservatively requires both. — This prevents a purpose-specific grant from authorizing an ungoverned downstream tag mix.
 - [Phase 01.1-07]: The consent contract defaults to immutable denial and rejects missing, malformed, stale-version, unknown, or extra preference fields. — Untrusted browser preference data must never enable optional provider behavior by ambiguity.
 - [Phase 01.1-07]: Phase 3 retains ownership of the user-facing consent, revisit, withdrawal, policy, and approved tag-administration experience. — Plan 07 implements only the minimal GOV-10 technical loading boundary and does not claim GOV-05 or GOV-06 completion.
+- [Phase 01.1-08]: Performance budgets enforce repository and production-build proxies only; Phase 4/5 retains browser certification for per-route transfer, LCP, CLS, and INP.
+- [Phase 01.1-08]: The budget checker accepts an explicit fixture root, validates an exact positive-integer schema, and uses only node:fs, node:path, and node:zlib.
 
 ### Pending Todos
 
@@ -159,6 +162,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-08-22T14:46:40.257Z
-Stopped at: Completed 01.1-07-PLAN.md
+Last session: 2026-08-22T17:56:39.701Z
+Stopped at: Completed 01.1-08-PLAN.md
 Resume file: None
