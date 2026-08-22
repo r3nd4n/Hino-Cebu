@@ -5,7 +5,7 @@ milestone_name: milestone
 status: executing
 stopped_at: Completed 01-12-PLAN.md
 last_updated: "2026-08-18T18:20:29Z"
-last_activity: 2026-08-19 -- Completed quick task 260819-hld: production holding mode and deployment
+last_activity: 2026-08-22 -- Completed quick task 260822-gov: record temporary operating decisions
 progress:
   total_phases: 6
   completed_phases: 0
@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-08-18)
 Phase: 01 (Production Contracts and Executable Configuration) — EXECUTING
 Plan: 14 of 16
 Status: Executing Phase 01
-Last activity: 2026-08-19 -- Completed quick task 260819-hld: production holding mode and deployment
+Last activity: 2026-08-22 -- Completed quick task 260822-gov: record temporary operating decisions
 
 Progress: [█████████░] 94%
 
@@ -114,10 +114,10 @@ None yet.
 
 ### Blockers/Concerns
 
-- [Phase 1]: Final domain, commercial Vercel account, DNS ownership, deployment/rollback authority, and production/preview account access require explicit approval.
-- [Phase 1]: Verified branch facts, local product/support applicability, request semantics, brand assets, and publication evidence require stakeholder approval.
-- [Phase 1]: Controller identity, privacy/consent rules, processors, retention/deletion, rights, incident handling, and legal copy require named legal/business approval.
-- [Phase 1–2]: Lead destination/provider, authentication, durability contract, departmental routing, recovery policy, retention, and operational ownership are not selected.
+- [Phase 1]: The Vercel origin and Hobby account are demonstration-only proposals; final domain, DNS ownership, and a commercial-use plan remain required for production.
+- [Phase 1]: Branch identity, address, phone, directions, and hours are approved through 2027-08-22; local product/support applicability and publication evidence remain pending.
+- [Phase 1]: Stakeholder authority is current, but controller identity, privacy contact, processors, retention/deletion, and final legal policy values remain proposals.
+- [Phase 1–2]: Neon Postgres, Resend, and phone-to-Neon are proposed; recipient/domain, durability sandbox proof, response/escalation policy, retention, and backup operation remain blocking.
 - [Phase 3–5]: Analytics/tag accounts, Search Console, Google Business Profile, monitoring ownership, allowed origins, and live operational access remain external dependencies.
 
 ### Quick Tasks Completed
@@ -125,6 +125,7 @@ None yet.
 | # | Description | Date | Commit | Directory |
 |---|-------------|------|--------|-----------|
 | 260819-hld | Implement production holding mode and deploy | 2026-08-19 | 4f0c1b5 | [260819-hld-production-holding-mode-deploy](./quick/260819-hld-production-holding-mode-deploy/) |
+| 260822-gov | Record approved temporary operating decisions while preserving Phase 1 blockers | 2026-08-22 | df8a482 | [260822-gov-record-temporary-operating-decisions](./quick/260822-gov-record-temporary-operating-decisions/) |
 
 ## Deferred Items
 
