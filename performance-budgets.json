@@ -1,0 +1,8 @@
+{
+  "maxTotalClientJsGzipBytes": 260000,
+  "maxLargestClientJsChunkGzipBytes": 90000,
+  "maxTotalClientCssGzipBytes": 20000,
+  "maxClientModules": 5,
+  "exactImagePreloadCount": 1,
+  "maxOfficialRasterSourceBytes": 1050000
+}

@@ -391,6 +391,11 @@ test("P08-T01: dependency-free performance checker enforces numeric source and g
       mutate(root) { writeFileSync(join(root, "public/images/official/truck.jpg"), "xx"); },
     }],
     ["configuration", { rawConfig: "{malformed" }],
+    ["configuration", { budgetOverrides: { maxClientModules: "5" } }],
+    ["configuration", {
+      mutate(root) { rmSync(join(root, "performance-budgets.json"), { force: true }); },
+    }],
+    ["configuration", { budgetOverrides: { unexpectedBudget: 1 } }],
     ["production output", { mutate(root) { rmSync(join(root, ".next"), { recursive: true, force: true }); } }],
   ];
   for (const [metric, options] of failures) {
