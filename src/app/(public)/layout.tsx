@@ -7,12 +7,18 @@ import { AttributionCapture } from "@/components/marketing/AttributionCapture";
 import { MarketingTags } from "@/components/marketing/MarketingTags";
 import { JsonLd } from "@/components/ui/Shared";
 import { siteConfig, getEligibleBranch, getEligibleContactActions } from "@/content/site";
-import { getEligibleRoutes } from "@/lib/governance/eligibility";
+import { getPublicShellNavigation } from "@/lib/governance/public-shell";
 import { absoluteUrl, getSiteOrigin } from "@/lib/site-url";
 
-const navigationLabels: Readonly<Record<string, string>> = {
-  "ROUTE-TRUCKS": "Trucks",
-};
+// getEligibleRoutes is enforced inside the canonical D-07 projection.
+const canonicalNavigationLabels = new Set([
+  "Trucks",
+  "Find Your Truck",
+  "Parts",
+  "Service",
+  "Hino Cebu",
+  "Get a Quote",
+]);
 
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteOrigin()),
@@ -23,11 +29,8 @@ export const metadata: Metadata = {
 
 export default function PublicLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const eligibleBranch = getEligibleBranch();
-  const navigation: ShellNavigationItem[] = getEligibleRoutes().flatMap((route) => {
-    const label = navigationLabels[route.routeId];
-    if (route.status === "withheld" || !label) return [];
-    return [{ navigationId: route.routeId, label, href: route.path }];
-  });
+  const navigation: ShellNavigationItem[] = getPublicShellNavigation()
+    .filter(({ label }) => canonicalNavigationLabels.has(label));
   const contactActions: ShellContactAction[] = getEligibleContactActions().map((action) => ({
     actionId: action.actionId,
     kind: action.kind,
