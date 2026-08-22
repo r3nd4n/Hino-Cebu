@@ -140,8 +140,8 @@ Every v1 requirement is assigned to exactly one roadmap phase.
 | GOV-06 | Phase 3 | Pending |
 | GOV-07 | Phase 3 | Pending |
 | GOV-08 | Phase 3 | Pending |
-| GOV-09 | Phase 3 | Pending |
-| GOV-10 | Phase 3 | Pending |
+| GOV-09 | Phase 01.1 | Pending |
+| GOV-10 | Phase 01.1 | Pending |
 | QUAL-01 | Phase 4 | Pending |
 | QUAL-02 | Phase 4 | Pending |
 | QUAL-03 | Phase 4 | Pending |

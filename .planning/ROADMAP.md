@@ -78,13 +78,13 @@ Plans:
 
 **Goal:** Cebu truck buyers and owners can confidently understand and act on a polished, responsive, accessible Hino-first public website that serves only governed content and authorized media.
 **Depends on:** Phase 1
-**Requirements:** GOV-09, GOV-10, QUAL-03, QUAL-04
+**Requirements:** GOV-09, GOV-10
 **Success Criteria** (what must be TRUE):
 
   1. Visitors see a premium-industrial Hino-first visual system with subordinate Cebu identity, lean self-hosted typography, purposeful approved imagery, stable responsive layouts, and no misleading local inventory, facility, staff, customer, or availability implication.
   2. Desktop and mobile visitors receive one canonical eligible task-first navigation, a keyboard-safe disclosure menu, a conversion-focused governed footer, and up to three canonical sticky actions without withheld destinations or reconstructed contact links.
   3. Social profiles remain honest non-interactive shells until approved; verified links can render only after HTTPS/platform-host validation and use accessible new-tab labeling plus `noopener noreferrer`, with no feeds, embeds, SDKs, or third-party social scripts.
-  4. Focused automated contracts and completed desktop/mobile browser evidence verify critical inquiry journeys, finder and attribution behavior, accessible errors/status, contact/recovery paths, responsive fit, media truthfulness, keyboard/focus/screen-reader behavior, contrast, reduced motion, touch targets, safe-area spacing, and the full production build.
+  4. Focused automated source/DTO contracts and a completed desktop/mobile manual evidence record support later release verification by documenting responsive fit, media truthfulness, navigation and social-shell behavior, keyboard/focus/screen-reader observations, contrast, reduced motion, touch targets, safe-area spacing, and the full production build without claiming completion of QUAL-03 or QUAL-04.
 
 **Plans:** 7 plans
 **UI hint:** yes
@@ -149,12 +149,14 @@ Plans:
 **Goal**: A release candidate cannot advance unless automated and human evidence proves critical commercial, accessibility, SEO, security, configuration, and recovery behavior.
 **Mode:** mvp
 **Depends on**: Phase 3
-**Requirements**: QUAL-01, QUAL-02, QUAL-05, QUAL-06, QUAL-07, QUAL-08
+**Requirements**: QUAL-01, QUAL-02, QUAL-03, QUAL-04, QUAL-05, QUAL-06, QUAL-07, QUAL-08
 **Success Criteria** (what must be TRUE):
 
   1. Deterministic unit and integration tests exercise environment, publication, origin, attribution, finder, and every lead type/variant across acceptance, rejection, timeout, transport, retry, idempotency, and replay behavior.
-  2. SEO checks prove canonical, index/noindex, robots, sitemap, redirect, social, breadcrumb, and structured-data behavior for each environment.
-  3. CI and protected-preview promotion stop when code quality, build, dependency/security, secret/configuration, accessibility, performance, critical-journey, approval, or operational-runbook evidence is missing or failing.
+  2. Rendered browser tests verify desktop and mobile navigation, every critical inquiry journey, the truck finder, campaign attribution, accessible errors and status, verified contact actions, and all specified recovery paths.
+  3. Automated accessibility checks plus documented keyboard, focus, screen-reader, contrast, reduced-motion, and touch-target review provide evidence against WCAG 2.2 AA practices.
+  4. SEO checks prove canonical, index/noindex, robots, sitemap, redirect, social, breadcrumb, and structured-data behavior for each environment.
+  5. CI and protected-preview promotion stop when code quality, build, dependency/security, secret/configuration, accessibility, performance, critical-journey, approval, or operational-runbook evidence is missing or failing.
 
 **Plans**: TBD
 **UI hint**: yes
@@ -199,9 +201,9 @@ Plans:
 |----------|--------------|-------|-------|
 | Production Contracts and Configuration | PROD-01–PROD-07 | Phase 1 | 7 |
 | Lead Correctness and Delivery | LEAD-01–LEAD-10 | Phase 2 | 10 |
-| Public Visual Polish and Engagement | GOV-09, GOV-10, QUAL-03, QUAL-04 | Phase 01.1 | 4 |
+| Public Visual Polish and Engagement | GOV-09, GOV-10 | Phase 01.1 | 2 |
 | Publishing, Privacy, Measurement, and Security | GOV-01–GOV-08 | Phase 3 | 8 |
-| Behavioral Verification and Release Gate | QUAL-01, QUAL-02, QUAL-05–QUAL-08 | Phase 4 | 6 |
+| Behavioral Verification and Release Gate | QUAL-01–QUAL-08 | Phase 4 | 8 |
 | Production Launch and Operations | LAUN-01–LAUN-08 | Phase 5 | 8 |
 | Evidence-Led Local Authority Growth | GROW-01–GROW-07 | Phase 6 | 7 |
 
