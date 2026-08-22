@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { InquiryPage } from "@/components/marketing/InquiryPage";
+import { getEligibleSupportServices } from "@/content/services";
 import { getEligibleContactActions } from "@/content/site";
 import { getEligibleClaims, getEligibleRoutes } from "@/lib/governance/eligibility";
 import { createMetadata } from "@/lib/seo";
@@ -10,6 +11,7 @@ export default function FinancingPage() {
   const route = getEligibleRoutes().find(({ path }) => path === "/financing");
   const claims = getEligibleClaims("surface:financing");
   const contactActions = getEligibleContactActions();
+  const supportService = getEligibleSupportServices().find(({ href }) => href === "/financing");
   if (!route?.status.startsWith("eligible") || contactActions.length === 0) notFound();
-  return <InquiryPage type="financing" claims={claims} contactActions={contactActions} />;
+  return <InquiryPage type="financing" claims={claims} contactActions={contactActions} image={supportService?.image} />;
 }
