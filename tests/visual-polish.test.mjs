@@ -2,6 +2,12 @@ import assert from "node:assert/strict";
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 import test from "node:test";
+import vm from "node:vm";
+import {
+  buildMarketingTagBootstrap,
+  deniedMarketingConsent,
+  parseMarketingConsent,
+} from "../src/lib/marketing-consent.ts";
 
 function readSource(path) {
   return readFileSync(path, "utf8");
@@ -170,11 +176,82 @@ test("P06-T02: inquiry composition renders optional responsive media while branc
 });
 
 test("P07-T01: strict versioned consent parsing grants analytics and advertising separately and fails closed", () => {
+  const denied = { analytics: false, advertising: false };
+  assert.deepEqual(deniedMarketingConsent, denied);
+  for (const preference of [
+    null,
+    "malformed",
+    "{}",
+    JSON.stringify({ version: 0, analytics: "granted", advertising: "granted" }),
+    JSON.stringify({ version: 1, analytics: true, advertising: false }),
+    JSON.stringify({ version: 1, analytics: "unknown", advertising: "denied" }),
+    JSON.stringify({ version: 1, analytics: "denied", advertising: "denied", extra: true }),
+  ]) assert.deepEqual(parseMarketingConsent(preference), denied);
+
+  assert.deepEqual(
+    parseMarketingConsent(JSON.stringify({ version: 1, analytics: "granted", advertising: "denied" })),
+    { analytics: true, advertising: false },
+  );
+  assert.deepEqual(
+    parseMarketingConsent(JSON.stringify({ version: 1, analytics: "denied", advertising: "granted" })),
+    { analytics: false, advertising: true },
+  );
+
+  const runBootstrap = (preference, identifiers = {
+    gtmId: "GTM-ABC123",
+    ga4Id: "G-ABC123",
+    metaPixelId: "1234567890",
+  }) => {
+    const inserted = [];
+    const context = {
+      localStorage: { getItem: () => preference },
+      document: {
+        createElement: () => ({}),
+        head: { appendChild: (element) => inserted.push(element.src) },
+      },
+    };
+    context.window = context;
+    vm.runInNewContext(buildMarketingTagBootstrap(identifiers), context);
+    return { context, inserted };
+  };
+
+  for (const preference of [
+    null,
+    "malformed",
+    JSON.stringify({ version: 0, analytics: "granted", advertising: "granted" }),
+    JSON.stringify({ version: 1, analytics: "denied", advertising: "denied" }),
+  ]) {
+    const { context, inserted } = runBootstrap(preference);
+    assert.deepEqual(inserted, []);
+    assert.equal(context.dataLayer, undefined);
+    assert.equal(context.gtag, undefined);
+    assert.equal(context.fbq, undefined);
+  }
+
+  const analyticsOnly = runBootstrap(JSON.stringify({ version: 1, analytics: "granted", advertising: "denied" }));
+  assert.deepEqual(analyticsOnly.inserted, ["https://www.googletagmanager.com/gtag/js?id=G-ABC123"]);
+  assert.equal(typeof analyticsOnly.context.gtag, "function");
+  assert.equal(analyticsOnly.context.fbq, undefined);
+
+  const advertisingOnly = runBootstrap(JSON.stringify({ version: 1, analytics: "denied", advertising: "granted" }));
+  assert.deepEqual(advertisingOnly.inserted, ["https://connect.facebook.net/en_US/fbevents.js"]);
+  assert.equal(advertisingOnly.context.gtag, undefined);
+  assert.equal(typeof advertisingOnly.context.fbq, "function");
+
+  const both = runBootstrap(JSON.stringify({ version: 1, analytics: "granted", advertising: "granted" }));
+  assert.ok(both.inserted.includes("https://www.googletagmanager.com/gtm.js?id=GTM-ABC123"));
+  assert.ok(both.inserted.includes("https://www.googletagmanager.com/gtag/js?id=G-ABC123"));
+  assert.ok(both.inserted.includes("https://connect.facebook.net/en_US/fbevents.js"));
+
+  const malformedIds = runBootstrap(
+    JSON.stringify({ version: 1, analytics: "granted", advertising: "granted" }),
+    { gtmId: "GTM-</script>", ga4Id: "UA-bad", metaPixelId: "1;alert(1)" },
+  );
+  assert.deepEqual(malformedIds.inserted, []);
+
   const marketing = readSource("src/components/marketing/MarketingTags.tsx");
-  for (const state of ["malformed", "version", "denied", "analytics", "advertising"]) assert.match(marketing, new RegExp(state, "i"));
-  assert.match(marketing, /GTM[\s\S]{0,300}analytics[\s\S]{0,180}advertising|analytics[\s\S]{0,180}advertising[\s\S]{0,300}GTM/i);
-  assert.match(marketing, /JSON\.parse|safeParse/);
-  assert.doesNotMatch(marketing, /catch\s*\([^)]*\)\s*\{\s*return\s+true/);
+  assert.match(marketing, /buildMarketingTagBootstrap/);
+  assert.doesNotMatch(marketing, /<Script[^>]+src=/);
 });
 
 test("P07-T02: public layout and analytics wire optional providers through one fail-closed boundary", () => {
