@@ -30,7 +30,7 @@ export const metadata: Metadata = {
 export default function PublicLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const now = new Date();
   const eligibleRoutes = getEligibleRoutes(now);
-  const eligibleBranch = getEligibleBranch(now);
+  const eligibleBranch = getEligibleBranch();
   const navigation: ShellNavigationItem[] = getPublicShellNavigation(now)
     .filter(({ label, href }) => canonicalNavigationLabels.has(label) && (
       href === "/find-your-truck"
