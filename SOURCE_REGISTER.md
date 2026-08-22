@@ -27,6 +27,16 @@ Reviewed August 22, 2026. Hino Cebu availability, local program participation, a
 | `quality-service.jpg` | https://www.hino.com.ph/assets/images/Parts-Service/Service/ServiceBanner.jpg |
 | `financial-services.jpg` | https://www.hino.com.ph/assets/images/ValueChain/HinoFinancing/01_Hino_Financing_Page_Banner.jpg |
 
+## Social platform icon sources
+
+The footer's small inline SVG glyphs are repository-owned renderings based on the official platform brand resources. They are decorative identifiers only and remain non-interactive until a Hino Cebu profile destination is verified.
+
+| Platform | Official brand resource |
+| --- | --- |
+| Facebook | https://about.meta.com/brand/resources/facebookapp/logo/ |
+| YouTube | https://www.youtube.com/howyoutubeworks/resources/brand-resources/ |
+| Instagram | https://about.meta.com/brand/resources/instagram/instagram-brand/ |
+
 ## Branch source
 
 - Stakeholder-provided Hino Cebu business-listing image.
