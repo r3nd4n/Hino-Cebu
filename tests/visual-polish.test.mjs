@@ -3,6 +3,7 @@ import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 import test from "node:test";
 import vm from "node:vm";
+import ts from "typescript";
 import {
   buildMarketingTagBootstrap,
   deniedMarketingConsent,
@@ -255,18 +256,59 @@ test("P07-T01: strict versioned consent parsing grants analytics and advertising
 });
 
 test("P07-T02: public layout and analytics wire optional providers through one fail-closed boundary", () => {
-  const marketingPath = "src/components/marketing/MarketingTags.tsx";
+  const consentPath = "src/lib/marketing-consent.ts";
   const providerPattern = /googletagmanager\.com|google-analytics\.com|connect\.facebook\.net/;
   for (const path of sourceFiles("src")) {
-    if (path.replaceAll("\\", "/") === marketingPath) continue;
+    if (path.replaceAll("\\", "/") === consentPath) continue;
     assert.doesNotMatch(readSource(path), providerPattern, path);
   }
+
+  const analyticsSource = readSource("src/lib/analytics.ts");
+  const compiledAnalytics = ts.transpileModule(analyticsSource, {
+    compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020 },
+  }).outputText;
+  const runTrack = (consent) => {
+    const calls = { dataLayer: [], gtag: [], fbq: [] };
+    const context = {
+      module: { exports: {} },
+      exports: {},
+      require: (specifier) => {
+        assert.match(specifier, /marketing-consent/);
+        return { getStoredMarketingConsent: () => consent };
+      },
+      process: { env: { NEXT_PUBLIC_GA4_ID: "G-ABC123", NEXT_PUBLIC_META_PIXEL_ID: "1234567890" } },
+      window: {
+        dataLayer: { push: (payload) => calls.dataLayer.push(payload) },
+        gtag: (...args) => calls.gtag.push(args),
+        fbq: (...args) => calls.fbq.push(args),
+      },
+    };
+    context.exports = context.module.exports;
+    vm.runInNewContext(compiledAnalytics, context);
+    context.module.exports.track("phone_click", { location: "footer", omitted: undefined });
+    return calls;
+  };
+
+  assert.deepEqual(runTrack({ analytics: false, advertising: false }), { dataLayer: [], gtag: [], fbq: [] });
+  const analyticsOnly = runTrack({ analytics: true, advertising: false });
+  assert.equal(analyticsOnly.dataLayer.length, 1);
+  assert.equal(analyticsOnly.gtag.length, 1);
+  assert.deepEqual(analyticsOnly.fbq, []);
+  assert.equal(Object.hasOwn(analyticsOnly.dataLayer[0], "omitted"), false);
+  const advertisingOnly = runTrack({ analytics: false, advertising: true });
+  assert.deepEqual(advertisingOnly.dataLayer, []);
+  assert.deepEqual(advertisingOnly.gtag, []);
+  assert.equal(advertisingOnly.fbq.length, 1);
+
   const layout = readSource(publicLayoutPath);
-  const analytics = readSource("src/lib/analytics.ts");
-  assert.match(layout, /<MarketingTags/);
-  assert.match(analytics, /consent/i);
-  assert.match(analytics, /analytics[\s\S]{0,220}gtag/);
-  assert.match(analytics, /advertising[\s\S]{0,220}fbq/);
+  const rootLayout = readSource("src/app/layout.tsx");
+  assert.equal((layout.match(/<MarketingTags/g) ?? []).length, 1);
+  assert.doesNotMatch(rootLayout, /MarketingTags/);
+  assert.doesNotMatch(layout, /["']use client["']/);
+  assert.match(analyticsSource, /getStoredMarketingConsent/);
+  assert.match(analyticsSource, /analytics[\s\S]{0,220}gtag/);
+  assert.match(analyticsSource, /advertising[\s\S]{0,220}fbq/);
+  assert.match(analyticsSource, /Record<string, string \| number \| boolean \| undefined>/);
 });
 
 test("P08-T01: dependency-free performance checker enforces numeric source and gzip build budgets in check", () => {
