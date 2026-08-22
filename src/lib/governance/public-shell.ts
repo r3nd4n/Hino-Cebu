@@ -1,4 +1,5 @@
 import { getEligibleBranch, getEligibleContactActions } from "@/content/site";
+import { getEligiblePrivacyTopics } from "@/content/governance/privacy";
 import { getEligibleTrucks } from "@/content/trucks";
 import { getEligibleRoutes } from "./eligibility";
 
@@ -16,6 +17,12 @@ export type PublicShellNavigationItem = {
   href: string;
   kind: "link" | "primary";
 };
+
+export type PublicShellLegalItem = Readonly<{
+  navigationId: "privacy" | "terms";
+  label: "Privacy" | "Terms";
+  href: "/privacy" | "/terms";
+}>;
 
 const governedDestinations = {
   "ROUTE-TRUCKS": { navigationId: "trucks", label: "Trucks", href: "/trucks", kind: "link" },
@@ -58,4 +65,19 @@ export function getPublicShellNavigation(now = new Date()): PublicShellNavigatio
     eligibleRoutes.has("ROUTE-QUOTE") ? governedDestinations["ROUTE-QUOTE"] : null,
   ];
   return navigation.filter((item): item is PublicShellNavigationItem => item !== null);
+}
+
+export function getPublicShellLegalNavigation(now = new Date()): PublicShellLegalItem[] {
+  const eligibleBranch = getEligibleBranch(now);
+  const hasEligibleContact = getEligibleContactActions(now).length > 0;
+  const legalNavigation: Array<PublicShellLegalItem | null> = [
+    getEligiblePrivacyTopics(now).length > 0
+      ? { navigationId: "privacy", label: "Privacy", href: "/privacy" }
+      : null,
+    eligibleBranch.identity && hasEligibleContact
+      ? { navigationId: "terms", label: "Terms", href: "/terms" }
+      : null,
+  ];
+
+  return legalNavigation.filter((item): item is PublicShellLegalItem => item !== null);
 }

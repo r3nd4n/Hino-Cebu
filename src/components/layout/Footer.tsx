@@ -1,10 +1,14 @@
 import Link from "next/link";
+import type { PublicSocialProfile } from "@/content/site";
+import type { PublicShellLegalItem } from "@/lib/governance/public-shell";
 import type { ShellContactAction, ShellNavigationItem } from "@/components/layout/Header";
 
 type FooterProps = Readonly<{
   navigation: readonly ShellNavigationItem[];
+  legalNavigation: readonly PublicShellLegalItem[];
+  socialProfiles: readonly PublicSocialProfile[];
   contactActions: readonly ShellContactAction[];
-  branch: Readonly<{ identity?: string; address?: string }>;
+  branch: Readonly<{ identity?: string; address?: string; phone?: string; hours?: string }>;
 }>;
 
 export function Footer({ navigation, contactActions, branch }: FooterProps) {

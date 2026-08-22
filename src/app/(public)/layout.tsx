@@ -6,11 +6,11 @@ import { StickyMobileActions } from "@/components/layout/StickyMobileActions";
 import { AttributionCapture } from "@/components/marketing/AttributionCapture";
 import { MarketingTags } from "@/components/marketing/MarketingTags";
 import { JsonLd } from "@/components/ui/Shared";
-import { siteConfig, getEligibleBranch, getEligibleContactActions } from "@/content/site";
-import { getPublicShellNavigation } from "@/lib/governance/public-shell";
+import { siteConfig, getEligibleBranch, getEligibleContactActions, getEligibleSocialProfiles } from "@/content/site";
+import { getEligibleRoutes } from "@/lib/governance/eligibility";
+import { getPublicShellLegalNavigation, getPublicShellNavigation } from "@/lib/governance/public-shell";
 import { absoluteUrl, getSiteOrigin } from "@/lib/site-url";
 
-// getEligibleRoutes is enforced inside the canonical D-07 projection.
 const canonicalNavigationLabels = new Set([
   "Trucks",
   "Find Your Truck",
@@ -28,10 +28,16 @@ export const metadata: Metadata = {
 };
 
 export default function PublicLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  const eligibleBranch = getEligibleBranch();
-  const navigation: ShellNavigationItem[] = getPublicShellNavigation()
-    .filter(({ label }) => canonicalNavigationLabels.has(label));
-  const contactActions: ShellContactAction[] = getEligibleContactActions().map((action) => ({
+  const now = new Date();
+  const eligibleRoutes = getEligibleRoutes(now);
+  const eligibleBranch = getEligibleBranch(now);
+  const navigation: ShellNavigationItem[] = getPublicShellNavigation(now)
+    .filter(({ label, href }) => canonicalNavigationLabels.has(label) && (
+      href === "/find-your-truck"
+      || href === "/hino-cebu"
+      || eligibleRoutes.some((route) => route.path === href && route.status !== "withheld")
+    ));
+  const contactActions: ShellContactAction[] = getEligibleContactActions(now).map((action) => ({
     actionId: action.actionId,
     kind: action.kind,
     label: action.label,
@@ -40,7 +46,11 @@ export default function PublicLayout({ children }: Readonly<{ children: React.Re
   const branch = {
     ...(eligibleBranch.identity ? { identity: eligibleBranch.identity } : {}),
     ...(eligibleBranch.address ? { address: eligibleBranch.address } : {}),
+    ...(eligibleBranch.phone ? { phone: eligibleBranch.phone } : {}),
+    ...(eligibleBranch.hours ? { hours: eligibleBranch.hours } : {}),
   };
+  const legalNavigation = getPublicShellLegalNavigation(now);
+  const socialProfiles = getEligibleSocialProfiles(now);
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": ["Organization", "AutoDealer"],
@@ -52,5 +62,5 @@ export default function PublicLayout({ children }: Readonly<{ children: React.Re
     } : {}),
   };
 
-  return <><a className="skip-link" href="#main-content">Skip to main content</a><Header navigation={navigation} contactActions={contactActions} branch={branch} /><main id="main-content">{children}</main><Footer navigation={navigation} contactActions={contactActions} branch={branch} /><StickyMobileActions navigation={navigation} contactActions={contactActions} /><Suspense><AttributionCapture /></Suspense><MarketingTags />{eligibleBranch.identity ? <JsonLd data={organizationSchema} /> : null}</>;
+  return <><a className="skip-link" href="#main-content">Skip to main content</a><Header navigation={navigation} contactActions={contactActions} branch={branch} /><main id="main-content">{children}</main><Footer navigation={navigation} legalNavigation={legalNavigation} socialProfiles={socialProfiles} contactActions={contactActions} branch={branch} /><StickyMobileActions navigation={navigation} contactActions={contactActions} /><Suspense><AttributionCapture /></Suspense><MarketingTags />{eligibleBranch.identity ? <JsonLd data={organizationSchema} /> : null}</>;
 }
