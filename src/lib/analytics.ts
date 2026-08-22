@@ -1,3 +1,5 @@
+import { getStoredMarketingConsent } from "@/lib/marketing-consent";
+
 export const analyticsEvents = [
   "truck_model_view", "truck_quote_started", "truck_quote_submitted", "truck_finder_started",
   "truck_finder_completed", "service_request_started", "service_request_submitted",
@@ -14,8 +16,13 @@ declare global {
 
 export function track(event: AnalyticsEvent, properties: AnalyticsProperties = {}) {
   if (typeof window === "undefined") return;
+  const consent = getStoredMarketingConsent();
+  if (!consent.analytics && !consent.advertising) return;
+
   const safe = Object.fromEntries(Object.entries(properties).filter(([, value]) => value !== undefined));
-  window.dataLayer?.push({ event, ...safe });
-  if (process.env.NEXT_PUBLIC_GA4_ID && window.gtag) window.gtag("event", event, safe);
-  if (process.env.NEXT_PUBLIC_META_PIXEL_ID && window.fbq) window.fbq("trackCustom", event, safe);
+  if (consent.analytics) {
+    window.dataLayer?.push({ event, ...safe });
+    window.gtag?.("event", event, safe);
+  }
+  if (consent.advertising) window.fbq?.("trackCustom", event, safe);
 }
