@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 01.1-04-PLAN.md
-last_updated: "2026-08-22T11:12:30.789Z"
+stopped_at: Completed 01.1-05-PLAN.md
+last_updated: "2026-08-22T11:18:47.936Z"
 last_activity: 2026-08-22
 progress:
   total_phases: 7
   completed_phases: 0
   total_plans: 25
-  completed_plans: 19
-  percent: 76
+  completed_plans: 20
+  percent: 80
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-08-18)
 ## Current Position
 
 Phase: 01.1 (Public website visual polish and engagement) — EXECUTING
-Plan: 5 of 9
+Plan: 6 of 9
 Status: Ready to execute
 Last activity: 2026-08-22
 
-Progress: 76%
+Progress: 80%
 
 ## Performance Metrics
 
@@ -56,6 +56,7 @@ Progress: 76%
 | Phase 01.1 P02 | 6 min | 2 tasks | 3 files |
 | Phase 01.1 P03 | 20 min | 3 tasks | 4 files |
 | Phase 01.1 P04 | 15 min | 3 tasks | 7 files |
+| Phase 01.1 P05 | 5 min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -119,6 +120,8 @@ Recent decisions affecting current work:
 - [Phase 01.1]: PageHero remains a named Server Component and renders media only when a narrow eligible DTO is supplied; text-only output remains complete.
 - [Phase 01.1-04]: Legal footer destinations are emitted by a server-only eligibility selector rather than reconstructed in shell clients.
 - [Phase 01.1-04]: The mobile disclosure uses ordinary navigation semantics, Escape focus return, and non-tabbable closed links without a focus trap.
+- [Phase 01.1-05]: The homepage Hino 300 image is identified only as an official Hino Motors Philippines product image and remains the sole preloaded application image. — This preserves asset provenance and prevents local inventory implications while prioritizing only the true LCP.
+- [Phase 01.1-05]: Truck card and detail images use breakpoint-aware sizes while detail and catalog media remain lazy by default. — Non-LCP product media should remain layout-stable without competing with the homepage preload.
 
 ### Pending Todos
 
@@ -149,6 +152,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-08-22T11:12:30.772Z
-Stopped at: Completed 01.1-04-PLAN.md
+Last session: 2026-08-22T11:18:47.756Z
+Stopped at: Completed 01.1-05-PLAN.md
 Resume file: None
