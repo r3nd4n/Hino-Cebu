@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 01.1-06-PLAN.md
-last_updated: "2026-08-22T14:28:11.739Z"
+stopped_at: Completed 01.1-07-PLAN.md
+last_updated: "2026-08-22T14:46:40.271Z"
 last_activity: 2026-08-22
 progress:
   total_phases: 7
   completed_phases: 0
   total_plans: 25
-  completed_plans: 21
-  percent: 84
+  completed_plans: 22
+  percent: 88
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-08-18)
 ## Current Position
 
 Phase: 01.1 (Public website visual polish and engagement) — EXECUTING
-Plan: 7 of 9
+Plan: 8 of 9
 Status: Ready to execute
 Last activity: 2026-08-22
 
-Progress: 84%
+Progress: 88%
 
 ## Performance Metrics
 
@@ -58,6 +58,7 @@ Progress: 84%
 | Phase 01.1 P04 | 15 min | 3 tasks | 7 files |
 | Phase 01.1 P05 | 5 min | 2 tasks | 4 files |
 | Phase 01.1 P06 | 12 min | 2 tasks | 5 files |
+| Phase 01.1 P07 | 9 min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -125,6 +126,9 @@ Recent decisions affecting current work:
 - [Phase 01.1-05]: Truck card and detail images use breakpoint-aware sizes while detail and catalog media remain lazy by default. — Non-LCP product media should remain layout-stable without competing with the homepage preload.
 - [Phase 01.1-06]: Support media crosses the public boundary only after its exact route and every attached current claim are eligible.
 - [Phase 01.1-06]: National support imagery carries adjacent source and non-locality caveats; the Hino Cebu branch remains media-free until governed Cebu photography exists.
+- [Phase 01.1-07]: Analytics and advertising remain separate grants; GA4 requires analytics, Meta requires advertising, and generic GTM conservatively requires both. — This prevents a purpose-specific grant from authorizing an ungoverned downstream tag mix.
+- [Phase 01.1-07]: The consent contract defaults to immutable denial and rejects missing, malformed, stale-version, unknown, or extra preference fields. — Untrusted browser preference data must never enable optional provider behavior by ambiguity.
+- [Phase 01.1-07]: Phase 3 retains ownership of the user-facing consent, revisit, withdrawal, policy, and approved tag-administration experience. — Plan 07 implements only the minimal GOV-10 technical loading boundary and does not claim GOV-05 or GOV-06 completion.
 
 ### Pending Todos
 
@@ -155,6 +159,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-08-22T14:28:11.725Z
-Stopped at: Completed 01.1-06-PLAN.md
+Last session: 2026-08-22T14:46:40.257Z
+Stopped at: Completed 01.1-07-PLAN.md
 Resume file: None
