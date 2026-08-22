@@ -12,6 +12,7 @@ import {
 
 const modules = loadGovernanceModules();
 const { schemas, decisions, privacy, leads, release, eligibility, claims, site, trucks, campaigns, services } = modules;
+const DIRECTIVE_NOW = new Date("2026-08-22T00:00:00.000Z");
 
 function readSource(path) {
   return readFileSync(path, "utf8");
@@ -110,7 +111,7 @@ test("approval requires two tiers, the correct fixed lane, evidence, and a curre
   })).success, false);
 });
 
-test("production estate records keep unknown authorities as explicit blockers", () => {
+test("production estate records retain temporary and unresolved values as explicit blockers", () => {
   assert.equal(decisions.productionEstateRecord.decisions.length, 6);
   assert.deepEqual(decisions.productionEstateRecord.decisions.map(({ key }) => key), [
     "production-domain",
@@ -120,11 +121,13 @@ test("production estate records keep unknown authorities as explicit blockers", 
     "deployment-owner",
     "rollback-owner",
   ]);
-  assert.equal(decisions.isProductionEstateApproved(NOW), false);
-  assert.ok(decisions.productionEstateRecord.decisions.every(({ value }) => value.status === "pending"));
+  assert.equal(decisions.isProductionEstateApproved(DIRECTIVE_NOW), false);
+  assert.deepEqual(decisions.productionEstateRecord.decisions.map(({ value }) => value.status), [
+    "proposal", "proposal", "approved", "pending", "approved", "approved",
+  ]);
 });
 
-test("privacy contract enumerates every required topic and remains blocked pending approval", () => {
+test("privacy contract enumerates every required topic and keeps draft policy values blocked", () => {
   assert.deepEqual(privacy.privacyContract.topics.map(({ key }) => key), [
     "controller-identity",
     "privacy-contact",
@@ -135,11 +138,11 @@ test("privacy contract enumerates every required topic and remains blocked pendi
     "incident-process",
     "marketing-consent",
   ]);
-  assert.equal(privacy.isPrivacyContractApproved(NOW), false);
-  assert.ok(privacy.privacyContract.topics.every(({ value }) => value.status === "pending"));
+  assert.equal(privacy.isPrivacyContractApproved(DIRECTIVE_NOW), false);
+  assert.ok(privacy.privacyContract.topics.every(({ value }) => value.status === "proposal"));
 });
 
-test("lead contract registry contains one provider-neutral pending contract per lead type", () => {
+test("lead contract registry records the approved proposal while preventing production eligibility", () => {
   assert.deepEqual(leads.leadOperatingContracts.map(({ leadType }) => leadType).sort(), [
     "financing", "fleet", "parts", "sales", "service",
   ]);
@@ -148,12 +151,17 @@ test("lead contract registry contains one provider-neutral pending contract per 
   for (const contract of leads.leadOperatingContracts) {
     const expectedLane = ["service", "parts"].includes(contract.leadType) ? "aftersales" : "sales";
     assert.equal(contract.departmentOwnerLane, expectedLane);
-    assert.equal(contract.centralOperationsOwnerRef, "OWNER-CENTRAL-OPERATIONS-PENDING");
+    assert.equal(contract.centralOperationsOwnerRef, "OWNER-JCS-001");
     assert.deepEqual(contract.escalationStages.map(({ stage }) => stage), ["routing-failure", "unacknowledged"]);
     assert.equal(contract.secondaryIntake.mustBeContractEquivalent, true);
-    assert.equal(contract.policyStatus, "pending");
-    assert.equal(leads.isLeadContractApproved(contract, NOW), false);
+    assert.equal(contract.policyStatus, "proposal");
+    assert.equal(leads.isLeadContractApproved(contract, DIRECTIVE_NOW), false);
   }
+  assert.equal(leads.leadProviderProposal.durableStore.providerCode, "neon-postgres");
+  assert.equal(leads.leadProviderProposal.notificationTransport.providerCode, "resend");
+  assert.equal(leads.leadProviderProposal.notificationTransport.recipientStatus, "pending");
+  assert.equal(leads.leadProviderProposal.notificationTransport.sendingDomainStatus, "pending");
+  assert.equal(leads.leadProviderProposal.secondaryIntake.mode, "phone-to-neon");
 });
 
 test("proposal values cannot satisfy an approved policy predicate", () => {
@@ -300,7 +308,16 @@ test("canonical content entries carry stable claim and route IDs while unapprove
   assert.ok(trucks.trucks.every(({ claimIds, routeId }) => claimIds.length > 0 && routeId.startsWith("ROUTE-")));
   assert.ok(campaigns.campaigns.every(({ claimIds, routeId }) => claimIds.length > 0 && routeId.startsWith("ROUTE-")));
   assert.ok(services.supportServices.every(({ claimIds, routeId }) => claimIds.length > 0 && routeId.startsWith("ROUTE-")));
-  assert.deepEqual(site.getEligibleBranch(NOW), {});
-  assert.deepEqual(site.getEligibleContactActions(NOW), []);
+  assert.deepEqual(site.getEligibleBranch(DIRECTIVE_NOW), {
+    identity: "Hino Cebu",
+    address: "377 P. Almendras Extension, Cebu City, Central Visayas",
+    phone: "+63 32 346 3322",
+    hours: "Monday–Saturday, 8:00 AM–5:00 PM; Sunday, closed",
+    directions: "https://www.google.com/maps/search/?api=1&query=377%20P.%20Almendras%20Extension%2C%20Cebu%20City%2C%20Central%20Visayas",
+  });
+  assert.deepEqual(site.getEligibleContactActions(DIRECTIVE_NOW), [
+    { actionId: "branch-phone", kind: "phone", label: "Call Hino Cebu", href: "tel:+63323463322" },
+    { actionId: "branch-directions", kind: "directions", label: "Directions", href: "https://www.google.com/maps/search/?api=1&query=377%20P.%20Almendras%20Extension%2C%20Cebu%20City%2C%20Central%20Visayas" },
+  ]);
   assert.equal(claims.getClaimCatalogSize() > 0, true);
 });

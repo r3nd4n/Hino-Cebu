@@ -1,6 +1,6 @@
 # Official Content and Asset Source Register
 
-Reviewed August 18, 2026. Hino Cebu availability, local program participation, and current commercial terms must still be confirmed by the branch.
+Reviewed August 22, 2026. Hino Cebu availability, local program participation, and current commercial terms must still be confirmed by the branch.
 
 ## Product and program sources
 
@@ -33,10 +33,11 @@ Reviewed August 18, 2026. Hino Cebu availability, local program participation, a
 - Verified display name: Hino Cebu.
 - Verified address: 377 P. Almendras Extension, Cebu City, Central Visayas.
 - Verified phone: +63 32 346 3322.
-- The image displayed a closing time, but hours were not accepted as verified because the stakeholder specifically designated the image as the address source.
+- Stakeholder-approved hours: Monday–Saturday, 8:00 AM–5:00 PM; Sunday closed.
+- Approval review date: August 22, 2027.
 
 ## Publishing controls
 
 - National specifications are presented as national published data, not Cebu inventory or configuration promises.
-- Product and support copy is adapted for local use rather than copied wholesale.
+- Product and support copy may be adapted from official Hino Motors Philippines sources under the project-owner directive; source URLs remain recorded and Cebu availability claims remain separately governed.
 - Promotions, advertising IDs, and customer-delivery stories remain unpublished until supplied and approved.

@@ -6,6 +6,22 @@ import {
   type Approval,
 } from "../../lib/governance/schemas";
 
+const approvedAt = "2026-08-21T16:00:00.000Z";
+const reviewAt = "2027-08-21T16:00:00.000Z";
+const stakeholderEvidence = { reference: "EVID-STAKEHOLDER-DIRECTIVE-20260822" };
+
+const approvedTechnicalDecision = {
+  status: "approved" as const,
+  lane: "technical-release" as const,
+  approverRole: "technical-release-owner",
+  approvedAt,
+  reviewAt,
+  evidence: stakeholderEvidence,
+  invalidatedAt: null,
+  invalidationCode: null,
+  supersededByRevision: null,
+};
+
 export const releaseAuthorityRecord = releaseAuthoritySchema.parse({
   recordId: "GOV-RELEASE-AUTHORITY",
   revision: 1,
@@ -13,24 +29,24 @@ export const releaseAuthorityRecord = releaseAuthoritySchema.parse({
     recordId: "GOV-RELEASE-AUTHORITY",
     revision: 1,
     responsibleLane: "technical-release",
-    departmentApproval: { status: "pending", lane: "technical-release" },
-    releaseConfirmation: { status: "pending", lane: "technical-release" },
+    departmentApproval: approvedTechnicalDecision,
+    releaseConfirmation: approvedTechnicalDecision,
   },
   ordinaryRelease: {
-    status: "pending",
+    status: "proposal",
     manualPromotionRequired: true,
     protectedPreviewRequired: true,
     technicalGatesRequired: true,
     businessApprovalsRequired: true,
   },
   emergencyAuthority: {
-    status: "pending",
+    status: "proposal",
     allowedRoles: ["technical-release-owner", "technical-release-backup"],
     allowedTriggers: ["customer", "lead", "privacy", "security", "indexing", "availability"],
     retrospectiveReviewRequired: true,
   },
   rollbackAuthority: {
-    status: "pending",
+    status: "proposal",
     allowedRoles: ["technical-release-owner", "technical-release-backup"],
     thresholds: [
       { status: "proposal", value: 1, unit: "failed-critical-journeys" },
@@ -39,7 +55,7 @@ export const releaseAuthorityRecord = releaseAuthoritySchema.parse({
     immediateOwnerNotificationRequired: true,
   },
   closeout: {
-    status: "pending",
+    status: "proposal",
     requiredFields: [
       "trigger",
       "authority",

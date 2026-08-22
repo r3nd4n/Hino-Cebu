@@ -20,7 +20,7 @@ export const siteConfig = {
   phoneHref: "tel:+63323463322",
   directionsUrl: "https://www.google.com/maps/search/?api=1&query=377%20P.%20Almendras%20Extension%2C%20Cebu%20City%2C%20Central%20Visayas",
   email: "",
-  hours: [] as string[],
+  hours: ["Monday–Saturday, 8:00 AM–5:00 PM", "Sunday, closed"],
   socials: [
     { label: "Hino Motors Philippines on Facebook", href: "https://www.facebook.com/HinoMotorsPH/" },
     { label: "Hino Motors Philippines on Instagram", href: "https://www.instagram.com/hinomotors_philippines/" },
@@ -38,7 +38,15 @@ export const siteConfig = {
   ],
 } as const;
 
-function pendingField(field: BranchField, value: string, ownerLane: ApprovalLane) {
+const approvedAt = "2026-08-21T16:00:00.000Z";
+const reviewAt = "2027-08-21T16:00:00.000Z";
+
+function approvedField(
+  field: BranchField,
+  value: string,
+  ownerLane: ApprovalLane,
+  evidenceReference: string,
+) {
   return governedClaimSchema.parse({
     claimId: `CLAIM-BRANCH-${field.toUpperCase()}`,
     revision: 1,
@@ -52,8 +60,28 @@ function pendingField(field: BranchField, value: string, ownerLane: ApprovalLane
       recordId: `GOV-BRANCH-${field.toUpperCase()}`,
       revision: 1,
       responsibleLane: ownerLane,
-      departmentApproval: { status: "pending", lane: ownerLane },
-      releaseConfirmation: { status: "pending", lane: "technical-release" },
+      departmentApproval: {
+        status: "approved",
+        lane: ownerLane,
+        approverRole: `${ownerLane}-owner`,
+        approvedAt,
+        reviewAt,
+        evidence: { reference: evidenceReference },
+        invalidatedAt: null,
+        invalidationCode: null,
+        supersededByRevision: null,
+      },
+      releaseConfirmation: {
+        status: "approved",
+        lane: "technical-release",
+        approverRole: "technical-release-owner",
+        approvedAt,
+        reviewAt,
+        evidence: { reference: "EVID-STAKEHOLDER-DIRECTIVE-20260822" },
+        invalidatedAt: null,
+        invalidationCode: null,
+        supersededByRevision: null,
+      },
     }),
   });
 }
@@ -62,11 +90,11 @@ const branchRecord: BranchRecord = {
   recordId: "BRANCH-HINO-CEBU",
   revision: 1,
   fields: {
-    identity: pendingField("identity", siteConfig.name, "brand-content"),
-    address: pendingField("address", siteConfig.address, "brand-content"),
-    phone: pendingField("phone", siteConfig.phoneDisplay, "sales"),
-    hours: pendingField("hours", "Operating hours pending approval", "aftersales"),
-    directions: pendingField("directions", siteConfig.directionsUrl, "brand-content"),
+    identity: approvedField("identity", siteConfig.name, "brand-content", "EVID-BUSINESS-LISTING-20260818"),
+    address: approvedField("address", siteConfig.address, "brand-content", "EVID-BUSINESS-LISTING-20260818"),
+    phone: approvedField("phone", siteConfig.phoneDisplay, "sales", "EVID-BUSINESS-LISTING-20260818"),
+    hours: approvedField("hours", siteConfig.hours.join("; "), "aftersales", "EVID-STAKEHOLDER-DIRECTIVE-20260822"),
+    directions: approvedField("directions", siteConfig.directionsUrl, "brand-content", "EVID-BUSINESS-LISTING-20260818"),
   },
 };
 

@@ -5,14 +5,29 @@ import {
   leadOperatingContractSchema,
 } from "../../lib/governance/schemas";
 
-const pendingCapabilities = {
-  completeNormalizedInquiryPersistence: { status: "pending" as const },
-  stableReference: { status: "pending" as const },
-  reconciliation: { status: "pending" as const },
-  recoveryAfterDeliveryFailure: { status: "pending" as const },
-  retryReplay: { status: "pending" as const },
-  retention: { status: "pending" as const },
+const proposalCapabilities = {
+  completeNormalizedInquiryPersistence: { status: "proposal" as const, value: "neon-postgres" },
+  stableReference: { status: "proposal" as const, value: "database-generated-reference" },
+  reconciliation: { status: "proposal" as const, value: "stored-status-history" },
+  recoveryAfterDeliveryFailure: { status: "proposal" as const, value: "persist-before-resend-notification" },
+  retryReplay: { status: "proposal" as const, value: "idempotent-notification-retry" },
+  retention: { status: "proposal" as const },
 };
+
+export const leadProviderProposal = {
+  durableStore: { status: "proposal", providerCode: "neon-postgres" },
+  notificationTransport: {
+    status: "proposal",
+    providerCode: "resend",
+    recipientStatus: "pending",
+    sendingDomainStatus: "pending",
+  },
+  secondaryIntake: {
+    status: "proposal",
+    mode: "phone-to-neon",
+    contactClaimId: "CLAIM-BRANCH-PHONE",
+  },
+} as const;
 
 function createPendingLeadContract(leadType: LeadType) {
   const departmentOwnerLane = (["service", "parts"] as LeadType[]).includes(leadType)
@@ -24,8 +39,8 @@ function createPendingLeadContract(leadType: LeadType) {
     revision: 1,
     leadType,
     departmentOwnerLane,
-    centralOperationsOwnerRef: "OWNER-CENTRAL-OPERATIONS-PENDING",
-    policyStatus: "pending",
+    centralOperationsOwnerRef: "OWNER-JCS-001",
+    policyStatus: "proposal",
     approval: {
       recordId,
       revision: 1,
@@ -33,25 +48,25 @@ function createPendingLeadContract(leadType: LeadType) {
       departmentApproval: { status: "pending", lane: departmentOwnerLane },
       releaseConfirmation: { status: "pending", lane: "technical-release" },
     },
-    capabilities: pendingCapabilities,
+    capabilities: proposalCapabilities,
     responseWindow: { status: "proposal", value: 1, unit: "business-days" },
     escalationStages: [
       {
         stage: "routing-failure",
-        ownerRef: "OWNER-CENTRAL-OPERATIONS-PENDING",
+        ownerRef: "OWNER-JCS-001",
         timing: "immediate",
       },
       {
         stage: "unacknowledged",
-        ownerRef: `OWNER-${departmentOwnerLane.toUpperCase()}-PENDING`,
+        ownerRef: "OWNER-JCS-001",
         backupOwnerRef: `OWNER-${departmentOwnerLane.toUpperCase()}-BACKUP-PENDING`,
         threshold: { status: "proposal", value: 1, unit: "business-days" },
       },
     ],
     secondaryIntake: {
-      status: "pending",
+      status: "proposal",
       mustBeContractEquivalent: true,
-      capabilities: pendingCapabilities,
+      capabilities: proposalCapabilities,
     },
   });
 }
