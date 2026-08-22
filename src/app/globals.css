@@ -226,4 +226,10 @@ p { margin: 0 0 1rem; }
   .report-blocker-list dl, .report-owner-alerts dl { grid-template-columns: 1fr; }
   .report-blocker-list dd, .report-owner-alerts dd { margin-bottom: .75rem; }
 }
+@media (max-width: 1060px) and (min-width: 1060px) {
+  .approval-report .review-summary { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 720px) and (min-width: 720px) {
+  .approval-report .review-summary { grid-template-columns: 1fr; }
+}
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition: none !important; animation: none !important; } }
