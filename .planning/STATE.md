@@ -110,7 +110,7 @@ Recent decisions affecting current work:
 
 ### Pending Todos
 
-None yet.
+1 pending — see `.planning/todos/pending/2026-08-22-align-website-infrastructure-with-current-decisions.md`.
 
 ### Blockers/Concerns
 
