@@ -51,7 +51,7 @@ Five MVP phases deliver a conversion-first Hino Cebu website from safe foundatio
 
 ## Requirement Coverage
 
-All 23 v1 requirements are mapped exactly once in `.planning/REQUIREMENTS.md`.
+All 24 v1 requirements are mapped exactly once in `.planning/REQUIREMENTS.md`.
 
 ## Sequencing
 
