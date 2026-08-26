@@ -15,8 +15,8 @@ test("support content defines two primary paths before two supporting topics", a
   assert.match(services, /topic: InquiryTopic/);
   assert.match(services, /ctaLabel: string/);
   assert.match(services, /sectionId: string/);
-  assert.equal((services.match(/role: "primary"/g) ?? []).length, 2);
-  assert.equal((services.match(/role: "supporting"/g) ?? []).length, 2);
+  assert.equal((services.match(/role: "primary",/g) ?? []).length, 2);
+  assert.equal((services.match(/role: "supporting",/g) ?? []).length, 2);
 
   const partsIndex = services.indexOf('sectionId: "parts-inquiry"');
   const serviceIndex = services.indexOf('sectionId: "service-inquiry"');
