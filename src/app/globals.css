@@ -72,20 +72,20 @@ h3 { font-size: 1.5rem; }
 .homepage { display: flex; flex-direction: column; }
 .homepage-hero { display: block; }
 .homepage-hero__surface { background: linear-gradient(90deg, rgb(10 13 16 / 84%) 0%, rgb(10 13 16 / 52%) 46%, rgb(10 13 16 / 20%) 100%), url("/images/generated/hino-cebu-hero-v3.png") center / cover; }
-.homepage-hero__content { color: var(--color-paper); display: grid; gap: clamp(2rem, 5vw, 5rem); grid-template-columns: minmax(0, 1fr) minmax(23rem, 28rem); min-height: min(42rem, calc(100vh - 4.5rem)); padding-block: clamp(2.5rem, 5vw, 4.5rem) var(--space-xl); padding-inline: clamp(1rem, 3vw, 4rem); }
-.homepage-hero__story { align-self: center; max-width: 48rem; }
+.homepage-hero__content { color: var(--color-paper); display: grid; gap: clamp(2rem, 5vw, 5rem); grid-template-columns: minmax(0, 1fr) minmax(22rem, 25rem); min-height: min(42rem, calc(100vh - 4.5rem)); padding-block: clamp(2.5rem, 5vw, 4.5rem) var(--space-xl); padding-inline: clamp(1rem, 3vw, 4rem); }
+.homepage-hero__story { align-self: center; max-width: 48rem; padding-left: clamp(0rem, 3vw, 4rem); }
 .homepage-hero h1 { font-size: clamp(3.25rem, 5.4vw, 5.8rem); margin-top: var(--space-md); max-width: 13ch; }
 .homepage-hero h1 span { color: var(--color-red); display: block; }
 .homepage-hero__story > p:not(.eyebrow) { color: #f0f1f1; font-size: clamp(1rem, 1.4vw, 1.15rem); margin: var(--space-lg) 0 0; max-width: 37rem; }
 .homepage-hero__actions { display: flex; flex-wrap: wrap; gap: var(--space-md); margin-top: var(--space-xl); }
 .homepage-hero .button--secondary { border-color: var(--color-paper); color: var(--color-paper); }
 .homepage-hero .button--secondary:hover { background: rgb(255 255 255 / 12%); }
-.homepage-quote { align-self: center; background: rgb(30 33 36 / 76%); backdrop-filter: blur(10px); border: 1px solid rgb(255 255 255 / 16%); border-radius: var(--radius-card); box-shadow: var(--shadow-elevated); color: var(--color-paper); padding: 1.25rem; scroll-margin-block-start: 5.5rem; width: 100%; }
-.homepage-quote__heading h2 { font-size: clamp(1.7rem, 2.2vw, 2.15rem); margin-top: var(--space-xs); }
-.homepage-quote form { display: grid; gap: 0.6rem; margin-top: 0.75rem; }
+.homepage-quote { align-self: center; background: rgb(30 33 36 / 76%); backdrop-filter: blur(10px); border: 1px solid rgb(255 255 255 / 16%); border-radius: var(--radius-card); box-shadow: var(--shadow-elevated); color: var(--color-paper); padding: 1rem; scroll-margin-block-start: 5.5rem; transform: translateY(1.75rem); width: 100%; }
+.homepage-quote__heading h2 { font-size: clamp(1.6rem, 2vw, 2rem); margin-top: var(--space-xs); }
+.homepage-quote form { display: grid; gap: 0.45rem; margin-top: 0.65rem; }
 .quote-field { display: grid; gap: 0.2rem; }
 .quote-field label { font-size: .75rem; font-weight: 700; }
-.quote-field input:not([type="checkbox"]), .quote-field select { background: rgb(255 255 255 / 96%); border: 1px solid transparent; border-radius: var(--radius-control); color: var(--color-ink); font: inherit; min-height: 2.5rem; padding-inline: .7rem; width: 100%; }
+.quote-field input:not([type="checkbox"]), .quote-field select { background: rgb(255 255 255 / 96%); border: 1px solid transparent; border-radius: var(--radius-control); color: var(--color-ink); font: inherit; font-size: .875rem; min-height: 2.25rem; padding-inline: .7rem; width: 100%; }
 .quote-field input[aria-invalid="true"], .quote-field select[aria-invalid="true"] { border-color: var(--color-destructive); }
 .quote-field--consent { align-items: start; column-gap: var(--space-sm); grid-template-columns: 1.25rem minmax(0, 1fr); }
 .quote-field--consent input { height: 1.25rem; margin: .15rem 0 0; width: 1.25rem; }
@@ -96,6 +96,7 @@ h3 { font-size: 1.5rem; }
 .homepage-quote--confirmation { display: grid; gap: var(--space-md); }
 .homepage-quote--confirmation h2 { font-size: clamp(2rem, 3vw, 2.8rem); }
 .homepage-quote--confirmation p { color: #dceede; margin: 0; }
+.homepage-quote .button { min-height: 2.5rem; }
 .homepage-hero__trust { background: var(--color-dark); color: var(--color-paper); display: grid; gap: 1px; grid-template-columns: repeat(3, 1fr); list-style: none; margin: 0; order: 1; padding: 0 max(1.25rem, calc((100vw - var(--container-max)) / 2)); }
 .homepage-hero__trust li { align-items: center; display: flex; font-size: .8125rem; font-weight: 700; min-height: 4.5rem; padding: var(--space-md) var(--space-lg); text-transform: uppercase; }
 .homepage-hero__trust li + li { border-left: 1px solid rgb(255 255 255 / 18%); }
@@ -180,10 +181,10 @@ h3 { font-size: 1.5rem; }
   .site-footer__legal { align-items: flex-start; flex-direction: column; }
   .homepage-hero__surface { background-position: 60% center; }
   .homepage-hero__content { display: flex; flex-direction: column; gap: var(--space-xl); min-height: 0; padding-block: var(--space-3xl) var(--space-xl); }
-  .homepage-hero__story { align-self: auto; }
+  .homepage-hero__story { align-self: auto; padding-left: 0; }
   .homepage-hero h1 { font-size: clamp(3.2rem, 15vw, 4.75rem); max-width: 10ch; }
   .homepage-hero__actions { display: grid; grid-template-columns: 1fr; }
-  .homepage-quote { padding: var(--space-lg); scroll-margin-block-start: 4.5rem; }
+  .homepage-quote { padding: var(--space-lg); scroll-margin-block-start: 4.5rem; transform: none; }
   .homepage-hero__trust { grid-template-columns: 1fr; padding-inline: var(--gutter); }
   .homepage-hero__trust li { min-height: 3.25rem; padding: var(--space-sm) 0; }
   .homepage-hero__trust li + li { border-left: 0; border-top: 1px solid rgb(255 255 255 / 18%); }
