@@ -87,7 +87,7 @@ h3 { font-size: 1.5rem; }
 .mobile-menu__trigger { align-items: center; background: transparent; border: 0; color: var(--color-ink); display: inline-flex; justify-content: center; min-height: 3rem; min-width: 3rem; }
 .mobile-menu__panel { background: var(--color-dark); color: var(--color-paper); display: flex; flex-direction: column; inset: 4.5rem 0 0; justify-content: space-between; padding: var(--space-xl) var(--gutter) calc(var(--space-xl) + env(safe-area-inset-bottom)); position: fixed; z-index: 19; }
 .mobile-menu__panel nav { display: grid; }
-.mobile-menu__panel nav a { border-bottom: 1px solid rgb(255 255 255 / 20%); font-family: var(--font-display), "Arial Narrow", sans-serif; font-size: clamp(2rem, 9vw, 3rem); font-weight: 700; padding-block: var(--space-md); text-decoration: none; text-transform: uppercase; }
+.mobile-menu__panel nav a { border-bottom: 1px solid rgb(255 255 255 / 20%); font-family: var(--font-display), "Arial Narrow", sans-serif; font-size: clamp(1rem, 4.8vw, 1.2rem); font-weight: 700; letter-spacing: 0.02em; line-height: 1.2; padding-block: 0.9rem; text-decoration: none; text-transform: uppercase; }
 .mobile-menu__actions { display: grid; gap: var(--space-sm); }
 .mobile-menu__actions a { align-items: center; border: 1px solid var(--color-paper); color: var(--color-paper); display: flex; font-weight: 700; gap: var(--space-sm); justify-content: center; min-height: 3.25rem; padding: var(--space-sm) var(--space-md); text-decoration: none; text-transform: uppercase; }
 .mobile-menu__actions a:last-child { background: var(--color-red); border-color: var(--color-red); }
