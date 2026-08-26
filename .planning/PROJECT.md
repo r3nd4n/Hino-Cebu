@@ -12,15 +12,12 @@ Make it easy and credible for a Cebu business to identify the right Hino solutio
 
 ### Validated
 
-<!-- Shipped and confirmed valuable. -->
-
-(None yet — ship to validate)
+- [x] Deliver a polished, responsive Hino Cebu homepage with a dominant truck hero and integrated quote CTA. (Phase 2, approved 2026-08-26)
 
 ### Active
 
 <!-- Current scope. Building toward these. -->
 
-- [ ] Deliver a polished, responsive Hino Cebu homepage with a dominant truck hero and integrated quote CTA.
 - [ ] Provide truck discovery through listing and configurable series/detail pages.
 - [ ] Provide clear local sales, parts, service, contact, and dealership-location paths.
 - [ ] Capture, validate, attribute, and safely route quote and inquiry leads to Google Sheets and Resend.
@@ -79,4 +76,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-08-26 after initialization from HINO_CEBU_WEBSITE_SPEC.md*
+*Last updated: 2026-08-26 after Phase 2 approval*

@@ -16,6 +16,7 @@ Five MVP phases deliver a conversion-first Hino Cebu website from safe foundatio
 ### Phase 2: Conversion-Led Homepage
 **Goal:** Deliver the polished, truck-dominant homepage that drives a visitor from discovery to a local quote conversation.
 **Mode:** mvp
+**Status:** Complete (2026-08-26)
 **Requirements:** HOME-01, HOME-02, HOME-03, HOME-04, HOME-05
 **Success Criteria:**
 1. Desktop and mobile visitors see an unmistakable Hino Cebu hero, a dominant truck visual, and quote/truck actions at the intended hierarchy.

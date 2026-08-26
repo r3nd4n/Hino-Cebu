@@ -14,11 +14,11 @@
 
 ### Homepage & Conversion
 
-- [ ] **HOME-01**: Visitors see a truck-photography-dominant hero that identifies Hino Cebu and presents quote and truck-discovery actions without desktop scrolling.
-- [ ] **HOME-02**: Visitors can use an integrated quote form with all specified lead fields, consent, visible validation, loading, success, and safe server-error states.
-- [ ] **HOME-03**: Visitors can browse a configurable truck-range section and business-use selector from the homepage.
-- [ ] **HOME-04**: Visitors can understand Hino Cebu's local value, parts/service support, address, hours, call action, directions, and final quote CTA from the homepage.
-- [ ] **HOME-05**: The public journey contains no visible promotions navigation, route, carousel, homepage section, footer link, or promotion CTA.
+- [x] **HOME-01**: Visitors see a truck-photography-dominant hero that identifies Hino Cebu and presents quote and truck-discovery actions without desktop scrolling.
+- [x] **HOME-02**: Visitors can use an integrated quote form with all specified lead fields, consent, visible validation, loading, success, and safe server-error states.
+- [x] **HOME-03**: Visitors can browse a configurable truck-range section and business-use selector from the homepage.
+- [x] **HOME-04**: Visitors can understand Hino Cebu's local value, parts/service support, address, hours, call action, directions, and final quote CTA from the homepage.
+- [x] **HOME-05**: The public journey contains no visible promotions navigation, route, carousel, homepage section, footer link, or promotion CTA.
 
 ### Discovery & Local Support
 
@@ -64,7 +64,7 @@
 | Requirement | Phase | Status |
 |---|---|---|
 | FND-01–FND-04 | Phase 1 | Pending |
-| HOME-01–HOME-05 | Phase 2 | Pending |
+| HOME-01–HOME-05 | Phase 2 | Complete |
 | DISC-01–DISC-04 | Phase 3 | Pending |
 | LEAD-01–LEAD-06 | Phase 4 | Pending |
 | QLT-01–QLT-05 | Phase 5 | Pending |
