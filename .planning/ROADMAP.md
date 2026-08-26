@@ -27,6 +27,14 @@ Five MVP phases deliver a conversion-first Hino Cebu website from safe foundatio
 **Goal:** Extend the conversion system across vehicles, parts/service, contact, and local-dealer information.
 **Mode:** mvp
 **Requirements:** DISC-01, DISC-02, DISC-03, DISC-04
+**Plans:** 4 plans
+
+Plans:
+- [ ] 03-01-PLAN.md â€” Deliver the configurable truck listing and four safe series journeys.
+- [ ] 03-02-PLAN.md â€” Deliver distinct Parts & Service and About routes.
+- [ ] 03-03-PLAN.md â€” Deliver the allowlisted, truthful shared Contact inquiry experience.
+- [ ] 03-04-PLAN.md â€” Integrate the shared shell, responsive styling, and full acceptance gates.
+
 **Success Criteria:**
 1. Truck listing and representative detail routes render configurable approved content and clear inquiry paths.
 2. Parts/service, contact, and about/local pages provide credible practical paths to local assistance.
