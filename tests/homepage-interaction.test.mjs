@@ -46,7 +46,7 @@ test("mobile actions observe the hero before showing the call and quote targets"
   assert.match(mobileActionBar, /"use client"/);
   assert.match(mobileActionBar, /IntersectionObserver/);
   assert.match(mobileActionBar, /homepage-hero/);
-  assert.match(mobileActionBar, /tel:\+63323463322/);
+  assert.match(mobileActionBar, /siteConfig\.contact\.phone\.href/);
   assert.match(mobileActionBar, /\/#request-a-quote/);
   assert.match(mobileActionBar, /aria-label="Quick actions"/);
 });
