@@ -43,7 +43,6 @@ Retain the tokens in `src/app/globals.css`. Do not add Tailwind, shadcn, a secon
 | xl | 32px | Mobile section padding, tablet grids, major component gaps |
 | 2xl | 48px | Tablet/desktop section rhythm |
 | 3xl | 64px | Standard desktop route-section spacing |
-| 4xl | 96px | Desktop-only editorial breathing room between major route bands |
 
 Exceptions: all interactive controls and clickable cards have a minimum 44px target; primary controls remain 48–54px high. Fluid hero/section padding may use `clamp()` bounded by scale values. Image aspect ratios, the existing 4px control radius, and 8px card radius are geometry rather than spacing tokens.
 
@@ -55,7 +54,7 @@ Exceptions: all interactive controls and clickable cards have a minimum 44px tar
 - Use the implemented container and gutters: 20px at phone, 32px from 768px, and 48px from 1024px. Long text columns stop at 36–44rem even when the site container is wider.
 - Subpage heroes are compact editorial bands, not homepage duplicates. Use a near-black or charcoal text surface with a red eyebrow and one H1; pair it with a light contained product image only where a truck is the subject.
 - Alternate white and `#F4F4F2` section surfaces. Reserve dark full-width bands for route introductions, credibility, or the final conversion panel—not every section.
-- Keep the standard section rhythm at 48px on mobile/tablet and 64–96px on desktop. Card grids use 16px gaps on phone and 16–24px at wider viewports.
+- Keep the standard section rhythm at 48px on mobile/tablet and 64px on desktop. Card grids use 16px gaps on phone and 16–24px at wider viewports.
 - Use only restrained 150–200ms opacity, border, shadow, and up-to-3px transform transitions. Honor `prefers-reduced-motion`; content comprehension and form feedback must never depend on animation.
 
 | Viewport | Required composition |
@@ -72,11 +71,11 @@ Manual visual verification is required for `/trucks`, all four series routes, `/
 | Role | Size | Weight | Line Height | Contract |
 |---|---:|---:|---:|---|
 | Body | 16px | 400 | 1.5 | Explanations, application guidance, form help, local facts |
-| Label/navigation | 14px | 700 | 1.2 | Controls, CTAs, compact metadata; uppercase only for short labels |
+| Label/navigation | 14px | 700 | 1.2 | Controls, CTAs, compact metadata, and the inherited `.eyebrow` section marker; uppercase only for short labels |
 | Section heading | `clamp(32px, 4vw, 48px)` | 700 | 0.98 | Condensed uppercase section hierarchy |
 | Route display | `clamp(48px, 6vw, 72px)` | 700 | 0.92 | One H1 per route; shorter than the homepage display |
 
-Use exactly weights 400 and 700. Preserve the existing 12px `.eyebrow` utility style as the inherited section marker; do not create additional semantic type tiers. Headings remain condensed and uppercase; body, notices, errors, and status copy remain normal case. Never render whole paragraphs or technical highlights in red.
+Use exactly weights 400 and 700. Consolidate the inherited `.eyebrow` section marker into the 14px label/navigation tier; do not create additional semantic type tiers. Headings remain condensed and uppercase; body, notices, errors, and status copy remain normal case. Never render whole paragraphs or technical highlights in red.
 
 ## Color
 
