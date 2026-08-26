@@ -12,9 +12,14 @@ A conversion-focused Hino Cebu website for local truck sales, parts, service, an
 Quality checks:
 
 ```bash
+npm test
 npm run lint
 npm run build
 ```
+
+## Responsive shell verification
+
+Run `npm run dev`, then inspect the public shell at 390px, 768px, 1024px, and 1440px wide. Confirm that the desktop header shows Trucks, Parts & Service, About, Contact, and the Cebu phone action without any Promotions surface. At mobile widths, open the menu, use Escape to close it, and confirm the fixed Call and Request a Quote controls remain reachable without obscuring primary content.
 
 ## Environment boundary
 
