@@ -7,6 +7,35 @@ function optional(name: string): OptionalValue {
   return value || undefined;
 }
 
+function publicSiteUrl(): OptionalValue {
+  const value = optional("NEXT_PUBLIC_SITE_URL");
+
+  if (!value) {
+    return undefined;
+  }
+
+  try {
+    const url = new URL(value);
+
+    if (
+      (url.protocol !== "http:" && url.protocol !== "https:") ||
+      url.username ||
+      url.password
+    ) {
+      return undefined;
+    }
+
+    return url.origin;
+  } catch {
+    return undefined;
+  }
+}
+
+/** Values that may safely be used in public-facing server output. */
+export const publicEnv = {
+  siteUrl: publicSiteUrl(),
+} as const;
+
 /** Server-only configuration. Do not import this module from a Client Component. */
 export const serverEnv = {
   resendApiKey: optional("RESEND_API_KEY"),
