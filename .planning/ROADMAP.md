@@ -32,7 +32,7 @@ Five MVP phases deliver a conversion-first Hino Cebu website from safe foundatio
 **Goal:** Extend the conversion system across vehicles, parts/service, contact, and local-dealer information.
 **Mode:** mvp
 **Requirements:** DISC-01, DISC-02, DISC-03, DISC-04
-**Plans:** 1/4 plans executed
+**Plans:** 4/10 plans executed
 
 Plans:
 **Wave 1**
@@ -41,12 +41,30 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 03-02-PLAN.md â€” Deliver distinct Parts & Service and About routes.
-- [ ] 03-03-PLAN.md â€” Deliver the allowlisted, truthful shared Contact inquiry experience.
+- [x] 03-02-PLAN.md â€” Deliver distinct Parts & Service and About routes.
+- [x] 03-03-PLAN.md â€” Deliver the allowlisted, truthful shared Contact inquiry experience.
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 03-04-PLAN.md â€” Integrate the shared shell, responsive styling, and full acceptance gates.
+- [x] 03-04-PLAN.md â€” Integrate the shared shell, responsive styling, and full acceptance gates.
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
+- [ ] 03-05-PLAN.md — Establish approval-gated local facts and safe shared-shell fallbacks.
+- [ ] 03-06-PLAN.md — Repair shared/discovery selectors and protect compiled CSS.
+
+**Wave 5** *(blocked on Wave 4 completion)*
+
+- [ ] 03-07-PLAN.md — Apply approval-aware facts and inquiry fallbacks across Phase 3 routes.
+- [ ] 03-08-PLAN.md — Make local-only inquiry states truthful and gate homepage contact facts.
+
+**Wave 6** *(blocked on Wave 5 completion)*
+
+- [ ] 03-09-PLAN.md — Complete the selector sweep and add fresh-build runtime regression gates.
+
+**Wave 7** *(blocked on Wave 6 completion)*
+
+- [ ] 03-10-PLAN.md — Verify responsive, keyboard, motion, form, and fact-safety closure.
 
 **Success Criteria:**
 
