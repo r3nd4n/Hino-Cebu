@@ -40,6 +40,9 @@ body {
   line-height: 1.5;
 }
 
+button, a { -webkit-tap-highlight-color: transparent; }
+button { font: inherit; }
+
 a { color: inherit; }
 
 :focus-visible { outline: none; box-shadow: var(--focus-ring); }
@@ -65,6 +68,66 @@ h3 { font-size: 1.5rem; }
 .foundation-page__content { max-width: 48rem; }
 .foundation-page__content > p:last-child { color: var(--color-muted-ink); font-size: 1.125rem; max-width: 38rem; }
 
+.skip-link { background: var(--color-dark); color: var(--color-paper); left: var(--space-md); padding: var(--space-sm) var(--space-md); position: fixed; top: -5rem; z-index: 100; }
+.skip-link:focus { top: var(--space-md); }
+
+.site-header { background: var(--color-paper); border-bottom: 1px solid var(--color-border); position: sticky; top: 0; z-index: 20; }
+.site-header__inner { align-items: center; display: flex; min-height: 4.5rem; }
+.site-identity { align-items: center; display: inline-flex; font-weight: 800; letter-spacing: 0.02em; text-decoration: none; }
+.site-identity__hino { color: var(--color-ink); font-size: 1.2rem; }
+.site-identity__divider { background: var(--color-border); height: 1.6rem; margin-inline: 0.7rem; width: 1px; }
+.site-identity__cebu { color: var(--color-red); font-size: 0.9rem; letter-spacing: 0.12em; }
+.site-header__nav { align-items: center; display: flex; gap: clamp(1rem, 2vw, 2rem); margin-left: auto; }
+.site-header__nav a { font-size: 0.875rem; font-weight: 700; text-decoration: none; text-transform: uppercase; }
+.site-header__nav a:hover, .site-header__nav a:focus-visible { color: var(--color-red); text-decoration: underline; text-underline-offset: 0.35rem; }
+.site-header__phone { align-items: center; align-self: stretch; background: var(--color-red); color: var(--color-paper); display: inline-flex; font-size: 0.875rem; font-weight: 700; gap: var(--space-sm); margin-left: clamp(1rem, 2vw, 2rem); padding-inline: 1rem; text-decoration: none; }
+.site-header__phone:hover { background: var(--color-red-dark); }
+
+.mobile-menu { display: none; }
+.mobile-menu__trigger { align-items: center; background: transparent; border: 0; color: var(--color-ink); display: inline-flex; justify-content: center; min-height: 3rem; min-width: 3rem; }
+.mobile-menu__panel { background: var(--color-dark); color: var(--color-paper); display: flex; flex-direction: column; inset: 4.5rem 0 0; justify-content: space-between; padding: var(--space-xl) var(--gutter) calc(var(--space-xl) + env(safe-area-inset-bottom)); position: fixed; z-index: 19; }
+.mobile-menu__panel nav { display: grid; }
+.mobile-menu__panel nav a { border-bottom: 1px solid rgb(255 255 255 / 20%); font-family: var(--font-display), "Arial Narrow", sans-serif; font-size: clamp(2rem, 9vw, 3rem); font-weight: 700; padding-block: var(--space-md); text-decoration: none; text-transform: uppercase; }
+.mobile-menu__actions { display: grid; gap: var(--space-sm); }
+.mobile-menu__actions a { align-items: center; border: 1px solid var(--color-paper); color: var(--color-paper); display: flex; font-weight: 700; gap: var(--space-sm); justify-content: center; min-height: 3.25rem; padding: var(--space-sm) var(--space-md); text-decoration: none; text-transform: uppercase; }
+.mobile-menu__actions a:last-child { background: var(--color-red); border-color: var(--color-red); }
+
+.site-footer { background: var(--color-dark); color: var(--color-paper); padding-top: var(--space-3xl); }
+.site-footer__grid { display: grid; gap: var(--space-xl); grid-template-columns: 1.35fr repeat(3, 1fr); padding-bottom: var(--space-3xl); }
+.site-footer__identity { font-size: 1.2rem; font-weight: 800; letter-spacing: 0.04em; margin-top: 0; }
+.site-footer__identity span { color: var(--color-red); font-size: 0.8em; margin-left: var(--space-sm); }
+.site-footer__intro > p:last-child, .site-footer address p, .site-footer__grid > section > p { color: #c8ccce; font-size: 0.875rem; font-style: normal; }
+.site-footer h2 { color: var(--color-paper); font-family: var(--font-body), Arial, sans-serif; font-size: 0.75rem; letter-spacing: 0.08em; margin-bottom: var(--space-md); text-transform: uppercase; }
+.site-footer ul { list-style: none; margin: 0; padding: 0; }
+.site-footer li + li { margin-top: var(--space-sm); }
+.site-footer a { text-underline-offset: 0.25rem; }
+.site-footer a:hover { color: #fff; }
+.site-footer__legal { align-items: center; border-top: 1px solid rgb(255 255 255 / 18%); color: #c8ccce; display: flex; font-size: 0.75rem; gap: var(--space-lg); justify-content: space-between; padding-block: var(--space-lg); }
+.site-footer__legal p { margin: 0; }
+.site-footer__legal nav { display: flex; gap: var(--space-md); }
+
+.mobile-action-bar { background: var(--color-paper); border-top: 1px solid var(--color-border); bottom: 0; display: none; grid-template-columns: 1fr 1fr; left: 0; padding: var(--space-sm) var(--gutter) calc(var(--space-sm) + env(safe-area-inset-bottom)); position: fixed; right: 0; z-index: 18; }
+.mobile-action-bar a { align-items: center; background: var(--color-dark); color: var(--color-paper); display: flex; font-size: 0.75rem; font-weight: 700; gap: var(--space-sm); justify-content: center; min-height: 3rem; padding-inline: var(--space-sm); text-align: center; text-decoration: none; text-transform: uppercase; }
+.mobile-action-bar a:last-child { background: var(--color-red); }
+
 @media (min-width: 768px) { :root { --gutter: 2rem; } }
 @media (min-width: 1024px) { :root { --gutter: 3rem; } }
 @media (max-width: 389px) { :root { --gutter: 1rem; } }
+
+@media (max-width: 767px) {
+  body { padding-bottom: calc(4rem + env(safe-area-inset-bottom)); }
+  .site-header__inner { min-height: 4rem; }
+  .site-header__nav, .site-header__phone { display: none; }
+  .mobile-menu { display: block; margin-left: auto; }
+  .mobile-menu__panel { top: 4rem; }
+  .mobile-action-bar { display: grid; }
+  .site-footer { padding-bottom: var(--space-xl); }
+  .site-footer__grid { grid-template-columns: 1fr 1fr; }
+  .site-footer__intro { grid-column: 1 / -1; }
+  .site-footer__legal { align-items: flex-start; flex-direction: column; }
+}
+
+@media (max-width: 479px) {
+  .site-footer__grid { grid-template-columns: 1fr; }
+  .site-footer__intro { grid-column: auto; }
+}
