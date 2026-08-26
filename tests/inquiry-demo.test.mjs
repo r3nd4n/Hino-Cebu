@@ -27,6 +27,15 @@ async function normalize(value) {
 
 async function validate(draft) {
   return runTypeScript(`
+    const { registerHooks } = await import('node:module');
+    registerHooks({
+      resolve(specifier, context, nextResolve) {
+        if (specifier.startsWith('@/')) {
+          return nextResolve(new URL('./src/' + specifier.slice(2) + '.ts', import.meta.url).href, context);
+        }
+        return nextResolve(specifier, context);
+      },
+    });
     const { validateInquiryDraft } = await import('./src/lib/inquiry-demo.ts');
     process.stdout.write(JSON.stringify(validateInquiryDraft(${JSON.stringify(draft)})));
   `);
@@ -135,7 +144,8 @@ test("InquiryForm preserves the normalized origin and follows the accessible fie
   }
   assert.ok(form.indexOf('type="submit"') > cursor, "submit must follow consent");
 
-  assert.match(form, /<select[\s\S]*id="inquiry-topic"/);
+  assert.match(form, /<InquirySelect[\s\S]*id="inquiry-topic"/);
+  assert.match(form, /<select[^>]+aria-invalid/);
   assert.match(form, /aria-invalid/);
   assert.match(form, /aria-describedby/);
   assert.match(form, /aria-live="polite"/);
