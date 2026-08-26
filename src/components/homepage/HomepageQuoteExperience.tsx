@@ -74,30 +74,32 @@ export function HomepageQuoteExperience() {
   return (
     <>
       <section aria-labelledby="homepage-title" className="homepage-hero" id="homepage-hero">
-        <div className="container homepage-hero__content">
-          <div className="homepage-hero__story">
-            <p className="eyebrow">{homepageContent.hero.eyebrow}</p>
-            <h1 id="homepage-title">
-              Built for business. <span>Ready for Cebu.</span>
-            </h1>
-            <p>{homepageContent.hero.description}</p>
-            <div className="homepage-hero__actions">
-              <a className="button button--primary" href="#request-a-quote">
-                {homepageContent.hero.primaryAction}
-              </a>
-              <a className="button button--secondary" href="#trucks">
-                {homepageContent.hero.secondaryAction}
-              </a>
+        <div className="homepage-hero__surface">
+          <div className="container homepage-hero__content">
+            <div className="homepage-hero__story">
+              <p className="eyebrow">{homepageContent.hero.eyebrow}</p>
+              <h1 id="homepage-title">
+                Built for business. <span>Ready for Cebu.</span>
+              </h1>
+              <p>{homepageContent.hero.description}</p>
+              <div className="homepage-hero__actions">
+                <a className="button button--primary" href="#request-a-quote">
+                  {homepageContent.hero.primaryAction}
+                </a>
+                <a className="button button--secondary" href="#trucks">
+                  {homepageContent.hero.secondaryAction}
+                </a>
+              </div>
             </div>
+            <QuoteForm
+              businessUseSelectRef={businessUseSelectRef}
+              draft={draft}
+              errors={errors}
+              onSubmit={submitQuote}
+              onUpdate={updateDraft}
+              status={status}
+            />
           </div>
-          <QuoteForm
-            businessUseSelectRef={businessUseSelectRef}
-            draft={draft}
-            errors={errors}
-            onSubmit={submitQuote}
-            onUpdate={updateDraft}
-            status={status}
-          />
         </div>
         <ul aria-label="Hino Cebu support highlights" className="homepage-hero__trust">
           {homepageContent.hero.trustPoints.map((point) => <li key={point}>{point}</li>)}

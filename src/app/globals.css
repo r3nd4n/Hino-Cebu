@@ -70,8 +70,9 @@ h3 { font-size: 1.5rem; }
 
 /* Phase 2 homepage composition. The conversion island supplies hero and business use. */
 .homepage { display: flex; flex-direction: column; }
-.homepage-hero { display: contents; }
-.homepage-hero__content { background: linear-gradient(90deg, rgb(10 13 16 / 84%) 0%, rgb(10 13 16 / 52%) 46%, rgb(10 13 16 / 20%) 100%), url("/images/generated/hino-cebu-hero-v3.png") center / cover; color: var(--color-paper); display: grid; gap: clamp(2rem, 5vw, 5rem); grid-template-columns: minmax(0, 1fr) minmax(23rem, 28rem); min-height: min(42rem, calc(100vh - 4.5rem)); padding-block: clamp(2.5rem, 5vw, 4.5rem) var(--space-xl); }
+.homepage-hero { display: block; }
+.homepage-hero__surface { background: linear-gradient(90deg, rgb(10 13 16 / 84%) 0%, rgb(10 13 16 / 52%) 46%, rgb(10 13 16 / 20%) 100%), url("/images/generated/hino-cebu-hero-v3.png") center / cover; }
+.homepage-hero__content { color: var(--color-paper); display: grid; gap: clamp(2rem, 5vw, 5rem); grid-template-columns: minmax(0, 1fr) minmax(23rem, 28rem); min-height: min(42rem, calc(100vh - 4.5rem)); padding-block: clamp(2.5rem, 5vw, 4.5rem) var(--space-xl); padding-inline: clamp(1rem, 3vw, 4rem); }
 .homepage-hero__story { align-self: center; max-width: 48rem; }
 .homepage-hero h1 { font-size: clamp(3.25rem, 5.4vw, 5.8rem); margin-top: var(--space-md); max-width: 13ch; }
 .homepage-hero h1 span { color: var(--color-red); display: block; }
@@ -79,7 +80,7 @@ h3 { font-size: 1.5rem; }
 .homepage-hero__actions { display: flex; flex-wrap: wrap; gap: var(--space-md); margin-top: var(--space-xl); }
 .homepage-hero .button--secondary { border-color: var(--color-paper); color: var(--color-paper); }
 .homepage-hero .button--secondary:hover { background: rgb(255 255 255 / 12%); }
-.homepage-quote { align-self: center; background: var(--color-charcoal); box-shadow: var(--shadow-elevated); color: var(--color-paper); padding: var(--space-xl); scroll-margin-block-start: 5.5rem; width: 100%; }
+.homepage-quote { align-self: center; background: rgb(36 39 42 / 96%); border-radius: var(--radius-card); box-shadow: var(--shadow-elevated); color: var(--color-paper); padding: var(--space-xl); scroll-margin-block-start: 5.5rem; width: 100%; }
 .homepage-quote__heading h2 { font-size: clamp(1.9rem, 2.5vw, 2.5rem); margin-top: var(--space-sm); }
 .homepage-quote form { display: grid; gap: var(--space-md); margin-top: var(--space-lg); }
 .quote-field { display: grid; gap: var(--space-xs); }
@@ -171,7 +172,8 @@ h3 { font-size: 1.5rem; }
   .site-footer__grid { grid-template-columns: 1fr 1fr; }
   .site-footer__intro { grid-column: 1 / -1; }
   .site-footer__legal { align-items: flex-start; flex-direction: column; }
-  .homepage-hero__content { background-position: 60% center; display: flex; flex-direction: column; gap: var(--space-xl); min-height: 0; padding-block: var(--space-3xl) var(--space-xl); }
+  .homepage-hero__surface { background-position: 60% center; }
+  .homepage-hero__content { display: flex; flex-direction: column; gap: var(--space-xl); min-height: 0; padding-block: var(--space-3xl) var(--space-xl); }
   .homepage-hero__story { align-self: auto; }
   .homepage-hero h1 { font-size: clamp(3.2rem, 15vw, 4.75rem); max-width: 10ch; }
   .homepage-hero__actions { display: grid; grid-template-columns: 1fr; }

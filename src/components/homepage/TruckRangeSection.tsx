@@ -66,8 +66,8 @@ export function TruckRangeSection() {
         .truck-range__grid { display: grid; gap: var(--space-md); grid-template-columns: repeat(4, minmax(0, 1fr)); }
         .truck-card { background: var(--color-paper); border: 1px solid var(--color-border); border-radius: var(--radius-card); box-shadow: var(--shadow-card); color: inherit; display: flex; flex-direction: column; min-width: 0; overflow: hidden; text-decoration: none; transition: box-shadow 180ms ease, transform 180ms ease; }
         .truck-card:hover { box-shadow: var(--shadow-elevated); transform: translateY(-3px); }
-        .truck-card__media { align-items: center; aspect-ratio: 5 / 4; background: #f7f7f5; display: flex; justify-content: center; overflow: hidden; padding: 0; }
-        .truck-card__media :global(img) { height: 100%; object-fit: cover; object-position: center 42%; width: 100%; }
+        .truck-card__media { align-items: center; aspect-ratio: 4 / 5; background: #f7f7f5; display: flex; justify-content: center; overflow: hidden; padding: 0; }
+        .truck-card__media :global(img) { height: 100%; object-fit: contain; width: 100%; }
         .truck-card__body { display: flex; flex: 1; flex-direction: column; padding: var(--space-lg); }
         .truck-card__body p { color: var(--color-red); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.07em; margin: 0 0 var(--space-sm); text-transform: uppercase; }
         .truck-card__body h3 { font-size: clamp(1.35rem, 2vw, 1.7rem); }
