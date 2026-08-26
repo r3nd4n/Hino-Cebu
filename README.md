@@ -1,109 +1,60 @@
-# Hino Cebu Digital Growth Website
+# Hino Cebu Website
 
-A production-oriented, local-first website foundation for Hino Cebu. The application routes Cebu business users to truck sales, parts, service, fleet, financing, and contact actions while keeping unverified facts out of the public experience.
-
-## Stack
-
-- Next.js App Router and React
-- TypeScript with strict checking
-- Plain CSS design tokens and responsive components
-- Zod-backed server-side lead validation
-- Repository-managed TypeScript content
-- Native Next.js metadata, sitemap, robots, server actions, and static generation
-
-There is no database, paid CMS, upload store, search service, chat tool, or experiment platform in the MVP.
+A conversion-focused Hino Cebu website for local truck sales, parts, service, and support conversations. It is built with Next.js App Router, TypeScript, CSS custom properties, and Vercel-compatible deployment conventions.
 
 ## Local setup
 
-Requirements: Node.js 20.9 or newer and npm.
+1. Install Node.js 20.9 or later.
+2. Copy `.env.example` to `.env.local` and add only the values available to your environment.
+3. Run `npm install`.
+4. Run `npm run dev` and open `http://localhost:3000`.
+
+Quality checks:
 
 ```bash
-npm install
-copy .env.example .env.local
-npm run dev
-```
-
-Open `http://localhost:3000`. Without `NEXT_PUBLIC_SITE_URL`, robots intentionally blocks indexing and canonical helpers use localhost. Never deploy production without setting the final HTTPS origin.
-
-## Commands
-
-```bash
-npm run dev
 npm run lint
-npm run typecheck
-npm test
 npm run build
-npm run check
 ```
 
-## Architecture
+## Environment boundary
 
-- `src/app` — routes, metadata endpoints, shared layout, and the lead server action
-- `src/content` — editable branch, product, guide, promotion, delivery, service, and campaign data
-- `src/components/layout` — global navigation, footer, and mobile action bar
-- `src/components/forms` — shared accessible lead-form renderer
-- `src/components/trucks` — model cards and the rules-based truck finder
-- `src/components/marketing` — attribution capture, optional provider tags, inquiry layout, and tracked actions
-- `src/lib` — URL/SEO utilities, PII-free analytics, attribution, validation support, and vendor-neutral lead routing
+Only variables prefixed with `NEXT_PUBLIC_` may be read by client code. All credentials and provider configuration must stay server-only; use `src/lib/env.ts` only from server code, route handlers, or server actions. Never commit `.env.local` or provider credentials.
 
-Truck detail pages use one template at `src/app/trucks/[slug]/page.tsx`. Paid campaigns use one template at `src/app/lp/[slug]/page.tsx`, with index/noindex controlled by campaign content.
-
-## Environment variables
-
-| Variable | Purpose | Required |
+| Variable | Purpose | Visibility |
 | --- | --- | --- |
-| `NEXT_PUBLIC_SITE_URL` | Site origin for canonicals, sitemap, robots, Open Graph, and JSON-LD | Production |
-| `NEXT_PUBLIC_GTM_ID` | Loads Google Tag Manager | Optional |
-| `NEXT_PUBLIC_GA4_ID` | Loads direct GA4 only when GTM is absent | Optional |
-| `NEXT_PUBLIC_META_PIXEL_ID` | Loads Meta Pixel | Optional |
-| `LEAD_ROUTING_WEBHOOK_URL` | Approved server-side lead webhook | Production forms |
-| `ENABLE_UPLOADS` | Reserved future upload flag; uploads remain disabled | No |
-| `PRODUCTION_HOLDING_MODE` | Set to `enabled` only for a temporary non-indexed Production shell with leads, analytics, and review access disabled | No |
+| `NEXT_PUBLIC_SITE_URL` | Canonical deployed site URL | Public |
+| `NEXT_PUBLIC_GA_ID` | Analytics measurement ID when approved | Public |
+| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | Turnstile browser site key | Public |
+| `RESEND_API_KEY` | Resend API authentication | Server-only |
+| `RESEND_FROM_EMAIL` | Verified Resend sender | Server-only |
+| `LEAD_NOTIFICATION_EMAIL` | Internal lead recipient | Server-only |
+| `GOOGLE_SHEETS_SPREADSHEET_ID` | Lead worksheet spreadsheet ID | Server-only |
+| `GOOGLE_SHEETS_CLIENT_EMAIL` | Google service account email | Server-only |
+| `GOOGLE_SHEETS_PRIVATE_KEY` | Google service account private key | Server-only |
+| `GOOGLE_SHEETS_WORKSHEET_NAME` | Lead tab name; defaults to `Website Leads` | Server-only |
+| `TURNSTILE_SECRET_KEY` | Turnstile server verification secret | Server-only |
 
-Google Ads conversion tags should be configured through the single GTM container to keep tags centralized and prevent duplicate tracking. IDs load only when configured. Consent requirements must be approved before marketing IDs are enabled.
+## Lead integrations
 
-## Lead handling
+Google Sheets: create a dedicated service account, enable the Google Sheets API, create a private key, then share the target spreadsheet with the service-account email as an editor. Keep the client email and private key in Vercel environment variables.
 
-Forms submit through a server action that:
+Resend: verify the sending domain, configure `RESEND_FROM_EMAIL` with an approved sender, and set the internal notification recipient before enabling live lead delivery.
 
-1. allow-lists the lead type and fields;
-2. validates required values, email format, maximum lengths, consent, and a honeypot;
-3. sanitizes attribution to supported keys;
-4. calls the vendor-neutral lead router.
+Lead handling is implemented in a later phase. Until all required server-only values are set, providers must fail safely without exposing provider errors or credentials to visitors.
 
-The development adapter validates and acknowledges leads without persistence. It does not email, save, or log personal data. Configure and test an approved production webhook before launch. Rate limiting or an approved anti-abuse provider remains a production requirement.
+## Deployment
 
-Photo uploads are intentionally unavailable. Do not enable them until secure storage, file validation, access controls, retention, and privacy handling are approved.
+Deploy the repository through Vercel using the standard Next.js build command (`npm run build`). Add environment variables separately for Preview and Production; do not use real production credentials in local files or example files.
 
-## Attribution and measurement
+## Content and asset updates
 
-The app captures `utm_source`, `utm_medium`, `utm_campaign`, `utm_content`, `utm_term`, `gclid`, and `fbclid` into session storage, then attaches those non-sensitive values to lead submissions. Analytics events never include submitted contact or free-text form data.
+Public business facts live in `src/content/`. Update the typed configuration rather than copying contact, vehicle, or service claims into components. Replace truck imagery only with authorized Hino assets and preserve image dimensions/aspect ratios to avoid layout shift.
 
-Typed hooks cover model views, form starts/submissions, truck-finder activity, campaign leads, phone clicks, and directions clicks. GTM is the recommended tag-control layer for GA4 and Google Ads. Direct GA4 loading is a fallback and is suppressed when GTM is configured to avoid duplicate page views.
+## Launch inputs still required
 
-## Content publishing workflow
+- Registered Cebu dealership legal entity and approved legal copy.
+- Brand authorization for Hino marks, product photography, and brochures.
+- Confirmed branch email, notification recipients, verified map URL, and current local availability.
+- Approved privacy/DPO channel, analytics consent approach, Resend sending domain, and Google Sheets service-account access.
 
-1. Edit a typed entry under `src/content`.
-2. Use only approved copy, facts, and assets.
-3. For promotions, set verified dates and `isPublished: true`; inactive/expired entries do not render as current.
-4. For campaigns, choose `index: false` when the page duplicates an organic page or exists only for paid traffic.
-5. Run `npm run check` and review preview deployment on mobile, tablet, and desktop.
-6. Obtain business approval before production promotion, technical specification, customer story, or image publishing.
-
-This repository-first workflow avoids a CMS subscription. The presentation reads isolated typed data so a later CMS adapter can replace content sourcing without rebuilding page components.
-
-## Vercel deployment
-
-No `vercel.json` is required. Import the repository, set environment variables separately for Preview and Production, and use a Vercel plan approved for commercial production. Preview URLs work without hardcoded domains; preview deployments remain non-indexable when `NEXT_PUBLIC_SITE_URL` is not set.
-
-Before connecting the final domain, set `NEXT_PUBLIC_SITE_URL` to its exact HTTPS origin, verify generated canonical/sitemap/robots URLs, configure DNS, and validate Search Console ownership.
-
-For a temporary visual-only Production release while governance records remain pending, set `PRODUCTION_HOLDING_MODE=enabled`, `LEAD_PROFILE=disabled`, `ANALYTICS_PROFILE=disabled`, `CRAWL_POLICY=blocked`, and `REVIEW_ACCESS=disabled`. Holding mode does not approve or publish governed facts: selectors continue withholding them, forms cannot establish durable delivery, marketing tags remain off, robots disallows crawling, and the approval report remains unavailable in Production. Remove holding mode and complete the normal approval contract before enabling integrations or indexing.
-
-## Production readiness
-
-Review [BUSINESS_INPUTS_REQUIRED.md](BUSINESS_INPUTS_REQUIRED.md), [ASSET_REQUIREMENTS.md](ASSET_REQUIREMENTS.md), [SOURCE_REGISTER.md](SOURCE_REGISTER.md), and [IMPLEMENTATION_PLAN.md](IMPLEMENTATION_PLAN.md). The checked-in privacy and terms pages are Cebu-specific drafts adapted from Hino Philippines material and still require final business/legal approval.
-
-Operator procedures are in `docs/operations/production-decisions.md`, `docs/operations/lead-provider-scorecard.md`, `docs/operations/release-runbook.md`, and `docs/operations/records/README.md`. They explain how to execute approvals, provider evaluation, promotion, alerts, recovery, and closeout while the authoritative typed governance records under `src/content/governance` remain the only source of decision values.
-
-Run `node --test tests/operations.test.mjs` for the operations documentation contracts, then `npm run check` before requesting promotion. The procedures intentionally keep unknown providers, owners, thresholds, destinations, and approvals pending.
+The website must not claim dealer authorization, availability, specifications, or contact details that have not been verified for launch.
