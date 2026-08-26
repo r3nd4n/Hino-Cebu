@@ -13,6 +13,41 @@ const publicFiles = [
   "src/components/trucks/TruckSeriesPage.tsx",
 ];
 
+test("discovery routes retain the shared shell, navigation, and fixed conversion paths", async () => {
+  const [layout, navigation, listing, detail, template, mobileAction, site] = await Promise.all([
+    readSource("src/app/layout.tsx"),
+    readSource("src/content/navigation.ts"),
+    readSource("src/app/trucks/page.tsx"),
+    readSource("src/app/trucks/[slug]/page.tsx"),
+    readSource("src/components/trucks/TruckSeriesPage.tsx"),
+    readSource("src/components/layout/MobileActionBar.tsx"),
+    readSource("src/content/site.ts"),
+  ]);
+
+  assert.match(layout, /<Header\s*\/>[\s\S]*\{children\}[\s\S]*<Footer\s*\/>[\s\S]*<MobileActionBar\s*\/>/);
+  assert.equal((listing.match(/<main\b/g) ?? []).length, 1);
+  assert.match(listing, /<main[^>]+id="main-content"/);
+  assert.equal((detail.match(/<main\b/g) ?? []).length, 0, "finite detail route delegates its landmark to the template");
+  assert.equal((template.match(/<main\b/g) ?? []).length, 1);
+  assert.match(template, /<main[^>]+id="main-content"/);
+
+  for (const route of ["/trucks", "/trucks/200-series", "/trucks/300-series", "/trucks/500-series", "/trucks/bus-puv"])
+    assert.ok(navigation.includes(`href: "${route}"`), `${route} must be reachable from configured navigation`);
+
+  assert.match(listing, /inquiryHref\("general"\)/);
+  assert.match(template, /inquiryHref\(series\.slug\)/);
+  assert.match(template, /siteConfig\.contact\.phone\.href/);
+  assert.match(mobileAction, /usePathname\(\)/);
+  assert.match(mobileAction, /pathname\s*===\s*"\/"/);
+  assert.match(mobileAction, /isHomepage\s*\?\s*"\/#request-a-quote"\s*:\s*"\/contact#inquiry"/);
+  assert.doesNotMatch(mobileAction, /searchParams|topic=|pathname\.(?:split|slice)|new URLSearchParams/);
+  assert.match(site, /href: "tel:\+63323463322"/);
+
+  const publicSource = [layout, navigation, listing, detail, template, mobileAction].join("\n");
+  assert.doesNotMatch(publicSource, /promotions?/i);
+  assert.doesNotMatch(publicSource, /https:\/\/(?:www\.)?hino\.com\.ph/i);
+});
+
 test("truck discovery exposes four configured, single-link application cards", async () => {
   const [listing, card, content, cta] = await Promise.all([
     readSource("src/app/trucks/page.tsx"),

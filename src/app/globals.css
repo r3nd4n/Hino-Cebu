@@ -162,6 +162,66 @@ h3 { font-size: 1.5rem; }
 .mobile-action-bar a { align-items: center; background: var(--color-dark); color: var(--color-paper); display: flex; font-size: 0.75rem; font-weight: 700; gap: var(--space-sm); justify-content: center; min-height: 3rem; padding-inline: var(--space-sm); text-align: center; text-decoration: none; text-transform: uppercase; }
 .mobile-action-bar a:last-child { background: var(--color-red); }
 
+/* Phase 3 discovery and local-support route contracts. */
+main#main-content { min-width: 0; }
+main#main-content section[id] { scroll-margin-block-start: 6rem; }
+main#main-content .page-hero,
+main#main-content .truck-listing,
+main#main-content .series-section,
+main#main-content .support-primary,
+main#main-content .support-guidance,
+main#main-content .contact-inquiry,
+main#main-content .contact-map,
+main#main-content .about-local,
+main#main-content .about-national,
+main#main-content .about-practical,
+main#main-content .local-contact-cta { padding-block: var(--space-2xl); }
+main#main-content .page-hero__grid,
+main#main-content .truck-listing > .container,
+main#main-content .series-section > .container,
+main#main-content .series-availability > .container,
+main#main-content .support-primary > .container,
+main#main-content .support-guidance > .container,
+main#main-content .contact-inquiry > .container,
+main#main-content .contact-map > .container,
+main#main-content .about-local > .container,
+main#main-content .about-national > .container,
+main#main-content .about-practical > .container,
+main#main-content .local-contact-cta > .container { max-width: 84rem; }
+main#main-content .page-hero__content,
+main#main-content .truck-listing__notice,
+main#main-content .series-lightweight__panel,
+main#main-content .about-national__content { max-width: 44rem; }
+main#main-content .truck-listing-card,
+main#main-content .series-application-card,
+main#main-content .series-highlight-card,
+main#main-content .support-path,
+main#main-content .support-guidance article,
+main#main-content .about-practical article { min-width: 0; }
+main#main-content .truck-listing-card__media,
+main#main-content .page-hero__media { contain: layout paint; }
+main#main-content .contact-inquiry__form { max-width: 40rem; width: 100%; }
+main#main-content .contact-inquiry input:not([type="checkbox"]),
+main#main-content .contact-inquiry select,
+main#main-content .contact-inquiry textarea { min-height: 3.125rem; }
+main#main-content .contact-inquiry textarea { min-height: 7.5rem; }
+main#main-content .contact-inquiry input:focus-visible,
+main#main-content .contact-inquiry select:focus-visible,
+main#main-content .contact-inquiry textarea:focus-visible { border-color: var(--color-red); box-shadow: var(--focus-ring); }
+main#main-content .contact-inquiry [aria-invalid="true"] { border-color: var(--color-destructive); }
+main#main-content .contact-inquiry button:disabled { cursor: wait; opacity: .68; }
+main#main-content .contact-map__frame { aspect-ratio: 16 / 10; overflow: hidden; }
+main#main-content .inquiry-confirmation { border-left-color: var(--color-success); }
+main#main-content .button,
+main#main-content a,
+.mobile-action-bar a { min-height: 2.75rem; }
+main#main-content .button,
+main#main-content .truck-listing-card,
+main#main-content .contact-inquiry input,
+main#main-content .contact-inquiry select,
+main#main-content .contact-inquiry textarea,
+.mobile-action-bar a { transition-duration: 180ms; transition-timing-function: ease; }
+
 @media (min-width: 768px) { :root { --gutter: 2rem; } }
 @media (min-width: 1024px) { :root { --gutter: 3rem; } }
 @media (max-width: 389px) { :root { --gutter: 1rem; } }
@@ -190,6 +250,24 @@ h3 { font-size: 1.5rem; }
   .homepage-hero__trust li + li { border-left: 0; border-top: 1px solid rgb(255 255 255 / 18%); }
   .homepage-business-needs__grid { grid-template-columns: 1fr; }
   .homepage-business-needs__card { min-height: 8rem; }
+  main#main-content .page-hero__grid--media,
+  main#main-content .truck-listing__grid,
+  main#main-content .series-applications__grid,
+  main#main-content .series-highlights__grid,
+  main#main-content .support-primary__grid,
+  main#main-content .support-guidance__grid,
+  main#main-content .contact-inquiry__grid,
+  main#main-content .about-local__grid,
+  main#main-content .about-practical__grid { grid-template-columns: minmax(0, 1fr); }
+  main#main-content .page-hero__media { grid-row: 1; }
+  main#main-content .page-hero__actions,
+  main#main-content .about-practical__actions,
+  main#main-content .local-contact-cta__actions { display: grid; grid-template-columns: minmax(0, 1fr); }
+  main#main-content .page-hero__actions .button,
+  main#main-content .about-practical__actions .button,
+  main#main-content .local-contact-cta__actions .button { width: 100%; }
+  main#main-content .support-path { min-height: 0; }
+  main#main-content .contact-inquiry { scroll-margin-block-start: 4.75rem; }
 }
 
 @media (max-width: 479px) {
@@ -201,7 +279,43 @@ h3 { font-size: 1.5rem; }
   .homepage-business-needs__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
+@media (min-width: 768px) and (max-width: 1023px) {
+  main#main-content .truck-listing__grid,
+  main#main-content .series-applications__grid,
+  main#main-content .series-highlights__grid,
+  main#main-content .support-primary__grid,
+  main#main-content .support-guidance__grid,
+  main#main-content .about-practical__grid { grid-template-columns: repeat(2, minmax(17.5rem, 1fr)); }
+  main#main-content .contact-inquiry__grid,
+  main#main-content .about-local__grid { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (min-width: 1024px) {
+  main#main-content .page-hero,
+  main#main-content .truck-listing,
+  main#main-content .series-section,
+  main#main-content .support-primary,
+  main#main-content .support-guidance,
+  main#main-content .contact-inquiry,
+  main#main-content .contact-map,
+  main#main-content .about-local,
+  main#main-content .about-national,
+  main#main-content .about-practical,
+  main#main-content .local-contact-cta { padding-block: var(--space-3xl); }
+  main#main-content .truck-listing__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  main#main-content .page-hero__grid--media { grid-template-columns: minmax(0, 1fr) minmax(0, .9fr); }
+  main#main-content .support-primary__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  main#main-content .contact-inquiry__grid { grid-template-columns: minmax(0, 55fr) minmax(18rem, 45fr); }
+}
+
+@media (min-width: 1440px) {
+  main#main-content .page-hero__grid--media { grid-template-columns: minmax(0, 1fr) minmax(0, .95fr); }
+  main#main-content .contact-inquiry__form { max-width: 40rem; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; }
+  main#main-content .truck-listing-card:hover,
+  main#main-content .truck-listing-card:focus-visible { transform: none; }
 }

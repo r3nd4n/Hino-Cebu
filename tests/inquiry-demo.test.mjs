@@ -62,6 +62,32 @@ const validDraft = {
   consent: true,
 };
 
+test("Contact retains the shared shell and the mobile action cannot mint topics", async () => {
+  const [layout, navigation, page, form, validator, mobileAction] = await Promise.all([
+    readFile(new URL("../src/app/layout.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../src/content/navigation.ts", import.meta.url), "utf8"),
+    readFile(new URL("../src/app/contact/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../src/components/contact/InquiryForm.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../src/lib/inquiry-demo.ts", import.meta.url), "utf8"),
+    readFile(new URL("../src/components/layout/MobileActionBar.tsx", import.meta.url), "utf8"),
+  ]);
+
+  assert.match(layout, /<Header\s*\/>[\s\S]*\{children\}[\s\S]*<Footer\s*\/>[\s\S]*<MobileActionBar\s*\/>/);
+  assert.equal((page.match(/<main\b/g) ?? []).length, 1);
+  assert.match(page, /<main[^>]+id="main-content"/);
+  assert.match(navigation, /href: "\/contact"/);
+  assert.match(page, /<section[^>]+id="inquiry"/);
+  assert.match(page, /siteConfig\.contact\.phone\.href/);
+  assert.match(mobileAction, /usePathname\(\)/);
+  assert.match(mobileAction, /pathname\s*===\s*"\/"/);
+  assert.match(mobileAction, /"\/contact#inquiry"/);
+  assert.doesNotMatch(mobileAction, /topic=|searchParams|pathname\.(?:split|slice)/);
+
+  const phaseFourBoundary = [page, form, validator, mobileAction].join("\n");
+  assert.doesNotMatch(phaseFourBoundary, /fetch\s*\(|use server|server action|process\.env|resend|google sheets|provider|leadId/i);
+  assert.doesNotMatch(phaseFourBoundary, /promotions?|https:\/\/(?:www\.)?hino\.com\.ph/i);
+});
+
 test("topic normalization accepts only the seven stable keys", async () => {
   for (const topic of topics) assert.equal(await normalize(topic), topic);
 

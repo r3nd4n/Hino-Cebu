@@ -7,6 +7,33 @@ const readSource = (file) => readFile(new URL(`../${file}`, import.meta.url), "u
 const prohibitedPublicClaims =
   /authorized dealer|legal entity|our history|Cebu history|in stock|inventory|guaranteed|guarantee|turnaround|uptime|service plan|dealer count|customer volume|territory|award/i;
 
+test("local-support routes retain one landmark, shared-shell reachability, and safe actions", async () => {
+  const [layout, navigation, partsService, about, localCta, mobileAction] = await Promise.all([
+    readSource("src/app/layout.tsx"),
+    readSource("src/content/navigation.ts"),
+    readSource("src/app/parts-service/page.tsx"),
+    readSource("src/app/about/page.tsx"),
+    readSource("src/components/shared/LocalContactCta.tsx"),
+    readSource("src/components/layout/MobileActionBar.tsx"),
+  ]);
+
+  assert.match(layout, /<Header\s*\/>[\s\S]*\{children\}[\s\S]*<Footer\s*\/>[\s\S]*<MobileActionBar\s*\/>/);
+  for (const [route, source] of [["/parts-service", partsService], ["/about", about]]) {
+    assert.equal((source.match(/<main\b/g) ?? []).length, 1, `${route} must own exactly one main`);
+    assert.match(source, /<main[^>]+id="main-content"/);
+    assert.ok(navigation.includes(`href: "${route}"`), `${route} must be reachable from configured navigation`);
+    assert.match(source, /siteConfig\.contact\.phone\.href/);
+  }
+  assert.match(partsService, /inquiryHref\("general"\)/);
+  assert.match(about, /inquiryHref\("general"\)/);
+  assert.match(localCta, /inquiryHref\(topic\)/);
+  assert.match(mobileAction, /"\/contact#inquiry"/);
+
+  const publicSource = [layout, navigation, partsService, about, localCta, mobileAction].join("\n");
+  assert.doesNotMatch(publicSource, /promotions?/i);
+  assert.doesNotMatch(publicSource, /https:\/\/(?:www\.)?hino\.com\.ph/i);
+});
+
 test("support content defines two primary paths before two supporting topics", async () => {
   const services = await readSource("src/content/services.ts");
 
