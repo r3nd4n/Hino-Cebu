@@ -24,7 +24,7 @@ test("discovery routes retain the shared shell, navigation, and fixed conversion
     readSource("src/content/site.ts"),
   ]);
 
-  assert.match(layout, /<Header\s*\/>[\s\S]*\{children\}[\s\S]*<Footer\s*\/>[\s\S]*<MobileActionBar\s*\/>/);
+  assert.match(layout, /<Header phone=\{publicContact\.phone\}\s*\/>[\s\S]*\{children\}[\s\S]*<Footer\s*\/>[\s\S]*<MobileActionBar phone=\{publicContact\.phone\}\s*\/>/);
   assert.equal((listing.match(/<main\b/g) ?? []).length, 1);
   assert.match(listing, /<main[^>]+id="main-content"/);
   assert.equal((detail.match(/<main\b/g) ?? []).length, 0, "finite detail route delegates its landmark to the template");
@@ -36,7 +36,7 @@ test("discovery routes retain the shared shell, navigation, and fixed conversion
 
   assert.match(listing, /inquiryHref\("general"\)/);
   assert.match(template, /inquiryHref\(series\.slug\)/);
-  assert.match(template, /siteConfig\.contact\.phone\.href/);
+  assert.match(template, /publicContact\.phone\.status === "approved"/);
   assert.match(mobileAction, /usePathname\(\)/);
   assert.match(mobileAction, /pathname\s*===\s*"\/"/);
   assert.match(mobileAction, /isHomepage\s*\?\s*"\/#request-a-quote"\s*:\s*"\/contact#inquiry"/);
@@ -74,7 +74,7 @@ test("truck discovery exposes four configured, single-link application cards", a
   assert.match(card, /Explore this range for/);
   assert.match(card, /applications\.map/);
   assert.match(cta, /inquiryHref\(topic\)/);
-  assert.match(cta, /siteConfig\.contact\.phone\.href/);
+  assert.match(cta, /publicContact\.phone\.status === "approved"/);
 });
 
 test("detail routes are finite, guarded, and use the shared application-first template", async () => {

@@ -14,12 +14,14 @@ test("approved navigation excludes promotions", async () => {
   assert.match(navigation, /label: "Contact"/);
 });
 
-test("site configuration supplies the approved Cebu call action", async () => {
+test("site configuration keeps candidate Cebu facts behind approval status", async () => {
   const site = await readSource("src/content/site.ts");
 
   assert.match(site, /display: "\(032\) 346 3322"/);
   assert.match(site, /href: "tel:\+63323463322"/);
-  assert.match(site, /address: "8WC6\+Q46/);
+  assert.match(site, /address:\s*\{[\s\S]*value: "8WC6\+Q46/);
+  assert.equal((site.match(/status: "requires-verification"/g) ?? []).length >= 3, true);
+  assert.match(site, /export const publicContact = projectPublicContact\(siteConfig\)/);
 });
 
 test("the public shell exports desktop and mobile conversion actions", async () => {
@@ -31,10 +33,13 @@ test("the public shell exports desktop and mobile conversion actions", async () 
   ]);
 
   assert.match(header, /export function Header/);
-  assert.match(header, /siteConfig\.contact\.phone\.href/);
+  assert.match(header, /phone\.status === "approved"/);
+  assert.match(header, /href="\/contact#inquiry"/);
   assert.match(mobileMenu, /Request a Quote/);
   assert.match(mobileMenu, /event\.key === "Escape"/);
   assert.match(mobileActionBar, /Call/);
   assert.match(mobileActionBar, /Request a Quote/);
+  assert.match(mobileActionBar, /phone\.status === "approved"/);
   assert.match(footer, /export function Footer/);
+  assert.match(footer, /Phone: awaiting confirmation/);
 });

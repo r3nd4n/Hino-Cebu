@@ -57,8 +57,9 @@ test("the home route composes the approved conversion journey from local contrac
   assert.match(quote, /href="#trucks"/);
   assert.match(trucks, /truckRanges\.map/);
   assert.equal((trucks.match(/officialAssets\.truck(?:200|300|500|BusPuv)/g) ?? []).length, 4);
-  assert.match(support, /encodeURIComponent\(siteConfig\.contact\.address\)/);
-  assert.match(support, /title=\{`Map search for/);
+  assert.match(support, /contact\.address\.status === "approved"/);
+  assert.match(support, /map details are awaiting confirmation/);
+  assert.doesNotMatch(support, /encodeURIComponent\(|siteConfig\.contact/);
   assert.match(finalCta, /href="#request-a-quote"/);
   assert.match(manifest, /src: "\/images\/official\/hino-300-series-hero\.jpg"/);
 });

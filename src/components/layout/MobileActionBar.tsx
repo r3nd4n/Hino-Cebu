@@ -5,11 +5,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import { siteConfig } from "@/content/site";
+import type { PublicContact } from "@/content/site";
 
 import { Icon } from "../ui/Icon";
 
-export function MobileActionBar() {
+export function MobileActionBar({ phone }: { phone: PublicContact["phone"] }) {
   const pathname = usePathname();
   const isHomepage = pathname === "/";
   const [isVisible, setIsVisible] = useState(false);
@@ -35,7 +35,9 @@ export function MobileActionBar() {
 
   return (
     <nav aria-label="Quick actions" className="mobile-action-bar">
-      <a href={siteConfig.contact.phone.href}><Icon icon={Phone} size={18} />Call</a>
+      {phone.status === "approved" ? (
+        <a href={phone.href}><Icon icon={Phone} size={18} />Call</a>
+      ) : null}
       <Link href={isHomepage ? "/#request-a-quote" : "/contact#inquiry"}>
         {isHomepage ? "Request a Quote" : "Inquire"}
       </Link>

@@ -3,7 +3,7 @@ import { ArrowUpRight, Phone } from "lucide-react";
 import { ButtonLink } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { inquiryHref, type InquiryTopic } from "@/content/inquiry";
-import { siteConfig } from "@/content/site";
+import { publicContact } from "@/content/site";
 
 interface LocalContactCtaProps {
   eyebrow?: string;
@@ -30,7 +30,9 @@ export function LocalContactCta({
         </div>
         <div className="local-contact-cta__actions">
           <ButtonLink href={inquiryHref(topic)}>{inquiryLabel}<Icon icon={ArrowUpRight} size={17} /></ButtonLink>
-          <ButtonLink href={siteConfig.contact.phone.href} variant="secondary"><Icon icon={Phone} size={17} />Call {siteConfig.contact.phone.display}</ButtonLink>
+          {publicContact.phone.status === "approved" ? (
+            <ButtonLink href={publicContact.phone.href} variant="secondary"><Icon icon={Phone} size={17} />Call {publicContact.phone.display}</ButtonLink>
+          ) : null}
         </div>
       </div>
       <style>{`

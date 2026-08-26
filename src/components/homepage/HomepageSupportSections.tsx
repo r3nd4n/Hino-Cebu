@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, Check, MapPin, Phone } from "lucide-react";
@@ -5,13 +7,16 @@ import { ArrowUpRight, Check, MapPin, Phone } from "lucide-react";
 import { partsServiceWorkshop } from "@/content/assets";
 import { homepageContent } from "@/content/homepage";
 import { serviceOfferings } from "@/content/services";
-import { siteConfig } from "@/content/site";
+import type { PublicContact } from "@/content/site";
 import { Icon } from "@/components/ui/Icon";
 
-const mapSearchUrl = `https://www.google.com/maps?q=${encodeURIComponent(siteConfig.contact.address)}&output=embed`;
-const directionsUrl = siteConfig.contact.directionsUrl.value ?? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(siteConfig.contact.address)}`;
-
-export function HomepageSupportSections() {
+export function HomepageSupportSections({
+  contact,
+  siteName,
+}: {
+  contact: PublicContact;
+  siteName: string;
+}) {
   const { service, valuePoints, visit } = homepageContent;
 
   return (
@@ -53,22 +58,34 @@ export function HomepageSupportSections() {
           <div className="visit-section__content">
             <p className="eyebrow">{visit.eyebrow}</p>
             <h2 id="visit-heading">{visit.title}</h2>
-            <address>
-              <Icon icon={MapPin} size={22} />
-              <span>{siteConfig.contact.address}</span>
-            </address>
-            <a className="visit-section__phone" href={siteConfig.contact.phone.href}>
-              <Icon icon={Phone} size={20} />{siteConfig.contact.phone.display}
-            </a>
-            <dl>
-              {siteConfig.hours.map((entry) => <div key={entry.days}><dt>{entry.days}</dt><dd>{entry.hours}</dd></div>)}
-            </dl>
-            <a className="button button--primary" href={directionsUrl} rel="noreferrer" target="_blank">
-              {visit.directionsAction}<Icon icon={ArrowUpRight} size={17} />
-            </a>
+            {contact.address.status === "approved" ? (
+              <address>
+                <Icon icon={MapPin} size={22} />
+                <span>{contact.address.display}</span>
+              </address>
+            ) : <p>Address: awaiting confirmation</p>}
+            {contact.phone.status === "approved" ? (
+              <a className="visit-section__phone" href={contact.phone.href}>
+                <Icon icon={Phone} size={20} />{contact.phone.display}
+              </a>
+            ) : <p>Phone: awaiting confirmation</p>}
+            {contact.hours.status === "approved" ? (
+              <dl>
+                {contact.hours.rows.map((entry) => <div key={entry.days}><dt>{entry.days}</dt><dd>{entry.hours}</dd></div>)}
+              </dl>
+            ) : <p>Hours: awaiting confirmation</p>}
+            {contact.directions.status === "approved" ? (
+              <a className="button button--primary" href={contact.directions.href} rel="noreferrer" target="_blank">
+                {visit.directionsAction}<Icon icon={ArrowUpRight} size={17} />
+              </a>
+            ) : (
+              <Link className="button button--primary" href="/contact#inquiry">
+                Contact / Inquire<Icon icon={ArrowUpRight} size={17} />
+              </Link>
+            )}
           </div>
           <div className="visit-section__map">
-            <iframe allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" src={mapSearchUrl} title={`Map search for ${siteConfig.identity.displayName}`} />
+            <p>{siteName} map details are awaiting confirmation.</p>
           </div>
         </div>
       </section>

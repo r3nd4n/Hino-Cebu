@@ -72,12 +72,12 @@ test("Contact retains the shared shell and the mobile action cannot mint topics"
     readFile(new URL("../src/components/layout/MobileActionBar.tsx", import.meta.url), "utf8"),
   ]);
 
-  assert.match(layout, /<Header\s*\/>[\s\S]*\{children\}[\s\S]*<Footer\s*\/>[\s\S]*<MobileActionBar\s*\/>/);
+  assert.match(layout, /<Header phone=\{publicContact\.phone\}\s*\/>[\s\S]*\{children\}[\s\S]*<Footer\s*\/>[\s\S]*<MobileActionBar phone=\{publicContact\.phone\}\s*\/>/);
   assert.equal((page.match(/<main\b/g) ?? []).length, 1);
   assert.match(page, /<main[^>]+id="main-content"/);
   assert.match(navigation, /href: "\/contact"/);
   assert.match(page, /<section[^>]+id="inquiry"/);
-  assert.match(page, /siteConfig\.contact\.phone\.href/);
+  assert.match(page, /publicContact\.phone\.status === "approved"/);
   assert.match(mobileAction, /usePathname\(\)/);
   assert.match(mobileAction, /pathname\s*===\s*"\/"/);
   assert.match(mobileAction, /"\/contact#inquiry"/);
@@ -140,7 +140,7 @@ test("Contact normalizes server-owned query context before the client boundary",
   assert.match(page, /searchParams:\s*Promise/);
   assert.match(page, /await\s+searchParams/);
   assert.match(page, /normalizeInquiryTopic\([^)]*topic[^)]*\)/);
-  assert.match(page, /<InquiryForm\s+initialTopic=\{[A-Za-z]+Topic\}/);
+  assert.match(page, /<InquiryForm\s+initialTopic=\{[A-Za-z]+Topic\}\s+phone=\{publicContact\.phone\}/);
   assert.doesNotMatch(page, /<InquiryForm[^>]*(?:searchParams|query)=/);
   assert.doesNotMatch(page, /dangerouslySetInnerHTML|process\.env|fetch\s*\(|use server|server action/i);
 });
@@ -180,27 +180,30 @@ test("InquiryForm preserves the normalized origin and follows the accessible fie
   assert.match(form, /\.focus\(\)/);
   assert.match(form, /window\.setTimeout\([^,]+,\s*300\)/);
   assert.match(form, /Thank you for your interest in Hino Cebu\./);
-  assert.match(form, /For immediate assistance, call \(032\) 346 3322\./);
-  assert.match(form, /We couldn't send your inquiry right now\. Please try again or call Hino Cebu at \(032\) 346 3322\./);
+  assert.match(form, /phone\.status === "approved"/);
+  assert.match(form, /Local phone details are awaiting confirmation\./);
+  assert.match(form, /We couldn't send your inquiry right now\. Please try again\./);
   assert.doesNotMatch(form, /fetch\s*\(|use server|process\.env|localStorage|sessionStorage|leadId|thank-you|resend|google sheets|provider/i);
 });
 
-test("Contact exposes verified facts and truthful unresolved statuses", async () => {
+test("Contact gates local facts and keeps truthful unresolved statuses", async () => {
   const page = await readFile(new URL("../src/app/contact/page.tsx", import.meta.url), "utf8");
 
-  assert.match(page, /siteConfig\.contact\.phone\.href/);
-  assert.match(page, /siteConfig\.contact\.address/);
-  assert.match(page, /siteConfig\.hours/);
+  assert.match(page, /publicContact\.phone\.status === "approved"/);
+  assert.match(page, /publicContact\.address\.status === "approved"/);
+  assert.match(page, /publicContact\.hours\.status === "approved"/);
+  assert.match(page, /Phone: awaiting confirmation/);
+  assert.match(page, /Address: awaiting confirmation/);
+  assert.match(page, /Hours: awaiting confirmation/);
   assert.match(page, /Email: awaiting confirmation/);
   assert.match(page, /Verified directions link: awaiting confirmation/);
-  assert.match(page, /Address search for Hino Cebu/);
-  assert.match(page, /Search this address on Google Maps/);
-  assert.match(page, /encodeURIComponent\(siteConfig\.contact\.address\)/);
+  assert.match(page, /Map and directions: awaiting confirmation/);
+  assert.doesNotMatch(page, /<iframe|encodeURIComponent\(|Google Maps/);
   assert.match(page, /<section[^>]+id="inquiry"/);
 
-  const mapEnd = page.indexOf("</iframe>");
-  const closingCall = page.indexOf("Call (032) 346 3322", mapEnd);
-  assert.ok(mapEnd >= 0 && closingCall > mapEnd, "configured call cue must appear after the map");
+  const locationStatus = page.indexOf("Map and directions: awaiting confirmation");
+  const closingInquiry = page.indexOf("Contact / Inquire", locationStatus);
+  assert.ok(locationStatus >= 0 && closingInquiry > locationStatus, "general inquiry must follow pending location status");
 
   assert.doesNotMatch(page, /mailto:|siteConfig\.contact\.email\.value\s*\?\?|siteConfig\.contact\.directionsUrl\.value\s*\?\?/);
   assert.doesNotMatch(page, /verified branch listing|verified map|mother site|hino\.com\.ph|Promotions/i);

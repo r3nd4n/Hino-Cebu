@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
-import { siteConfig } from "@/content/site";
+import type { PublicContact } from "@/content/site";
 import { primaryNavigation } from "@/content/navigation";
 import { Phone } from "lucide-react";
 
@@ -13,7 +13,7 @@ import { MobileMenu } from "./MobileMenu";
 import { Container } from "../ui/Container";
 import { Icon } from "../ui/Icon";
 
-export function Header() {
+export function Header({ phone }: { phone: PublicContact["phone"] }) {
   const pathname = usePathname();
   const isHomepage = pathname === "/";
   const [hasScrolled, setHasScrolled] = useState(false);
@@ -50,11 +50,17 @@ export function Header() {
           ))}
         </nav>
 
-        <a className="site-header__phone" href={siteConfig.contact.phone.href}>
-          <Icon icon={Phone} size={18} />
-          <span>{siteConfig.contact.phone.display}</span>
-        </a>
-        <MobileMenu navigation={primaryNavigation} phone={siteConfig.contact.phone} />
+        {phone.status === "approved" ? (
+          <a className="site-header__phone" href={phone.href}>
+            <Icon icon={Phone} size={18} />
+            <span>{phone.display}</span>
+          </a>
+        ) : (
+          <Link className="site-header__phone" href="/contact#inquiry">
+            Contact / Inquire
+          </Link>
+        )}
+        <MobileMenu navigation={primaryNavigation} phone={phone} />
       </Container>
     </header>
   );

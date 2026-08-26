@@ -3,7 +3,7 @@
 import { type FormEvent, useRef, useState } from "react";
 
 import { inquiryTopics, type InquiryTopic } from "@/content/inquiry";
-import { siteConfig } from "@/content/site";
+import type { PublicContact } from "@/content/site";
 import {
   type InquiryDraft,
   type InquiryField,
@@ -14,11 +14,14 @@ type InquiryStatus = "idle" | "loading" | "success" | "failure";
 type InquiryErrors = Partial<Record<InquiryField, string>>;
 
 const confirmationHeading = "Thank you for your interest in Hino Cebu.";
-const immediateAssistance = "For immediate assistance, call (032) 346 3322.";
-const safeFailureMessage =
-  "We couldn't send your inquiry right now. Please try again or call Hino Cebu at (032) 346 3322.";
 
-export function InquiryForm({ initialTopic }: { initialTopic: InquiryTopic }) {
+export function InquiryForm({
+  initialTopic,
+  phone,
+}: {
+  initialTopic: InquiryTopic;
+  phone: PublicContact["phone"];
+}) {
   const [draft, setDraft] = useState<InquiryDraft>({
     originTopic: initialTopic,
     inquiryTopic: initialTopic,
@@ -77,8 +80,12 @@ export function InquiryForm({ initialTopic }: { initialTopic: InquiryTopic }) {
     return (
       <div aria-live="polite" className="inquiry-confirmation">
         <h2 ref={confirmationRef} tabIndex={-1}>{confirmationHeading}</h2>
-        <p>{immediateAssistance}</p>
-        <a className="button button--primary" href={siteConfig.contact.phone.href}>Call Hino Cebu</a>
+        <p>{phone.status === "approved" ? `For immediate assistance, call ${phone.display}.` : "Local phone details are awaiting confirmation."}</p>
+        {phone.status === "approved" ? (
+          <a className="button button--primary" href={phone.href}>Call Hino Cebu</a>
+        ) : (
+          <a className="button button--primary" href="/contact#inquiry">Start another inquiry</a>
+        )}
       </div>
     );
   }
@@ -86,7 +93,11 @@ export function InquiryForm({ initialTopic }: { initialTopic: InquiryTopic }) {
   return (
     <>
       {status === "failure" && (
-        <p aria-live="assertive" className="form-message form-message--error">{safeFailureMessage}</p>
+        <p aria-live="assertive" className="form-message form-message--error">
+          {phone.status === "approved"
+            ? `We couldn't send your inquiry right now. Please try again or call Hino Cebu at ${phone.display}.`
+            : "We couldn't send your inquiry right now. Please try again."}
+        </p>
       )}
       <form noValidate onSubmit={submitInquiry} ref={formRef}>
         <InquirySelect

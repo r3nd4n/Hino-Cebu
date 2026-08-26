@@ -1,9 +1,10 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 
 import { officialAssets } from "@/content/assets";
 import { homepageContent } from "@/content/homepage";
-import { siteConfig } from "@/content/site";
 import { truckRanges, type TruckSeriesSlug } from "@/content/trucks";
 
 const rangeAssets: Record<TruckSeriesSlug, (typeof officialAssets)[keyof typeof officialAssets]> = {
@@ -13,7 +14,7 @@ const rangeAssets: Record<TruckSeriesSlug, (typeof officialAssets)[keyof typeof 
   "bus-puv": officialAssets.truckBusPuv,
 };
 
-export function TruckRangeSection() {
+export function TruckRangeSection({ availabilityNotice }: { availabilityNotice: string }) {
   const { truckRange } = homepageContent;
 
   return (
@@ -28,7 +29,7 @@ export function TruckRangeSection() {
             {truckRange.action}
           </Link>
         </div>
-        <p className="truck-range__availability">{siteConfig.availabilityNotice}</p>
+        <p className="truck-range__availability">{availabilityNotice}</p>
 
         <div className="truck-range__grid">
           {truckRanges.map((truck) => {

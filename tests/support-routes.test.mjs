@@ -107,11 +107,11 @@ test("shared shell consumes only approval-aware contact facts and keeps inquiry 
     );
   }
 
-  assert.match(header, /publicContact\.phone/);
-  assert.match(header, /<MobileMenu[\s\S]*phone=\{publicContact\.phone\}/);
+  assert.match(header, /phone\.status === "approved"/);
+  assert.match(header, /<MobileMenu[\s\S]*phone=\{phone\}/);
   assert.match(mobileMenu, /phone\.status === "approved"/);
-  assert.match(mobileMenu, /href="\/contact#inquiry"/);
-  assert.match(mobileAction, /publicContact\.phone/);
+  assert.match(mobileMenu, /"\/contact#inquiry"/);
+  assert.match(mobileAction, /phone\.status === "approved"/);
   assert.match(mobileAction, /"\/contact#inquiry"/);
   assert.match(footer, /Phone: awaiting confirmation/);
   assert.match(footer, /Address: awaiting confirmation/);
@@ -133,12 +133,12 @@ test("local-support routes retain one landmark, shared-shell reachability, and s
     readSource("src/components/layout/MobileActionBar.tsx"),
   ]);
 
-  assert.match(layout, /<Header\s*\/>[\s\S]*\{children\}[\s\S]*<Footer\s*\/>[\s\S]*<MobileActionBar\s*\/>/);
+  assert.match(layout, /<Header phone=\{publicContact\.phone\}\s*\/>[\s\S]*\{children\}[\s\S]*<Footer\s*\/>[\s\S]*<MobileActionBar phone=\{publicContact\.phone\}\s*\/>/);
   for (const [route, source] of [["/parts-service", partsService], ["/about", about]]) {
     assert.equal((source.match(/<main\b/g) ?? []).length, 1, `${route} must own exactly one main`);
     assert.match(source, /<main[^>]+id="main-content"/);
     assert.ok(navigation.includes(`href: "${route}"`), `${route} must be reachable from configured navigation`);
-    assert.match(source, /siteConfig\.contact\.phone\.href/);
+    assert.match(source, /publicContact\.phone\.status === "approved"/);
   }
   assert.match(partsService, /inquiryHref\("general"\)/);
   assert.match(about, /inquiryHref\("general"\)/);
@@ -182,7 +182,7 @@ test("Parts & Service route preserves path hierarchy and contextual contact acti
   assert.match(page, /serviceOfferings\.filter\(\(offering\) => offering\.role === "primary"\)/);
   assert.match(page, /serviceOfferings\.filter\(\(offering\) => offering\.role === "supporting"\)/);
   assert.match(page, /inquiryHref\(offering\.topic\)/);
-  assert.match(page, /siteConfig\.contact\.phone\.href/);
+  assert.match(page, /publicContact\.phone\.status === "approved"/);
   assert.doesNotMatch(page, /partsServiceWorkshop|Cebu facility|our workshop/i);
   assert.doesNotMatch(page, /promotions?/i);
   assert.doesNotMatch(page, /sourceUrl|publisher|reviewedOn|supports:/);
@@ -213,9 +213,9 @@ test("About route separates local and national subjects before practical Cebu fa
   assert.match(page, /<LocalContactCta/);
   assert.match(page, /getPublicAboutContent\(\)/);
   assert.match(page, /About Hino Motors Philippines/);
-  assert.match(page, /siteConfig\.contact\.address/);
-  assert.match(page, /siteConfig\.hours\.map/);
-  assert.match(page, /siteConfig\.contact\.phone\.href/);
+  assert.match(page, /publicContact\.address\.status === "approved"/);
+  assert.match(page, /publicContact\.hours\.status === "approved"/);
+  assert.match(page, /publicContact\.phone\.status === "approved"/);
 
   const localIndex = page.indexOf('id="local-commitment"');
   const nationalIndex = page.indexOf('id="national-background"');

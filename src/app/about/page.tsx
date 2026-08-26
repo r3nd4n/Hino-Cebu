@@ -7,7 +7,7 @@ import { ButtonLink } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { getPublicAboutContent } from "@/content/about";
 import { inquiryHref } from "@/content/inquiry";
-import { siteConfig } from "@/content/site";
+import { publicContact } from "@/content/site";
 
 export const metadata: Metadata = {
   title: "About | Hino Cebu",
@@ -57,23 +57,37 @@ export default function AboutPage() {
             <article>
               <Icon icon={MapPin} size={24} />
               <h3>Address</h3>
-              <address>{siteConfig.contact.address}</address>
+              {publicContact.address.status === "approved" ? (
+                <address>{publicContact.address.display}</address>
+              ) : (
+                <p>Address: awaiting confirmation</p>
+              )}
             </article>
             <article>
               <Icon icon={Phone} size={24} />
               <h3>Phone</h3>
-              <a href={siteConfig.contact.phone.href}>{siteConfig.contact.phone.display}</a>
+              {publicContact.phone.status === "approved" ? (
+                <a href={publicContact.phone.href}>{publicContact.phone.display}</a>
+              ) : (
+                <p>Phone: awaiting confirmation</p>
+              )}
             </article>
             <article>
               <h3>Hours</h3>
-              <dl>
-                {siteConfig.hours.map((entry) => <div key={entry.days}><dt>{entry.days}</dt><dd>{entry.hours}</dd></div>)}
-              </dl>
+              {publicContact.hours.status === "approved" ? (
+                <dl>
+                  {publicContact.hours.rows.map((entry) => <div key={entry.days}><dt>{entry.days}</dt><dd>{entry.hours}</dd></div>)}
+                </dl>
+              ) : (
+                <p>Hours: awaiting confirmation</p>
+              )}
             </article>
           </div>
           <div className="about-practical__actions">
             <ButtonLink href={inquiryHref("general")}>Start an Inquiry<Icon icon={ArrowUpRight} size={17} /></ButtonLink>
-            <ButtonLink href={siteConfig.contact.phone.href} variant="secondary"><Icon icon={Phone} size={17} />Call {siteConfig.contact.phone.display}</ButtonLink>
+            {publicContact.phone.status === "approved" ? (
+              <ButtonLink href={publicContact.phone.href} variant="secondary"><Icon icon={Phone} size={17} />Call {publicContact.phone.display}</ButtonLink>
+            ) : null}
           </div>
         </div>
       </section>

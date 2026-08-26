@@ -3,7 +3,7 @@
 import { type FormEvent, type Ref, type RefObject, type ReactNode, useRef, useState } from "react";
 
 import { homepageContent } from "@/content/homepage";
-import { siteConfig } from "@/content/site";
+import type { PublicContact } from "@/content/site";
 import { businessUses } from "@/content/trucks";
 import { type QuoteDraft, type QuoteField, validateQuoteDraft } from "@/lib/quote-demo";
 
@@ -22,11 +22,14 @@ type QuoteStatus = "idle" | "loading" | "success" | "failure";
 type QuoteErrors = Partial<Record<QuoteField, string>>;
 
 const confirmationHeading = "Thank you for your interest in Hino Cebu.";
-const immediateAssistance = "For immediate assistance, call (032) 346 3322.";
-const safeFailureMessage =
-  "We couldn't send your inquiry right now. Please try again or call Hino Cebu at (032) 346 3322.";
 
-export function HomepageQuoteExperience() {
+export function HomepageQuoteExperience({
+  phone,
+  primaryCta,
+}: {
+  phone: PublicContact["phone"];
+  primaryCta: string;
+}) {
   const [draft, setDraft] = useState<QuoteDraft>(initialDraft);
   const [errors, setErrors] = useState<QuoteErrors>({});
   const [status, setStatus] = useState<QuoteStatus>("idle");
@@ -97,6 +100,8 @@ export function HomepageQuoteExperience() {
               errors={errors}
               onSubmit={submitQuote}
               onUpdate={updateDraft}
+              phone={phone}
+              primaryCta={primaryCta}
               status={status}
             />
           </div>
@@ -132,18 +137,24 @@ type QuoteFormProps = {
   errors: QuoteErrors;
   onSubmit: (event: FormEvent<HTMLFormElement>) => void;
   onUpdate: <K extends QuoteField>(field: K, value: QuoteDraft[K]) => void;
+  phone: PublicContact["phone"];
+  primaryCta: string;
   status: QuoteStatus;
 };
 
-function QuoteForm({ businessUseSelectRef, draft, errors, onSubmit, onUpdate, status }: QuoteFormProps) {
+function QuoteForm({ businessUseSelectRef, draft, errors, onSubmit, onUpdate, phone, primaryCta, status }: QuoteFormProps) {
   const isLoading = status === "loading";
 
   if (status === "success") {
     return (
       <section aria-live="polite" className="homepage-quote homepage-quote--confirmation" id="request-a-quote" tabIndex={-1}>
         <h2>{confirmationHeading}</h2>
-        <p>{immediateAssistance}</p>
-        <a className="button button--primary" href={siteConfig.contact.phone.href}>Call Hino Cebu</a>
+        <p>{phone.status === "approved" ? `For immediate assistance, call ${phone.display}.` : "Local phone details are awaiting confirmation."}</p>
+        {phone.status === "approved" ? (
+          <a className="button button--primary" href={phone.href}>Call Hino Cebu</a>
+        ) : (
+          <a className="button button--primary" href="/contact#inquiry">Contact / Inquire</a>
+        )}
       </section>
     );
   }
@@ -154,7 +165,13 @@ function QuoteForm({ businessUseSelectRef, draft, errors, onSubmit, onUpdate, st
         <p className="eyebrow">Request a quote</p>
         <h2>Start with your business needs</h2>
       </div>
-      {status === "failure" && <p aria-live="assertive" className="form-message form-message--error">{safeFailureMessage}</p>}
+      {status === "failure" && (
+        <p aria-live="assertive" className="form-message form-message--error">
+          {phone.status === "approved"
+            ? `We couldn't send your inquiry right now. Please try again or call Hino Cebu at ${phone.display}.`
+            : "We couldn't send your inquiry right now. Please try again."}
+        </p>
+      )}
       <form noValidate onSubmit={onSubmit}>
         <QuoteTextField autoComplete="name" error={errors.name} id="quote-name" label="Full name" onChange={(value) => onUpdate("name", value)} value={draft.name} />
         <QuoteTextField autoComplete="tel" error={errors.mobile} id="quote-mobile" inputMode="tel" label="Mobile number" onChange={(value) => onUpdate("mobile", value)} type="tel" value={draft.mobile} />
@@ -184,7 +201,7 @@ function QuoteForm({ businessUseSelectRef, draft, errors, onSubmit, onUpdate, st
           {errors.consent && <p className="field-error" id="quote-consent-error">{errors.consent}</p>}
         </div>
         <button className="button button--primary" disabled={isLoading} type="submit">
-          {isLoading ? "Preparing your next step…" : siteConfig.primaryCta}
+          {isLoading ? "Preparing your next step…" : primaryCta}
         </button>
         <p aria-live="polite" className="form-message">{isLoading ? "Checking your details…" : ""}</p>
       </form>

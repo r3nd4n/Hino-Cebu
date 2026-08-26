@@ -5,7 +5,7 @@ import { PageHero } from "@/components/shared/PageHero";
 import { ButtonLink } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { inquiryHref } from "@/content/inquiry";
-import { siteConfig } from "@/content/site";
+import { publicContact } from "@/content/site";
 import type { PublicTruckSeries } from "@/content/trucks";
 
 interface TruckSeriesPageProps {
@@ -27,7 +27,9 @@ export function TruckSeriesPage({ series, image }: TruckSeriesPageProps) {
         actions={
           <>
             <ButtonLink href={inquiryHref(series.slug)}>Ask About This Range</ButtonLink>
-            <ButtonLink href={siteConfig.contact.phone.href} variant="secondary">Call {siteConfig.contact.phone.display}</ButtonLink>
+            {publicContact.phone.status === "approved" ? (
+              <ButtonLink href={publicContact.phone.href} variant="secondary">Call {publicContact.phone.display}</ButtonLink>
+            ) : null}
           </>
         }
         description={series.heroCopy}

@@ -7,7 +7,7 @@ import { ButtonLink } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { inquiryHref } from "@/content/inquiry";
 import { serviceOfferings } from "@/content/services";
-import { siteConfig } from "@/content/site";
+import { publicContact } from "@/content/site";
 
 export const metadata: Metadata = {
   title: "Parts & Service | Hino Cebu",
@@ -24,7 +24,9 @@ export default function PartsServicePage() {
         actions={
           <>
             <ButtonLink href={inquiryHref("general")}>Start an Inquiry<Icon icon={ArrowUpRight} size={17} /></ButtonLink>
-            <ButtonLink href={siteConfig.contact.phone.href} variant="secondary"><Icon icon={Phone} size={17} />Call {siteConfig.contact.phone.display}</ButtonLink>
+            {publicContact.phone.status === "approved" ? (
+              <ButtonLink href={publicContact.phone.href} variant="secondary"><Icon icon={Phone} size={17} />Call {publicContact.phone.display}</ButtonLink>
+            ) : null}
           </>
         }
         description="Choose the local support path that best matches your question, then share your vehicle and operating context with the Cebu team."

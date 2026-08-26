@@ -3,17 +3,21 @@
 import Link from "next/link";
 import { Menu, Phone, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 
 import type { NavigationItem } from "@/content/navigation";
+import type { PublicContact } from "@/content/site";
 
 import { Icon } from "../ui/Icon";
 
 type MobileMenuProps = {
   navigation: readonly NavigationItem[];
-  phone: { display: string; href: string };
+  phone: PublicContact["phone"];
 };
 
 export function MobileMenu({ navigation, phone }: MobileMenuProps) {
+  const pathname = usePathname();
+  const isHomepage = pathname === "/";
   const [isOpen, setIsOpen] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
 
@@ -54,8 +58,15 @@ export function MobileMenu({ navigation, phone }: MobileMenuProps) {
             {navigation.map((item) => <Link href={item.href} key={item.href} onClick={() => setIsOpen(false)}>{item.label}</Link>)}
           </nav>
           <div className="mobile-menu__actions">
-            <a href={phone.href}><Icon icon={Phone} size={18} />Call {phone.display}</a>
-            <Link href="/#request-a-quote" onClick={() => setIsOpen(false)}>Request a Quote</Link>
+            {phone.status === "approved" ? (
+              <a href={phone.href}><Icon icon={Phone} size={18} />Call {phone.display}</a>
+            ) : null}
+            <Link
+              href={isHomepage ? "/#request-a-quote" : "/contact#inquiry"}
+              onClick={() => setIsOpen(false)}
+            >
+              {isHomepage ? "Request a Quote" : "Contact / Inquire"}
+            </Link>
           </div>
         </div>
       ) : null}

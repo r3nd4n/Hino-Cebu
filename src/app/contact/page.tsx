@@ -6,7 +6,7 @@ import { PageHero } from "@/components/shared/PageHero";
 import { ButtonLink } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { normalizeInquiryTopic } from "@/content/inquiry";
-import { siteConfig } from "@/content/site";
+import { publicContact } from "@/content/site";
 
 export const metadata: Metadata = {
   title: "Contact | Hino Cebu",
@@ -20,14 +20,11 @@ type ContactPageProps = {
 export default async function ContactPage({ searchParams }: ContactPageProps) {
   const query = await searchParams;
   const initialTopic = normalizeInquiryTopic(query.topic);
-  const encodedAddress = encodeURIComponent(siteConfig.contact.address);
-  const mapSearchUrl = `https://www.google.com/maps?q=${encodedAddress}&output=embed`;
-  const accessibleAddressSearch = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
 
   return (
     <main id="main-content" tabIndex={-1}>
       <PageHero
-        description="Share what your business needs or use the verified phone path for immediate local assistance."
+        description="Share what your business needs and use only the confirmed local contact paths shown here."
         eyebrow="Contact Hino Cebu"
         title="Start a local conversation"
       />
@@ -38,25 +35,33 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
             <p className="eyebrow">Request information</p>
             <div className="contact-inquiry__heading">
               <h2 id="inquiry-heading">Tell us what you need</h2>
-              <a className="contact-inquiry__call" href={siteConfig.contact.phone.href}>
-                <Icon icon={Phone} size={18} />Call {siteConfig.contact.phone.display}
-              </a>
+              {publicContact.phone.status === "approved" ? (
+                <a className="contact-inquiry__call" href={publicContact.phone.href}>
+                  <Icon icon={Phone} size={18} />Call {publicContact.phone.display}
+                </a>
+              ) : null}
             </div>
-            <InquiryForm initialTopic={initialTopic} />
+            <InquiryForm initialTopic={initialTopic} phone={publicContact.phone} />
           </div>
 
           <aside aria-labelledby="contact-details-heading" className="contact-details">
             <p className="eyebrow">Local information</p>
             <h2 id="contact-details-heading">Reach Hino Cebu</h2>
-            <a className="contact-details__phone" href={siteConfig.contact.phone.href}>
-              <Icon icon={Phone} size={20} />{siteConfig.contact.phone.display}
-            </a>
-            <address><Icon icon={MapPin} size={22} /><span>{siteConfig.contact.address}</span></address>
-            <dl className="contact-details__hours">
-              {siteConfig.hours.map((entry) => (
-                <div key={entry.days}><dt>{entry.days}</dt><dd>{entry.hours}</dd></div>
-              ))}
-            </dl>
+            {publicContact.phone.status === "approved" ? (
+              <a className="contact-details__phone" href={publicContact.phone.href}>
+                <Icon icon={Phone} size={20} />{publicContact.phone.display}
+              </a>
+            ) : <p>Phone: awaiting confirmation</p>}
+            {publicContact.address.status === "approved" ? (
+              <address><Icon icon={MapPin} size={22} /><span>{publicContact.address.display}</span></address>
+            ) : <p>Address: awaiting confirmation</p>}
+            {publicContact.hours.status === "approved" ? (
+              <dl className="contact-details__hours">
+                {publicContact.hours.rows.map((entry) => (
+                  <div key={entry.days}><dt>{entry.days}</dt><dd>{entry.hours}</dd></div>
+                ))}
+              </dl>
+            ) : <p>Hours: awaiting confirmation</p>}
             <p>Email: awaiting confirmation</p>
             <p>Verified directions link: awaiting confirmation</p>
           </aside>
@@ -65,21 +70,20 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
 
       <section aria-labelledby="contact-map-heading" className="contact-map">
         <div className="container">
-          <p className="eyebrow">Address search</p>
-          <h2 id="contact-map-heading">Find the configured Cebu address</h2>
-          <div className="contact-map__frame">
-            <iframe
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              src={mapSearchUrl}
-              title="Address search for Hino Cebu"
-            ></iframe>
-          </div>
-          <a href={accessibleAddressSearch} rel="noreferrer" target="_blank">Search this address on Google Maps</a>
+          <p className="eyebrow">Location</p>
+          <h2 id="contact-map-heading">Cebu location details</h2>
+          {publicContact.directions.status === "approved" ? (
+            <a href={publicContact.directions.href} rel="noreferrer" target="_blank">Open verified directions</a>
+          ) : (
+            <p>Map and directions: awaiting confirmation</p>
+          )}
           <div className="contact-map__closing-call">
-            <p>Prefer to speak with the local team?</p>
-            <ButtonLink href={siteConfig.contact.phone.href}><Icon icon={Phone} size={17} />Call (032) 346 3322</ButtonLink>
+            <p>Continue with a general local inquiry.</p>
+            {publicContact.phone.status === "approved" ? (
+              <ButtonLink href={publicContact.phone.href}><Icon icon={Phone} size={17} />Call {publicContact.phone.display}</ButtonLink>
+            ) : (
+              <ButtonLink href="/contact#inquiry">Contact / Inquire</ButtonLink>
+            )}
           </div>
         </div>
       </section>

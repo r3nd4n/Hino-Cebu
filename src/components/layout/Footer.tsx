@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { legalNavigation, primaryNavigation } from "@/content/navigation";
 import { truckRanges } from "@/content/trucks";
-import { siteConfig } from "@/content/site";
+import { publicContact } from "@/content/site";
 
 import { Container } from "../ui/Container";
 
@@ -32,11 +32,22 @@ export function Footer() {
         </section>
         <section aria-labelledby="footer-contact-heading">
           <h2 id="footer-contact-heading">Contact</h2>
-          <address>
-            <a href={siteConfig.contact.phone.href}>{siteConfig.contact.phone.display}</a>
-            <p>{siteConfig.contact.address}</p>
-          </address>
-          <p>{siteConfig.hours.map((item) => `${item.days}: ${item.hours}`).join(" · ")}</p>
+          {publicContact.phone.status === "approved" ? (
+            <a href={publicContact.phone.href}>{publicContact.phone.display}</a>
+          ) : (
+            <p>Phone: awaiting confirmation</p>
+          )}
+          {publicContact.address.status === "approved" ? (
+            <address>{publicContact.address.display}</address>
+          ) : (
+            <p>Address: awaiting confirmation</p>
+          )}
+          {publicContact.hours.status === "approved" ? (
+            <p>{publicContact.hours.rows.map((item) => `${item.days}: ${item.hours}`).join(" · ")}</p>
+          ) : (
+            <p>Hours: awaiting confirmation</p>
+          )}
+          <Link href="/contact#inquiry">Contact / Inquire</Link>
         </section>
       </Container>
       <Container className="site-footer__legal">

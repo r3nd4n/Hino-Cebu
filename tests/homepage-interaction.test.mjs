@@ -27,10 +27,11 @@ test("quote experience keeps validation and one anchored quote form in its clien
 
 test("quote experience uses truthful local confirmation and a safe failure state", () => {
   assert.match(quoteExperience, /Thank you for your interest in Hino Cebu\./);
-  assert.match(quoteExperience, /For immediate assistance, call \(032\) 346 3322\./);
+  assert.match(quoteExperience, /phone\.status === "approved"/);
+  assert.match(quoteExperience, /Local phone details are awaiting confirmation\./);
   assert.match(
     quoteExperience,
-    /We couldn't send your inquiry right now\. Please try again or call Hino Cebu at \(032\) 346 3322\./,
+    /We couldn't send your inquiry right now\. Please try again\./,
   );
 });
 
@@ -46,7 +47,7 @@ test("mobile actions observe the hero before showing the call and quote targets"
   assert.match(mobileActionBar, /"use client"/);
   assert.match(mobileActionBar, /IntersectionObserver/);
   assert.match(mobileActionBar, /homepage-hero/);
-  assert.match(mobileActionBar, /siteConfig\.contact\.phone\.href/);
+  assert.match(mobileActionBar, /phone\.status === "approved"/);
   assert.match(mobileActionBar, /\/#request-a-quote/);
   assert.match(mobileActionBar, /aria-label="Quick actions"/);
 });
