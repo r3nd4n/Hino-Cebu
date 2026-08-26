@@ -13,7 +13,7 @@
 - **D-01:** Hino Cebu is authorized to use Hino Philippines assets. Download approved files into the project, optimize them locally, and never hotlink them.
 - **D-02:** Lead the hero with an authorized 300 or 500 Series box truck in a commercial setting, shown from a three-quarter front angle.
 - **D-03:** Use isolated authorized truck images on consistent light backgrounds for the four truck-range cards.
-- **D-04:** Use an authorized Hino workshop/service image in the Parts & Service section.
+- **D-04:** Use the approved generated workshop/service placeholder for this presentation build, tracked internally for replacement with authorized Cebu photography.
 - **D-05:** Keep official images as the live baseline. Record internal-only asset source and replacement metadata so each eligible visual can later be swapped for Cebu photography; never display that marker to visitors.
 
 ### Mobile Quote Journey
@@ -121,7 +121,7 @@ No package installation is recommended for this phase; the external-package legi
 - Hino Motors Philippines' product index exposes Hino 200, 300, 500, Bus, and PUV categories. [CITED: https://www.hino.com.ph/products]
 - Official page markup currently exposes isolated range images at `assets/images/Range/200%20(with%20background.jpg`, `assets/images/Range/300withbackground.jpg`, `assets/images/Range/500withbackground.jpg`, `assets/images/Range/BUS%20(with%20background)1.jpg`, and `assets/images/Range/PUV%20(with%20background).jpg`. These are candidate source URLs only; inspect dimensions/crop after download and select a Bus/PUV representation that fits a single equal card. [VERIFIED: live HTML audit of https://www.hino.com.ph/products]
 - Official series pages expose `assets/images/PerProduct/300/Img/300SeriesFrontBanner.jpg` and `assets/images/PerProduct/500/Img/500SeriesFrontBanner.jpg` as candidate hero assets. They must be visually reviewed against the required three-quarter commercial-box-truck composition before selection. [VERIFIED: live HTML audits of https://hino.com.ph/300-series and https://www.hino.com.ph/500-series]
-- The official Parts page exposes `assets/images/Parts-Service/Parts/PartsBanner.png`, a candidate Parts & Service asset. Prefer an actual workshop/service image if the official quality-service page yields one with an appropriate operational scene. [VERIFIED: live HTML audit of https://www.hino.com.ph/Parts.aspx]
+- The official Parts page banner was visually reviewed as a parts warehouse, not a workshop. Use the approved original generated workshop placeholder at `public/images/generated/hino-parts-service-workshop.png`; it is internal-only metadata-marked and replaceable with authorized Cebu photography.
 
 ### Required manifest
 

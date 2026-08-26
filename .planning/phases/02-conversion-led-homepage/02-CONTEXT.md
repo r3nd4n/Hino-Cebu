@@ -17,7 +17,7 @@ Build the polished conversion-led Hino Cebu homepage: its truck-dominant hero, p
 - **D-01:** Hino Cebu is authorized to use Hino Philippines assets. Download approved files into the project, optimize them locally, and never hotlink them.
 - **D-02:** Lead the hero with an authorized 300 or 500 Series box truck in a commercial setting, shown from a three-quarter front angle.
 - **D-03:** Use isolated authorized truck images on consistent light backgrounds for the four truck-range cards.
-- **D-04:** Use an authorized Hino workshop/service image in the Parts & Service section.
+- **D-04:** Use the approved original generated workshop/service image in the Parts & Service section for this presentation build; record it as a non-official, internal-only replaceable placeholder for future authorized Cebu photography.
 - **D-05:** Keep official images as the live baseline. Record internal-only asset source and replacement metadata so each eligible visual can later be swapped for Cebu photography; never display that marker to visitors.
 
 ### Mobile Quote Journey
