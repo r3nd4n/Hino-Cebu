@@ -1,5 +1,9 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 import { siteConfig } from "@/content/site";
 import { primaryNavigation } from "@/content/navigation";
@@ -10,8 +14,21 @@ import { Container } from "../ui/Container";
 import { Icon } from "../ui/Icon";
 
 export function Header() {
+  const pathname = usePathname();
+  const isHomepage = pathname === "/";
+  const [hasScrolled, setHasScrolled] = useState(false);
+
+  useEffect(() => {
+    if (!isHomepage) return;
+
+    const updateHeader = () => setHasScrolled(window.scrollY > 12);
+    updateHeader();
+    window.addEventListener("scroll", updateHeader, { passive: true });
+    return () => window.removeEventListener("scroll", updateHeader);
+  }, [isHomepage]);
+
   return (
-    <header className="site-header">
+    <header className={["site-header", isHomepage ? "site-header--hero" : "", hasScrolled ? "site-header--scrolled" : ""].filter(Boolean).join(" ")}>
       <a className="skip-link" href="#main-content">
         Skip to content
       </a>
