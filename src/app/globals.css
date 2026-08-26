@@ -68,6 +68,50 @@ h3 { font-size: 1.5rem; }
 .foundation-page__content { max-width: 48rem; }
 .foundation-page__content > p:last-child { color: var(--color-muted-ink); font-size: 1.125rem; max-width: 38rem; }
 
+/* Phase 2 homepage composition. The conversion island supplies hero and business use. */
+.homepage { display: flex; flex-direction: column; }
+.homepage-hero { display: contents; }
+.homepage-hero__content { background: linear-gradient(90deg, rgb(12 14 16 / 88%) 0%, rgb(12 14 16 / 64%) 52%, rgb(12 14 16 / 52%) 100%), url("/images/official/hino-300-series-hero.jpg") center / cover; color: var(--color-paper); display: grid; gap: clamp(2rem, 5vw, 5rem); grid-template-columns: minmax(0, 1fr) minmax(22.5rem, 27.5rem); min-height: min(48rem, calc(100vh - 4.5rem)); padding-block: clamp(3rem, 7vw, 6rem) var(--space-2xl); }
+.homepage-hero__story { align-self: center; max-width: 44rem; }
+.homepage-hero h1 { margin-top: var(--space-md); max-width: 11ch; }
+.homepage-hero h1 span { color: var(--color-red); display: block; }
+.homepage-hero__story > p:not(.eyebrow) { color: #f0f1f1; font-size: clamp(1rem, 1.4vw, 1.15rem); margin: var(--space-lg) 0 0; max-width: 37rem; }
+.homepage-hero__actions { display: flex; flex-wrap: wrap; gap: var(--space-md); margin-top: var(--space-xl); }
+.homepage-hero .button--secondary { border-color: var(--color-paper); color: var(--color-paper); }
+.homepage-hero .button--secondary:hover { background: rgb(255 255 255 / 12%); }
+.homepage-quote { align-self: center; background: var(--color-charcoal); box-shadow: var(--shadow-elevated); color: var(--color-paper); padding: var(--space-xl); scroll-margin-block-start: 5.5rem; width: 100%; }
+.homepage-quote__heading h2 { font-size: clamp(1.9rem, 2.5vw, 2.5rem); margin-top: var(--space-sm); }
+.homepage-quote form { display: grid; gap: var(--space-md); margin-top: var(--space-lg); }
+.quote-field { display: grid; gap: var(--space-xs); }
+.quote-field label { font-size: .8125rem; font-weight: 700; }
+.quote-field input:not([type="checkbox"]), .quote-field select { background: var(--color-paper); border: 1px solid transparent; border-radius: var(--radius-control); color: var(--color-ink); font: inherit; min-height: 3rem; padding-inline: .75rem; width: 100%; }
+.quote-field input[aria-invalid="true"], .quote-field select[aria-invalid="true"] { border-color: var(--color-destructive); }
+.quote-field--consent { align-items: start; column-gap: var(--space-sm); grid-template-columns: 1.25rem minmax(0, 1fr); }
+.quote-field--consent input { height: 1.25rem; margin: .15rem 0 0; width: 1.25rem; }
+.quote-field--consent label { line-height: 1.45; min-height: 2.75rem; }
+.field-error { color: #ffb4af; font-size: .8125rem; grid-column: 1 / -1; margin: 0; }
+.form-message { margin: 0; min-height: 1.25rem; }
+.form-message--error { color: #ffb4af; }
+.homepage-quote--confirmation { display: grid; gap: var(--space-md); }
+.homepage-quote--confirmation h2 { font-size: clamp(2rem, 3vw, 2.8rem); }
+.homepage-quote--confirmation p { color: #dceede; margin: 0; }
+.homepage-hero__trust { background: var(--color-dark); color: var(--color-paper); display: grid; gap: 1px; grid-template-columns: repeat(3, 1fr); list-style: none; margin: 0; order: 1; padding: 0 max(1.25rem, calc((100vw - var(--container-max)) / 2)); }
+.homepage-hero__trust li { align-items: center; display: flex; font-size: .8125rem; font-weight: 700; min-height: 4.5rem; padding: var(--space-md) var(--space-lg); text-transform: uppercase; }
+.homepage-hero__trust li + li { border-left: 1px solid rgb(255 255 255 / 18%); }
+.homepage-business-needs { background: var(--color-paper); order: 4; padding-block: clamp(3.5rem, 8vw, 6rem); }
+.homepage-business-needs h2 { margin-top: var(--space-sm); max-width: 16ch; }
+.homepage-business-needs__grid { display: grid; gap: var(--space-md); grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: var(--space-xl); }
+.homepage-business-needs__card { background: var(--color-muted-surface); border: 1px solid var(--color-border); color: var(--color-ink); cursor: pointer; display: flex; flex-direction: column; font: inherit; min-height: 10rem; padding: var(--space-lg); text-align: left; }
+.homepage-business-needs__card:hover { border-color: var(--color-red); box-shadow: var(--shadow-card); }
+.homepage-business-needs__card > span { font-family: var(--font-display), "Arial Narrow", sans-serif; font-size: 1.6rem; font-weight: 700; line-height: 1; text-transform: uppercase; }
+.homepage-business-needs__card strong { font-size: .75rem; margin-top: auto; padding-top: var(--space-lg); text-transform: uppercase; }
+.homepage > .truck-range { order: 2; }
+.homepage > .why-hino { order: 3; }
+.homepage > .support-service { order: 5; }
+.homepage > .visit-section { order: 6; }
+.homepage > .final-quote { order: 7; }
+.sr-only { clip: rect(0 0 0 0); clip-path: inset(50%); height: 1px; overflow: hidden; position: absolute; white-space: nowrap; width: 1px; }
+
 .skip-link { background: var(--color-dark); color: var(--color-paper); left: var(--space-md); padding: var(--space-sm) var(--space-md); position: fixed; top: -5rem; z-index: 100; }
 .skip-link:focus { top: var(--space-md); }
 
@@ -125,9 +169,28 @@ h3 { font-size: 1.5rem; }
   .site-footer__grid { grid-template-columns: 1fr 1fr; }
   .site-footer__intro { grid-column: 1 / -1; }
   .site-footer__legal { align-items: flex-start; flex-direction: column; }
+  .homepage-hero__content { background-position: 58% center; display: flex; flex-direction: column; gap: var(--space-xl); min-height: 0; padding-block: var(--space-3xl) var(--space-xl); }
+  .homepage-hero__story { align-self: auto; }
+  .homepage-hero h1 { max-width: 9ch; }
+  .homepage-hero__actions { display: grid; grid-template-columns: 1fr; }
+  .homepage-quote { padding: var(--space-lg); scroll-margin-block-start: 4.5rem; }
+  .homepage-hero__trust { grid-template-columns: 1fr; padding-inline: var(--gutter); }
+  .homepage-hero__trust li { min-height: 3.25rem; padding: var(--space-sm) 0; }
+  .homepage-hero__trust li + li { border-left: 0; border-top: 1px solid rgb(255 255 255 / 18%); }
+  .homepage-business-needs__grid { grid-template-columns: 1fr; }
+  .homepage-business-needs__card { min-height: 8rem; }
 }
 
 @media (max-width: 479px) {
   .site-footer__grid { grid-template-columns: 1fr; }
   .site-footer__intro { grid-column: auto; }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .homepage-business-needs__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
 }
