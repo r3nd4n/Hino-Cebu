@@ -1,30 +1,22 @@
 ---
 phase: 01-foundation-content-contracts-visual-system
-verified: 2026-08-26T08:20:00+08:00
-status: gaps_found
-score: 3/4 must-haves verified
+verified: 2026-08-26T08:42:00+08:00
+status: passed
+score: 4/4 must-haves verified
 overrides_applied: 0
-gaps:
-  - truth: "The project enforces strict TypeScript, linting, build checks, and focused unit tests for server utilities."
-    status: partial
-    reason: "Strict TypeScript, lint, build, and three source-contract tests pass, but no test imports or executes src/lib/env.ts or getLeadIntegrationReadiness(). The optional-provider behavior required by FND-03/FND-04 is therefore untested."
-    artifacts:
-      - path: "tests/foundation.test.mjs"
-        issue: "All three tests read TypeScript source as text; none exercises the server environment utility or readiness branches."
-    missing:
-      - "Focused executable tests for src/lib/env.ts covering absent optional credentials and complete/incomplete provider readiness."
+gaps: []
 ---
 
 # Phase 1: Foundation, Content Contracts & Visual System Verification Report
 
 **Phase Goal:** Establish the deployable Next.js base, authoritative data/configuration boundaries, visual language, and quality guardrails.
-**Verified:** 2026-08-26T08:20:00+08:00
-**Status:** gaps_found
-**Re-verification:** No — initial verification
+**Verified:** 2026-08-26T08:42:00+08:00
+**Status:** passed
+**Re-verification:** Yes - FND-04 runtime test gap closed.
 
 ## MVP Mode Discrepancy
 
-The roadmap marks this phase as `mvp`, but its goal is not a valid user story (`As a …, I want to …, so that …`). Consequently, a formal MVP User Flow Coverage table cannot be derived as required by the MVP verifier contract. The technical roadmap success criteria and FND-01 through FND-04 were verified directly below; reformat the phase with `/gsd mvp-phase 1` before a user-story-based re-verification.
+The roadmap labels this phase `mvp`, but its goal is not in user-story form. The technical roadmap success criteria and FND-01 through FND-04 are verified below; the documentation-format issue does not leave a Phase 1 requirement gap.
 
 ## Goal Achievement
 
@@ -32,95 +24,73 @@ The roadmap marks this phase as `mvp`, but its goal is not a valid user story (`
 
 | # | Truth | Status | Evidence |
 | --- | --- | --- | --- |
-| 1 | FND-01: Visitors receive a responsive reusable public layout, mobile menu, visible primary actions, and the correct Cebu phone link. | ✓ VERIFIED | `RootLayout` renders `Header`, `Footer`, and `MobileActionBar`; `Header`, mobile menu, action bar, and footer all consume `siteConfig.contact.phone`. The configured `tel:+63323463322` matches the supplied specification. `MobileMenu` implements Escape close, focus restoration, and scroll locking. |
-| 2 | FND-02: Maintainers can update site, branch, vehicle, service, navigation, and approved-claim data from typed authoritative configuration modules. | ✓ VERIFIED | `src/content/site.ts`, `trucks.ts`, `services.ts`, and `navigation.ts` are typed source authorities. Shell components import these modules rather than duplicating phone, navigation, truck, and legal-link values. Legal entity, email, and directions retain typed `unresolved` values with launch notes. |
-| 3 | FND-03: Environment handling keeps secrets server-only, documents variables accurately, and behaves safely when optional credentials are absent. | ✓ VERIFIED | `src/lib/env.ts` imports `server-only`, reads only server credential names, normalizes missing values to `undefined`, and returns boolean readiness rather than throwing. `.env.example` contains variable names only; `.gitignore` excludes `.env*` except the template. Production build succeeds and no secret variable names occur in emitted `.next` JavaScript. |
-| 4 | FND-04: Strict TypeScript, lint/build checks, and focused server-utility tests are enforced. | ✗ FAILED | `tsconfig.json` has `strict: true`; `npm run lint` and `npm run build` pass. However, `tests/foundation.test.mjs` performs only source-text assertions and has no executable coverage of `src/lib/env.ts` or `getLeadIntegrationReadiness()`. |
+| 1 | FND-01: Responsive reusable public layout, mobile menu, visible primary actions, and correct Cebu phone link. | VERIFIED | `RootLayout` renders the shared header, footer, and mobile action bar. Public call surfaces use configured `tel:+63323463322`; the shell contract tests pass. |
+| 2 | FND-02: Site, branch, vehicle, service, navigation, and approved-claim facts are typed authoritative configuration. | VERIFIED | Typed `src/content/site.ts`, `trucks.ts`, `services.ts`, and `navigation.ts` feed the shared shell, with unresolved business facts marked for launch verification. |
+| 3 | FND-03: Environment handling keeps secrets server-only and remains safe without optional provider credentials. | VERIFIED | `src/lib/env.ts` retains its `server-only` boundary. Runtime tests prove absent and incomplete providers stay disabled; `.env.example` contains only variable names. |
+| 4 | FND-04: Strict TypeScript, lint/build checks, and focused server-utility tests are enforced. | VERIFIED | `npm test` passes 6 tests, including runtime execution of `src/lib/env.ts` against isolated values; `npm run lint` and `npm run build` pass. |
 
-**Score:** 3/4 truths verified
+**Score:** 4/4 truths verified
 
 ### Roadmap Success Criteria
 
 | Criterion | Status | Evidence |
 | --- | --- | --- |
-| Reusable responsive public shell with correct click-to-call action | ✓ VERIFIED | Shared shell is wired through `src/app/layout.tsx`; phone action is configuration-driven in desktop, mobile, and footer surfaces. |
-| Editable business and vehicle facts in typed authoritative modules, with unresolved facts explicitly marked | ✓ VERIFIED | Content modules and their direct component consumers verified; unresolved values use typed status and launch notes. |
-| Environment handling, strict TypeScript, lint/build checks, and foundational tests work without exposing secrets | ✗ FAILED | Environment, strict compiler, lint, and production build work, but foundational tests do not test the server utility’s behavior. |
+| Reusable responsive public shell with correct click-to-call action | VERIFIED | Shared App Router shell and configuration-driven call links are implemented and covered by foundation tests. |
+| Editable business and vehicle facts in typed authoritative modules, with unresolved facts explicitly marked | VERIFIED | Typed content modules are direct public-data authorities and record unresolved launch inputs. |
+| Environment handling, strict TypeScript, lint/build checks, and foundational tests work without exposing secrets | VERIFIED | Executable environment tests validate URL normalization, readiness states, and safe public exports. Full tests, lint, and production build pass. |
 
-### Required Artifacts
+## Required Artifacts
 
 | Artifact | Expected | Status | Details |
 | --- | --- | --- | --- |
-| `src/app/layout.tsx` | Shared public shell | ✓ VERIFIED | Substantive layout imports and renders Header, Footer, and MobileActionBar around page children. |
-| `src/components/layout/{Header,Footer,MobileMenu,MobileActionBar}.tsx` | Responsive accessible public actions | ✓ VERIFIED | Components render configuration-driven navigation and phone links; `MobileMenu` is a client component with state, Escape handling, scroll lock, and focus restoration. |
-| `src/content/{site,trucks,services,navigation}.ts` | Typed authoritative public data | ✓ VERIFIED | Substantive typed data; rendered shell links/data are imported by consumers. No Promotion entry is exported. |
-| `src/lib/env.ts` | Server-only optional provider configuration | ✓ VERIFIED | `server-only` guard plus normalized optional values and readiness calculation. Its planned runtime consumer belongs to the later lead-routing phase. |
-| `.env.example`, `.gitignore`, `README.md` | No-secret setup and operating boundary | ✓ VERIFIED | Only template exists in repository; docs list all public/server-only names and rule. |
-| `tests/foundation.test.mjs` | Focused foundation/server utility tests | ⚠️ PARTIAL | Three tests pass, but they parse sources as strings and do not invoke the server utility. |
+| `src/app/layout.tsx` | Shared public shell | VERIFIED | Renders `Header`, `Footer`, and `MobileActionBar`. |
+| `src/components/layout/{Header,Footer,MobileMenu,MobileActionBar}.tsx` | Responsive accessible public actions | VERIFIED | Configuration-driven navigation and phone links; the mobile menu implements Escape close, focus restoration, and scroll locking. |
+| `src/content/{site,trucks,services,navigation}.ts` | Typed authoritative public data | VERIFIED | Substantive typed data without a Promotions export. |
+| `src/lib/env.ts` | Server-only optional provider configuration | VERIFIED | Normalizes safe public site URLs, retains provider secrets in `serverEnv`, and computes readiness booleans. |
+| `tests/env.test.mjs` | Executable server utility tests | VERIFIED | Loads the real TypeScript environment utility in isolated Node processes with controlled credentials. |
+| `.env.example`, `.gitignore`, `README.md` | No-secret setup and operating boundary | VERIFIED | Template, ignore rules, and documentation preserve the public/server-only boundary. |
 
-### Key Link Verification
+## Key Link Verification
 
-| From | To | Via | Status | Details |
+| From | To | Via | Status |
 | --- | --- | --- | --- |
-| `src/app/layout.tsx` | Public shell components | Direct imports and render | ✓ WIRED | Header, Footer, and MobileActionBar are in every App Router render. |
-| `src/content/site.ts` | Header, footer, and mobile actions | `siteConfig` imports | ✓ WIRED | Phone href/display flow to all visible call actions. |
-| `src/content/navigation.ts` / `trucks.ts` | Header/footer/menu | Imported arrays and `.map()` rendering | ✓ WIRED | Navigation and truck links originate from authoritative data. |
-| `src/lib/env.ts` | Future lead integration | Server-only import boundary | ⚠️ DEFERRED BY PHASE DESIGN | No lead endpoint exists in Phase 1; direct consumer is appropriately a Phase 4 concern. The missing test coverage remains a Phase 1 gap. |
+| `src/content/site.ts` | Header, footer, and mobile actions | `siteConfig` imports | WIRED |
+| `src/content/navigation.ts` / `trucks.ts` | Header/footer/menu | Imported arrays and `.map()` rendering | WIRED |
+| `tests/env.test.mjs` | `src/lib/env.ts` | Isolated Node subprocess imports | WIRED |
+| `src/lib/env.ts` | Future lead integration | Server-only import boundary | DEFERRED BY PHASE DESIGN |
 
-### Data-Flow Trace (Level 4)
-
-| Artifact | Data Variable | Source | Produces Real Data | Status |
-| --- | --- | --- | --- | --- |
-| Header/footer/mobile actions | `siteConfig.contact.phone`, navigation, truck ranges | Typed `src/content/*` modules | Yes — configured approved values flow directly into rendered links/text | ✓ FLOWING |
-| `src/lib/env.ts` | `serverEnv` / readiness flags | `process.env`, normalized by `optional()` | Yes — absent values become safe `undefined` and booleans; not yet consumed because provider work is Phase 4 | ✓ FLOWING (module-level) |
-
-### Behavioral Spot-Checks
+## Behavioral Evidence
 
 | Behavior | Command | Result | Status |
 | --- | --- | --- | --- |
-| Foundation regression tests | `npm test` | 3 passed, 0 failed | ✓ PASS |
-| Lint enforcement | `npm run lint` | Exit 0 | ✓ PASS |
-| Production TypeScript/build | `npm run build` | Exit 0; `/` statically generated | ✓ PASS |
-| Client bundle secret exposure | `rg` for server credential names in `.next` JS/map files | No matches | ✓ PASS |
+| Environment runtime behavior | `npm test -- tests/env.test.mjs` | 3 tests passed: safe public URL normalization/validation; disabled absent/incomplete providers; complete provider readiness with no public secret values. | PASS |
+| Foundation regression tests | `npm test` | 6 passed, 0 failed. | PASS |
+| Lint enforcement | `npm run lint` | Exit 0. | PASS |
+| Production TypeScript/build | `npm run build` | Exit 0; `/` statically generated. | PASS |
+| Client bundle secret exposure | `rg` for server credential names in `.next` JS/map files | No matches. | PASS |
 
-### Probe Execution
-
-Step 7c: SKIPPED — no `scripts/**/tests/probe-*.sh` files, migration/tooling criteria, or phase-declared probes exist.
-
-### Requirements Coverage
+## Requirements Coverage
 
 | Requirement | Source Plan | Description | Status | Evidence |
 | --- | --- | --- | --- | --- |
-| FND-01 | 01-02-PLAN.md | Responsive public layout and actions | ✓ SATISFIED | Shared shell, menu behavior, configuration-driven call links, and source-contract tests verified. Visual behavior still needs human confirmation. |
-| FND-02 | 01-01-PLAN.md | Typed authoritative configuration | ✓ SATISFIED | Typed content modules exist and shell consumers read them directly; unresolved business facts are explicit. |
-| FND-03 | 01-01-PLAN.md | Server-only environment handling | ✓ SATISFIED | Server-only module, no-secret template, gitignore, and emitted-bundle scan verified. |
-| FND-04 | 01-01-PLAN.md, 01-02-PLAN.md | Strict TypeScript, lint/build, focused server utility tests | ✗ BLOCKED | Quality commands pass, but focused executable server-utility tests are absent. |
+| FND-01 | 01-02-PLAN.md | Responsive public layout and actions | SATISFIED | Shared shell, mobile behavior, and configured call links are implemented. |
+| FND-02 | 01-01-PLAN.md | Typed authoritative configuration | SATISFIED | Typed content modules and direct shell consumers are verified. |
+| FND-03 | 01-01-PLAN.md | Server-only environment handling | SATISFIED | Server-only module, safe optional configuration, template, ignore rules, and build scan verified. |
+| FND-04 | 01-01-PLAN.md, 01-02-PLAN.md, 01-03-PLAN.md | Strict TypeScript, lint/build, focused server utility tests | SATISFIED | Runtime tests execute absent, incomplete, and complete configuration paths; all quality checks pass. |
 
-No Phase 1 requirements are orphaned: both plans collectively declare FND-01 through FND-04, matching `REQUIREMENTS.md`.
+No Phase 1 requirements are orphaned: the completed plans collectively declare FND-01 through FND-04, matching `REQUIREMENTS.md`.
 
-### Anti-Patterns Found
+## Anti-Patterns Found
 
-| File | Line | Pattern | Severity | Impact |
-| --- | --- | --- | --- | --- |
-| `tests/foundation.test.mjs` | 5–41 | Tests read sources as text rather than executing server utility behavior | 🛑 Blocker | Allows missing/incorrect optional-provider readiness behavior to pass the suite. |
+No blocking anti-patterns remain. `tests/foundation.test.mjs` retains narrow source-contract assertions for shell content, while `tests/env.test.mjs` now executes the server utility. No TODO, FIXME, or placeholder markers were found in the changed environment source and tests.
 
-No `TBD`, `FIXME`, or `XXX` debt markers were found in Phase 1 source/test files. The foundation landing copy is intentionally a Phase 1 baseline, not a homepage implementation stub; homepage delivery is explicitly Phase 2.
+## Human Verification Required
 
-### Human Verification Required
+Responsive public-shell behavior still requires a browser check at 390px, 768px, 1024px, and 1440px: confirm navigation hierarchy, Escape/focus behavior, and fixed mobile actions are usable and unobscured. This is a visual check, not an FND-04 evidence gap.
 
-### 1. Responsive public-shell behavior
+## Verification Summary
 
-**Test:** Run the site and inspect the shell at 390px, 768px, 1024px, and 1440px. At mobile width, open the menu, use Escape to close it, then tab through the fixed Call and Request a Quote controls.
+Phase 1 satisfies FND-01 through FND-04: its shell and typed content contracts are implemented, the server-only environment boundary has executable runtime coverage, and tests, lint, and production build all pass.
 
-**Expected:** Navigation does not crowd or disappear incorrectly; the mobile panel covers the intended viewport, restores focus to the menu trigger on close, and the fixed actions remain reachable without obscuring primary content.
-
-**Why human:** CSS layout, focus order in a real browser, and visual alignment cannot be proved by the source-contract tests.
-
-## Gaps Summary
-
-Phase 1’s deployable shell, content contracts, and secret boundary are materially implemented and build cleanly. It does not meet FND-04 in full because the test suite never executes the only server utility or its missing-credential behavior. Add executable tests around `optional()`/`getLeadIntegrationReadiness()` (using controlled environment inputs), then re-run verification. The roadmap’s MVP mode also needs a user-story-formatted goal before a compliant MVP user-flow verification can be produced.
-
----
-
-_Verified: 2026-08-26T08:20:00+08:00_
+_Verified: 2026-08-26T08:42:00+08:00_
 _Verifier: the agent (gsd-verifier)_
