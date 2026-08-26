@@ -200,6 +200,8 @@ main#main-content .support-guidance article,
 main#main-content .about-practical article { min-width: 0; }
 main#main-content .truck-listing-card__media,
 main#main-content .page-hero__media { contain: layout paint; }
+main#main-content .truck-listing-card__media img,
+main#main-content .page-hero__media img { display: block; height: 100%; object-fit: contain; width: 100%; }
 main#main-content .contact-inquiry__form { max-width: 40rem; width: 100%; }
 main#main-content .contact-inquiry input:not([type="checkbox"]),
 main#main-content .contact-inquiry select,
