@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 import { siteConfig } from "@/content/site";
@@ -16,7 +17,7 @@ export function Header() {
       </a>
       <Container className="site-header__inner">
         <Link aria-label="Hino Cebu home" className="site-identity" href="/">
-          <span className="site-identity__hino">HINO</span>
+          <Image alt="Hino" className="site-identity__logo" height={80} priority src="/images/official/hino-logo.png" width={331} />
           <span aria-hidden="true" className="site-identity__divider" />
           <span className="site-identity__cebu">CEBU</span>
         </Link>

@@ -74,16 +74,16 @@ export function HomepageSupportSections() {
       </section>
 
       <style jsx>{`
-        .why-hino { background: var(--color-charcoal); color: var(--color-paper); padding-block: clamp(3.5rem, 8vw, 6rem); text-align: center; }
+        .why-hino { background: var(--color-charcoal); color: var(--color-paper); padding-block: clamp(3rem, 5vw, 4.5rem); text-align: center; }
         .why-hino h2 { margin-top: var(--space-sm); }
         .why-hino__rule { background: var(--color-red); height: 3px; margin: var(--space-lg) auto var(--space-2xl); width: 3rem; }
         .why-hino__points { display: grid; gap: var(--space-lg); grid-template-columns: repeat(4, minmax(0, 1fr)); list-style: none; margin: 0; padding: 0; text-align: left; }
         .why-hino__points li { align-items: flex-start; color: #e8e9e9; display: flex; font-weight: 700; gap: var(--space-sm); }
         .why-hino__points :global(svg) { color: var(--color-red); flex: 0 0 auto; }
-        .support-service, .visit-section { padding-block: clamp(3.5rem, 8vw, 6rem); }
+        .support-service, .visit-section { padding-block: clamp(3rem, 5vw, 4.5rem); }
         .support-service { background: var(--color-paper); }
         .support-service__grid, .visit-section__grid { align-items: stretch; display: grid; gap: clamp(2rem, 6vw, 5rem); grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
-        .support-service__media { aspect-ratio: 16 / 10; background: var(--color-muted-surface); min-height: 18rem; overflow: hidden; position: relative; }
+        .support-service__media { aspect-ratio: 16 / 10; background: var(--color-muted-surface); min-height: 23rem; overflow: hidden; position: relative; }
         .support-service__media :global(img) { object-fit: cover; }
         .support-service__content { align-self: center; }
         .support-service h2, .visit-section h2 { margin-top: var(--space-sm); }

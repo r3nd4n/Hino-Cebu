@@ -22,7 +22,7 @@
   --radius-card: 0.5rem;
   --shadow-card: 0 1px 2px rgb(17 17 17 / 8%);
   --shadow-elevated: 0 12px 32px rgb(0 0 0 / 22%);
-  --container-max: 1200px;
+  --container-max: 1440px;
   --gutter: 1.25rem;
   --focus-ring: 0 0 0 3px rgb(227 27 35 / 35%);
 }
@@ -71,9 +71,9 @@ h3 { font-size: 1.5rem; }
 /* Phase 2 homepage composition. The conversion island supplies hero and business use. */
 .homepage { display: flex; flex-direction: column; }
 .homepage-hero { display: contents; }
-.homepage-hero__content { background: linear-gradient(90deg, rgb(12 14 16 / 88%) 0%, rgb(12 14 16 / 64%) 52%, rgb(12 14 16 / 52%) 100%), url("/images/official/hino-300-series-hero.jpg") center / cover; color: var(--color-paper); display: grid; gap: clamp(2rem, 5vw, 5rem); grid-template-columns: minmax(0, 1fr) minmax(22.5rem, 27.5rem); min-height: min(48rem, calc(100vh - 4.5rem)); padding-block: clamp(3rem, 7vw, 6rem) var(--space-2xl); }
-.homepage-hero__story { align-self: center; max-width: 44rem; }
-.homepage-hero h1 { margin-top: var(--space-md); max-width: 11ch; }
+.homepage-hero__content { background: linear-gradient(90deg, rgb(10 13 16 / 84%) 0%, rgb(10 13 16 / 52%) 51%, rgb(10 13 16 / 28%) 100%), url("/images/generated/hino-cebu-hero-v2.png") center / cover; color: var(--color-paper); display: grid; gap: clamp(2rem, 5vw, 5rem); grid-template-columns: minmax(0, 1fr) minmax(23rem, 28rem); min-height: min(42rem, calc(100vh - 4.5rem)); padding-block: clamp(2.5rem, 5vw, 4.5rem) var(--space-xl); }
+.homepage-hero__story { align-self: center; max-width: 48rem; }
+.homepage-hero h1 { font-size: clamp(3.25rem, 5.4vw, 5.8rem); margin-top: var(--space-md); max-width: 13ch; }
 .homepage-hero h1 span { color: var(--color-red); display: block; }
 .homepage-hero__story > p:not(.eyebrow) { color: #f0f1f1; font-size: clamp(1rem, 1.4vw, 1.15rem); margin: var(--space-lg) 0 0; max-width: 37rem; }
 .homepage-hero__actions { display: flex; flex-wrap: wrap; gap: var(--space-md); margin-top: var(--space-xl); }
@@ -98,7 +98,7 @@ h3 { font-size: 1.5rem; }
 .homepage-hero__trust { background: var(--color-dark); color: var(--color-paper); display: grid; gap: 1px; grid-template-columns: repeat(3, 1fr); list-style: none; margin: 0; order: 1; padding: 0 max(1.25rem, calc((100vw - var(--container-max)) / 2)); }
 .homepage-hero__trust li { align-items: center; display: flex; font-size: .8125rem; font-weight: 700; min-height: 4.5rem; padding: var(--space-md) var(--space-lg); text-transform: uppercase; }
 .homepage-hero__trust li + li { border-left: 1px solid rgb(255 255 255 / 18%); }
-.homepage-business-needs { background: var(--color-paper); order: 4; padding-block: clamp(3.5rem, 8vw, 6rem); }
+.homepage-business-needs { background: var(--color-paper); order: 4; padding-block: clamp(3rem, 5vw, 4.5rem); }
 .homepage-business-needs h2 { margin-top: var(--space-sm); max-width: 16ch; }
 .homepage-business-needs__grid { display: grid; gap: var(--space-md); grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: var(--space-xl); }
 .homepage-business-needs__card { background: var(--color-muted-surface); border: 1px solid var(--color-border); color: var(--color-ink); cursor: pointer; display: flex; flex-direction: column; font: inherit; min-height: 10rem; padding: var(--space-lg); text-align: left; }
@@ -118,7 +118,7 @@ h3 { font-size: 1.5rem; }
 .site-header { background: var(--color-paper); border-bottom: 1px solid var(--color-border); position: sticky; top: 0; z-index: 20; }
 .site-header__inner { align-items: center; display: flex; min-height: 4.5rem; }
 .site-identity { align-items: center; display: inline-flex; font-weight: 800; letter-spacing: 0.02em; text-decoration: none; }
-.site-identity__hino { color: var(--color-ink); font-size: 1.2rem; }
+.site-identity__logo { display: block; height: auto; object-fit: contain; width: clamp(5.8rem, 7vw, 7.2rem); }
 .site-identity__divider { background: var(--color-border); height: 1.6rem; margin-inline: 0.7rem; width: 1px; }
 .site-identity__cebu { color: var(--color-red); font-size: 0.9rem; letter-spacing: 0.12em; }
 .site-header__nav { align-items: center; display: flex; gap: clamp(1rem, 2vw, 2rem); margin-left: auto; }
@@ -171,7 +171,7 @@ h3 { font-size: 1.5rem; }
   .site-footer__legal { align-items: flex-start; flex-direction: column; }
   .homepage-hero__content { background-position: 58% center; display: flex; flex-direction: column; gap: var(--space-xl); min-height: 0; padding-block: var(--space-3xl) var(--space-xl); }
   .homepage-hero__story { align-self: auto; }
-  .homepage-hero h1 { max-width: 9ch; }
+  .homepage-hero h1 { font-size: clamp(3.2rem, 15vw, 4.75rem); max-width: 10ch; }
   .homepage-hero__actions { display: grid; grid-template-columns: 1fr; }
   .homepage-quote { padding: var(--space-lg); scroll-margin-block-start: 4.5rem; }
   .homepage-hero__trust { grid-template-columns: 1fr; padding-inline: var(--gutter); }
