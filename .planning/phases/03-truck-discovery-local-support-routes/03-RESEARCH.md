@@ -494,27 +494,31 @@ The positioned parent must reserve an aspect ratio/minimum height; `sizes` must 
 |---|-------|---------|---------------|
 | A1 | Manual browser responsive inspection is available to the implementer through a local or deployed preview. | Environment Availability | If unavailable, the mandatory four-width visual gate needs a browser-based alternative or explicit stakeholder verification. |
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **Are the curated product words approved for public launch, beyond being sourced?**
    - What we know: The user required official Hino Philippines sources and internal provenance, and Phase 2 records authorization to use official visual assets. [VERIFIED: `03-CONTEXT.md`, Phase 2 D-01]
    - What's unclear: Product-claim approval/brand review remains a launch dependency in project state. [VERIFIED: `.planning/STATE.md`]
    - Recommendation: Implement claims as configurable sourced content with `reviewedOn` and keep the availability disclaimer; carry final commercial approval into the launch checklist rather than blocking Phase 3. [VERIFIED: project constraints]
+   - **Adopted outcome:** Phase 3 implements curated claims as configurable sourced content with `reviewedOn` provenance and availability safeguards. Final commercial approval remains a launch dependency and is not represented as complete.
 
 2. **Should model names appear at all?**
    - What we know: User left model-level depth to agent discretion; official pages list models, but qualifiers and tables create maintenance risk. [VERIFIED: `03-CONTEXT.md`; official product pages]
    - What's unclear: No local model availability is verified. [VERIFIED: `.planning/STATE.md`]
    - Recommendation: Omit model names in Phase 3. Series-level highlights are useful and safer; ask visitors to confirm the current Cebu lineup. [Recommendation within D-09 discretion]
+   - **Adopted outcome:** Omit model names. Publish only series-level, qualified highlights and direct visitors to confirm the current Cebu lineup.
 
 3. **Is a new hero asset required for the 500 page?**
    - What we know: Distinct local card images exist for all four ranges, but only a 300 Series wide hero exists. [VERIFIED: `public/images/official`, `src/content/assets.ts`]
    - What's unclear: No second wide hero is locally available. [VERIFIED: filesystem inspection]
    - Recommendation: Use the existing distinct 500 card image inside a contained light-background media panel rather than scraping/downloading a new asset during this phase. This preserves local optimization and source metadata. [Recommendation based on existing assets]
+   - **Adopted outcome:** Use the existing contained 500 Series image in a light-background media panel; do not acquire a new hero asset in Phase 3.
 
 4. **How should the global sticky quote action preserve per-page context?**
    - What we know: The existing component hardcodes the homepage quote anchor; detail and support CTAs must converge on Contact with context. [VERIFIED: `MobileActionBar.tsx`, D-10/D-11]
    - What's unclear: Root layout does not directly know a series object. [VERIFIED: `src/app/layout.tsx`]
    - Recommendation: Give page-level CTAs precise topics; change the global mobile bar to a general `/contact#inquiry` action outside the homepage. Do not complicate the root shell with route-to-topic inference. [Recommendation within D-13 discretion]
+   - **Adopted outcome:** Page-level CTAs carry precise allowlisted topics, while every non-home global mobile inquiry action routes to general `/contact#inquiry`; the homepage retains its existing quote-anchor behavior.
 
 ## Environment Availability
 

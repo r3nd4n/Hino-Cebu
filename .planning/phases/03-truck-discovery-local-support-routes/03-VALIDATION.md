@@ -1,8 +1,8 @@
 ---
 phase: 03
 slug: truck-discovery-local-support-routes
-status: draft
-nyquist_compliant: false
+status: planned
+nyquist_compliant: true
 wave_0_complete: false
 created: 2026-08-26
 ---
@@ -38,12 +38,16 @@ created: 2026-08-26
 
 | Task ID | Plan | Wave | Requirement | Threat Ref | Secure Behavior | Test Type | Automated Command | File Exists | Status |
 |---------|------|------|-------------|------------|-----------------|-----------|-------------------|-------------|--------|
-| 03-01-01 | 01 | 1 | DISC-01, DISC-02 | T-03-01 | Internal provenance and non-public source URLs never render in visitor output | content contract | `node --test tests/discovery-routes.test.mjs` | ❌ W0 | ⬜ pending |
-| 03-02-01 | 02 | 1 | DISC-03, DISC-04 | T-03-02 | Unresolved email and directions values never become fabricated or inactive links | content contract | `node --test tests/support-routes.test.mjs` | ❌ W0 | ⬜ pending |
-| 03-03-01 | 03 | 2 | DISC-03 | T-03-03 | Inquiry topic is allowlisted and demo success does not imply provider delivery | unit + content contract | `node --test tests/inquiry-demo.test.mjs` | ❌ W0 | ⬜ pending |
-| 03-04-01 | 04 | 2 | DISC-04 | All primary routes retain shared shell, main landmark, CTA paths, and no Promotions surfaces | integration + build | `npm test && npm run lint && npm run build` | ⚠️ baseline only | ⬜ pending |
+| 03-01-01 | 01 | 1 | DISC-01, DISC-02 | T-03-01–T-03-04 | Establish failing contracts for finite discovery routes, internal provenance, safe claims, inquiry paths, and no Promotions | content contract (RED) | `node --test tests/discovery-routes.test.mjs` | ❌ W0 | ⬜ pending |
+| 03-01-02 | 01 | 1 | DISC-01, DISC-02 | T-03-01–T-03-04 | Implement typed public projections, four listing cards, finite series pages, qualified highlights, and safe CTA wiring | content + route contract | `node --test tests/discovery-routes.test.mjs` | ❌ W0 | ⬜ pending |
+| 03-02-01 | 02 | 2 | DISC-03, DISC-04 | T-03-05–T-03-07 | Establish failing contracts for distinct support routes, national/local separation, configured facts, and no Promotions | content contract (RED) | `node --test tests/support-routes.test.mjs` | ❌ W0 | ⬜ pending |
+| 03-02-02 | 02 | 2 | DISC-03, DISC-04 | T-03-05–T-03-07 | Implement Parts/Service and About routes without leaking provenance or implying unsupported local capabilities | content + route contract | `node --test tests/support-routes.test.mjs` | ❌ W0 | ⬜ pending |
+| 03-03-01 | 03 | 2 | DISC-03 | T-03-08–T-03-12 | Establish failing allowlist, local validation, truthful demo-state, contact-fact, map, and Phase 4 boundary contracts | unit + content contract (RED) | `node --test tests/inquiry-demo.test.mjs` | ❌ W0 | ⬜ pending |
+| 03-03-02 | 03 | 2 | DISC-03 | T-03-08–T-03-12 | Implement normalized editable inquiry context, local-only form states, verified facts, address-search map, and closing call cue | unit + content contract | `node --test tests/inquiry-demo.test.mjs` | ❌ W0 | ⬜ pending |
+| 03-04-01 | 04 | 3 | DISC-01, DISC-02, DISC-03, DISC-04 | T-03-13–T-03-16 | Integrate route-aware mobile inquiry behavior, responsive styles, shared-shell/no-Promotions contracts, and full gates | integration + build | `npm test && npm run lint && npm run build` | ❌ W0 | ⬜ pending |
+| 03-04-02 | 04 | 3 | DISC-01, DISC-02, DISC-03, DISC-04 | T-03-14, T-03-16 | Verify the complete eight-route by four-width visual, keyboard, form-state, claim-safety, and no-Promotions contract | automated gate + human verification | `npm test && npm run lint && npm run build` | ❌ W0 | ⬜ pending |
 
-*Task and plan IDs are provisional until PLAN.md files are finalized. Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
+*Task IDs, plan waves, and commands are synchronized to finalized Plans 03-01 through 03-04. The three Wave 0 test files do not yet exist, so `wave_0_complete` remains false. Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
 ---
 
@@ -67,11 +71,11 @@ created: 2026-08-26
 
 ## Validation Sign-Off
 
-- [ ] All tasks have `<automated>` verify or Wave 0 dependencies
-- [ ] Sampling continuity: no 3 consecutive tasks without automated verify
-- [ ] Wave 0 covers all missing test references
-- [ ] No watch-mode flags
-- [ ] Feedback latency under 30 seconds for the quick suite
-- [ ] `nyquist_compliant: true` set in frontmatter
+- [x] All tasks have `<automated>` verify or Wave 0 dependencies
+- [x] Sampling continuity: no 3 consecutive tasks without automated verify
+- [x] Wave 0 covers all missing test references
+- [x] No watch-mode flags
+- [x] Feedback latency under 30 seconds for the quick suite
+- [x] `nyquist_compliant: true` set in frontmatter
 
-**Approval:** pending
+**Approval:** validation plan complete; execution pending
