@@ -22,8 +22,8 @@
 
 ### Discovery & Local Support
 
-- [ ] **DISC-01**: Visitors can view a truck listing with configurable cards and reach detail pages without fabricated technical claims.
-- [ ] **DISC-02**: Visitors can view representative 300 and 500 series pages with approved/configurable content and a clear inquiry action.
+- [x] **DISC-01**: Visitors can view a truck listing with configurable cards and reach detail pages without fabricated technical claims.
+- [x] **DISC-02**: Visitors can view representative 300 and 500 series pages with approved/configurable content and a clear inquiry action.
 - [ ] **DISC-03**: Visitors can reach dedicated parts/service, contact, and about/local-dealer pages with clear next actions.
 - [ ] **DISC-04**: All primary public routes render correctly on mobile and desktop and maintain consistent navigation and footer information.
 
@@ -70,6 +70,7 @@
 | QLT-01–QLT-05 | Phase 5 | Pending |
 
 **Coverage:**
+
 - v1 requirements: 24 total
 - Mapped to phases: 24
 - Unmapped: 0 ✓
