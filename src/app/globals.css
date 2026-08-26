@@ -22,7 +22,7 @@
   --radius-card: 0.5rem;
   --shadow-card: 0 1px 2px rgb(17 17 17 / 8%);
   --shadow-elevated: 0 12px 32px rgb(0 0 0 / 22%);
-  --container-max: 1440px;
+  --container-max: 1800px;
   --gutter: 1.25rem;
   --focus-ring: 0 0 0 3px rgb(227 27 35 / 35%);
 }
@@ -71,7 +71,7 @@ h3 { font-size: 1.5rem; }
 /* Phase 2 homepage composition. The conversion island supplies hero and business use. */
 .homepage { display: flex; flex-direction: column; }
 .homepage-hero { display: contents; }
-.homepage-hero__content { background: linear-gradient(90deg, rgb(10 13 16 / 84%) 0%, rgb(10 13 16 / 52%) 51%, rgb(10 13 16 / 28%) 100%), url("/images/generated/hino-cebu-hero-v2.png") center / cover; color: var(--color-paper); display: grid; gap: clamp(2rem, 5vw, 5rem); grid-template-columns: minmax(0, 1fr) minmax(23rem, 28rem); min-height: min(42rem, calc(100vh - 4.5rem)); padding-block: clamp(2.5rem, 5vw, 4.5rem) var(--space-xl); }
+.homepage-hero__content { background: linear-gradient(90deg, rgb(10 13 16 / 84%) 0%, rgb(10 13 16 / 52%) 46%, rgb(10 13 16 / 20%) 100%), url("/images/generated/hino-cebu-hero-v3.png") center / cover; color: var(--color-paper); display: grid; gap: clamp(2rem, 5vw, 5rem); grid-template-columns: minmax(0, 1fr) minmax(23rem, 28rem); min-height: min(42rem, calc(100vh - 4.5rem)); padding-block: clamp(2.5rem, 5vw, 4.5rem) var(--space-xl); }
 .homepage-hero__story { align-self: center; max-width: 48rem; }
 .homepage-hero h1 { font-size: clamp(3.25rem, 5.4vw, 5.8rem); margin-top: var(--space-md); max-width: 13ch; }
 .homepage-hero h1 span { color: var(--color-red); display: block; }
@@ -118,7 +118,9 @@ h3 { font-size: 1.5rem; }
 .site-header { background: var(--color-paper); border-bottom: 1px solid var(--color-border); position: sticky; top: 0; z-index: 20; }
 .site-header__inner { align-items: center; display: flex; min-height: 4.5rem; }
 .site-identity { align-items: center; display: inline-flex; font-weight: 800; letter-spacing: 0.02em; text-decoration: none; }
-.site-identity__logo { display: block; height: auto; object-fit: contain; width: clamp(5.8rem, 7vw, 7.2rem); }
+.site-identity__brand { align-items: center; display: inline-flex; gap: 0.3rem; }
+.site-identity__mark { display: block; height: 2.1rem; object-fit: contain; width: 3.1rem; }
+.site-identity__wordmark { color: var(--color-ink); font-size: 1.45rem; font-weight: 900; letter-spacing: 0.18em; line-height: 1; }
 .site-identity__divider { background: var(--color-border); height: 1.6rem; margin-inline: 0.7rem; width: 1px; }
 .site-identity__cebu { color: var(--color-red); font-size: 0.9rem; letter-spacing: 0.12em; }
 .site-header__nav { align-items: center; display: flex; gap: clamp(1rem, 2vw, 2rem); margin-left: auto; }
@@ -169,7 +171,7 @@ h3 { font-size: 1.5rem; }
   .site-footer__grid { grid-template-columns: 1fr 1fr; }
   .site-footer__intro { grid-column: 1 / -1; }
   .site-footer__legal { align-items: flex-start; flex-direction: column; }
-  .homepage-hero__content { background-position: 58% center; display: flex; flex-direction: column; gap: var(--space-xl); min-height: 0; padding-block: var(--space-3xl) var(--space-xl); }
+  .homepage-hero__content { background-position: 60% center; display: flex; flex-direction: column; gap: var(--space-xl); min-height: 0; padding-block: var(--space-3xl) var(--space-xl); }
   .homepage-hero__story { align-self: auto; }
   .homepage-hero h1 { font-size: clamp(3.2rem, 15vw, 4.75rem); max-width: 10ch; }
   .homepage-hero__actions { display: grid; grid-template-columns: 1fr; }
