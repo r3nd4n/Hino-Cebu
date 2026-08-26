@@ -86,6 +86,43 @@ test("directions remain unavailable until both address and directions are approv
   });
 });
 
+test("shared shell consumes only approval-aware contact facts and keeps inquiry reachable", async () => {
+  const [header, mobileMenu, mobileAction, footer] = await Promise.all([
+    readSource("src/components/layout/Header.tsx"),
+    readSource("src/components/layout/MobileMenu.tsx"),
+    readSource("src/components/layout/MobileActionBar.tsx"),
+    readSource("src/components/layout/Footer.tsx"),
+  ]);
+
+  for (const [name, source] of [
+    ["Header", header],
+    ["MobileMenu", mobileMenu],
+    ["MobileActionBar", mobileAction],
+    ["Footer", footer],
+  ]) {
+    assert.doesNotMatch(
+      source,
+      /siteConfig\.contact\.(?:phone|address)|siteConfig\.hours/,
+      `${name} must not read configured candidates directly`,
+    );
+  }
+
+  assert.match(header, /publicContact\.phone/);
+  assert.match(header, /<MobileMenu[\s\S]*phone=\{publicContact\.phone\}/);
+  assert.match(mobileMenu, /phone\.status === "approved"/);
+  assert.match(mobileMenu, /href="\/contact#inquiry"/);
+  assert.match(mobileAction, /publicContact\.phone/);
+  assert.match(mobileAction, /"\/contact#inquiry"/);
+  assert.match(footer, /Phone: awaiting confirmation/);
+  assert.match(footer, /Address: awaiting confirmation/);
+  assert.match(footer, /Hours: awaiting confirmation/);
+
+  const shellSource = [header, mobileMenu, mobileAction, footer].join("\n");
+  assert.doesNotMatch(shellSource, /tel:\+63323463322/);
+  assert.doesNotMatch(shellSource, /8WC6\+Q46|Saint John Paul II Avenue/);
+  assert.doesNotMatch(shellSource, /Monday|8:00 AM|5:00 PM/);
+});
+
 test("local-support routes retain one landmark, shared-shell reachability, and safe actions", async () => {
   const [layout, navigation, partsService, about, localCta, mobileAction] = await Promise.all([
     readSource("src/app/layout.tsx"),
