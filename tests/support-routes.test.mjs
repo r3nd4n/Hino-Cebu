@@ -7,6 +7,85 @@ const readSource = (file) => readFile(new URL(`../${file}`, import.meta.url), "u
 const prohibitedPublicClaims =
   /authorized dealer|legal entity|our history|Cebu history|in stock|inventory|guaranteed|guarantee|turnaround|uptime|service plan|dealer count|customer volume|territory|award/i;
 
+const loadSiteModule = () => import("../src/content/site.ts");
+
+const configuredFact = (value, status = "requires-verification") => ({
+  value,
+  status,
+  launchNote: "Fixture value requires authorized confirmation.",
+});
+
+const contactFixture = ({
+  phoneStatus = "requires-verification",
+  addressStatus = "requires-verification",
+  directionsStatus = "requires-verification",
+  hoursStatus = "requires-verification",
+} = {}) => ({
+  contact: {
+    phone: configuredFact(
+      { display: "(032) 346 3322", href: "tel:+63323463322" },
+      phoneStatus,
+    ),
+    address: configuredFact("Candidate Cebu address", addressStatus),
+    email: configuredFact(null, "unresolved"),
+    directionsUrl: configuredFact("https://maps.example.test/candidate", directionsStatus),
+  },
+  hours: configuredFact(
+    [{ days: "Candidate weekdays", hours: "Candidate hours" }],
+    hoursStatus,
+  ),
+});
+
+test("default local facts project awaiting-confirmation without candidate values", async () => {
+  const { publicContact } = await loadSiteModule();
+
+  assert.deepEqual(publicContact.phone, { status: "awaiting-confirmation" });
+  assert.deepEqual(publicContact.address, { status: "awaiting-confirmation" });
+  assert.deepEqual(publicContact.hours, { status: "awaiting-confirmation" });
+  assert.deepEqual(publicContact.directions, { status: "awaiting-confirmation" });
+
+  const serialized = JSON.stringify(publicContact);
+  assert.doesNotMatch(serialized, /\(032\) 346 3322|tel:\+63323463322/);
+  assert.doesNotMatch(serialized, /8WC6\+Q46|Saint John Paul II Avenue/);
+  assert.doesNotMatch(serialized, /Monday|8:00 AM|5:00 PM/);
+});
+
+test("approved local facts become public independently", async () => {
+  const { projectPublicContact } = await loadSiteModule();
+  const projected = projectPublicContact(contactFixture({ phoneStatus: "approved" }));
+
+  assert.deepEqual(projected.phone, {
+    status: "approved",
+    display: "(032) 346 3322",
+    href: "tel:+63323463322",
+  });
+  assert.deepEqual(projected.address, { status: "awaiting-confirmation" });
+  assert.deepEqual(projected.hours, { status: "awaiting-confirmation" });
+  assert.deepEqual(projected.directions, { status: "awaiting-confirmation" });
+});
+
+test("directions remain unavailable until both address and directions are approved", async () => {
+  const { projectPublicContact } = await loadSiteModule();
+
+  const unresolvedAddress = projectPublicContact(
+    contactFixture({ directionsStatus: "approved" }),
+  );
+  assert.deepEqual(unresolvedAddress.directions, { status: "awaiting-confirmation" });
+  assert.doesNotMatch(JSON.stringify(unresolvedAddress), /maps\.example\.test/);
+
+  const approved = projectPublicContact(
+    contactFixture({ addressStatus: "approved", directionsStatus: "approved" }),
+  );
+  assert.deepEqual(approved.address, {
+    status: "approved",
+    display: "Candidate Cebu address",
+  });
+  assert.deepEqual(approved.directions, {
+    status: "approved",
+    href: "https://maps.example.test/candidate",
+  });
+});
+
 test("local-support routes retain one landmark, shared-shell reachability, and safe actions", async () => {
   const [layout, navigation, partsService, about, localCta, mobileAction] = await Promise.all([
     readSource("src/app/layout.tsx"),
