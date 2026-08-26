@@ -1,0 +1,14 @@
+export default function HomePage() {
+  return (
+    <main className="foundation-page">
+      <div className="container foundation-page__content">
+        <p className="eyebrow">Hino Cebu</p>
+        <h1>Built for business. Ready for Cebu.</h1>
+        <p>
+          The Hino Cebu public website foundation is being prepared for local sales, parts, and
+          service conversations.
+        </p>
+      </div>
+    </main>
+  );
+}
