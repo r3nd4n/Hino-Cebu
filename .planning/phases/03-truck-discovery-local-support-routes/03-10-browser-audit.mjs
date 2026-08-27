@@ -350,6 +350,7 @@ async function runAudit() {
         firstFocused: document.activeElement === panel?.querySelector('a'),
         activeInside: panel?.contains(document.activeElement) ?? false,
         backgroundInert: [document.querySelector('main'), document.querySelector('.site-footer'), document.querySelector('.mobile-action-bar')].every(element => element?.inert),
+        identityInert: document.querySelector('.site-identity')?.inert === true,
         overflow: document.body.style.overflow,
       };
     })()`);
@@ -364,6 +365,7 @@ async function runAudit() {
       closed: document.querySelector('.mobile-menu__trigger').getAttribute('aria-expanded') === 'false',
       focusRestored: document.activeElement === document.querySelector('.mobile-menu__trigger'),
       inertCleared: [document.querySelector('main'), document.querySelector('.site-footer'), document.querySelector('.mobile-action-bar')].every(element => !element?.inert),
+      identityRestored: document.querySelector('.site-identity')?.inert === false,
       overflowRestored: document.body.style.overflow === '',
     })`);
     const keyboard = { skipFocus, skipTarget, menuOpen, forwardWrapped, backwardWrapped, ...menuClosed };
@@ -431,8 +433,8 @@ async function runAudit() {
     await fs.writeFile(path.join(evidenceDir, "browser-audit.json"), JSON.stringify(report, null, 2));
     const failed = matrix.filter(cell => cell.result === "FAIL");
     const interactionFailures = [];
-    if (!menuOpen.expanded || !menuOpen.firstFocused || !menuOpen.activeInside || !menuOpen.backgroundInert || menuOpen.overflow !== "hidden") interactionFailures.push("mobile menu open/focus/inert state");
-    if (!forwardWrapped || !backwardWrapped || !menuClosed.closed || !menuClosed.focusRestored || !menuClosed.inertCleared || !menuClosed.overflowRestored) interactionFailures.push("mobile menu containment/cleanup state");
+    if (!menuOpen.expanded || !menuOpen.firstFocused || !menuOpen.activeInside || !menuOpen.backgroundInert || !menuOpen.identityInert || menuOpen.overflow !== "hidden") interactionFailures.push("mobile menu open/focus/inert state");
+    if (!forwardWrapped || !backwardWrapped || !menuClosed.closed || !menuClosed.focusRestored || !menuClosed.inertCleared || !menuClosed.identityRestored || !menuClosed.overflowRestored) interactionFailures.push("mobile menu containment/cleanup state");
     if (homepageConsent.invalid !== "true" || !homepageConsent.described || homepageConsent.firstFocus !== "quote-name") interactionFailures.push("homepage consent invalid state");
     if (fallbackTopic !== "general" || form.allowedPrefill !== "parts" || form.editedTopic !== "service" || form.invalid.focus !== "name" || !form.invalid.described) interactionFailures.push("Contact topic/invalid state");
     if (!form.loading.disabled || JSON.stringify(form.duplicate) !== JSON.stringify(form.loading) || !form.success.focused || form.success.liveRegion !== "polite") interactionFailures.push("Contact loading/success state");

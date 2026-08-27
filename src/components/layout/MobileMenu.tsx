@@ -27,10 +27,15 @@ export function MobileMenu({ navigation, phone }: MobileMenuProps) {
 
     const previousOverflow = document.body.style.overflow;
     const trigger = triggerRef.current;
+    const menuRoot = trigger?.closest<HTMLElement>(".mobile-menu");
+    const headerSiblings = [...(menuRoot?.parentElement?.children ?? [])].filter(
+      (element): element is HTMLElement => element instanceof HTMLElement && element !== menuRoot,
+    );
     const obscuredElements = [
       document.querySelector<HTMLElement>("main"),
       document.querySelector<HTMLElement>(".site-footer"),
       document.querySelector<HTMLElement>(".mobile-action-bar"),
+      ...headerSiblings,
     ].filter((element): element is HTMLElement => element !== null);
     const previousInert = obscuredElements.map((element) => ({ element, inert: element.inert }));
     const focusableElements = () => [...(panelRef.current?.querySelectorAll<HTMLElement>(
