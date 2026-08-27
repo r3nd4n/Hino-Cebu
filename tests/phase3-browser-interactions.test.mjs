@@ -1,8 +1,7 @@
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
-import { mkdtemp, rm, stat } from "node:fs/promises";
+import { mkdtemp, rm } from "node:fs/promises";
 import { createRequire } from "node:module";
-import { createServer } from "node:net";
 import os from "node:os";
 import path from "node:path";
 import test, { after, before } from "node:test";
@@ -10,9 +9,14 @@ import { fileURLToPath } from "node:url";
 
 import {
   evaluate as evaluateCdp,
+  exists,
+  isolatedPort,
   openPage,
   pressKey,
-} from "../.planning/phases/03-truck-discovery-local-support-routes/03-10-browser-audit.mjs";
+  stopProcess,
+  trackProcess,
+  waitFor,
+} from "./support/browser-services.mjs";
 
 const projectRoot = fileURLToPath(new URL("..", import.meta.url));
 const require = createRequire(import.meta.url);
@@ -30,54 +34,6 @@ let baseUrl;
 let debugUrl;
 let browser;
 let serverOutput = "";
-
-async function exists(location) {
-  try {
-    await stat(location);
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-async function isolatedPort() {
-  return new Promise((resolve, reject) => {
-    const socket = createServer();
-    socket.unref();
-    socket.once("error", reject);
-    socket.listen(0, "127.0.0.1", () => {
-      const address = socket.address();
-      socket.close(() => resolve(address.port));
-    });
-  });
-}
-
-async function waitFor(url, label, processHandle) {
-  const deadline = Date.now() + 30_000;
-  let lastError;
-  while (Date.now() < deadline) {
-    if (processHandle?.exitCode !== null) throw new Error(`${label} exited before readiness.\n${serverOutput}`);
-    try {
-      const response = await fetch(url, { signal: AbortSignal.timeout(1_000) });
-      if (response.ok) return response;
-      lastError = new Error(`${response.status}`);
-    } catch (error) {
-      lastError = error;
-    }
-    await new Promise((resolve) => setTimeout(resolve, 150));
-  }
-  throw new Error(`${label} did not become ready: ${lastError?.message ?? "unknown error"}`);
-}
-
-async function stop(processHandle) {
-  if (!processHandle || processHandle.exitCode !== null) return;
-  processHandle.kill("SIGTERM");
-  await Promise.race([
-    new Promise((resolve) => processHandle.once("exit", resolve)),
-    new Promise((resolve) => setTimeout(resolve, 2_000)),
-  ]);
-  if (processHandle.exitCode === null) processHandle.kill("SIGKILL");
-}
 
 async function evaluate(expression) {
   return evaluateCdp(browser.cdp, expression);
@@ -109,16 +65,16 @@ before(async () => {
   debugUrl = `http://127.0.0.1:${chromePort}`;
   chromeProfile = await mkdtemp(path.join(os.tmpdir(), "hino-phase3-chrome-"));
 
-  nextProcess = spawn(process.execPath, [require.resolve("next/dist/bin/next"), "start", "--hostname", "127.0.0.1", "--port", String(nextPort)], {
+  nextProcess = trackProcess(spawn(process.execPath, [require.resolve("next/dist/bin/next"), "start", "--hostname", "127.0.0.1", "--port", String(nextPort)], {
     cwd: projectRoot,
     env: { ...process.env, NEXT_TELEMETRY_DISABLED: "1", NODE_ENV: "production" },
     stdio: ["ignore", "pipe", "pipe"],
     windowsHide: true,
-  });
+  }));
   nextProcess.stdout.on("data", (chunk) => { serverOutput += chunk; });
   nextProcess.stderr.on("data", (chunk) => { serverOutput += chunk; });
 
-  chromeProcess = spawn(chromePath, [
+  chromeProcess = trackProcess(spawn(chromePath, [
     "--headless=new",
     "--disable-gpu",
     "--no-first-run",
@@ -126,10 +82,10 @@ before(async () => {
     `--remote-debugging-port=${chromePort}`,
     `--user-data-dir=${chromeProfile}`,
     "about:blank",
-  ], { stdio: "ignore", windowsHide: true });
+  ], { stdio: "ignore", windowsHide: true }));
 
   await Promise.all([
-    waitFor(`${baseUrl}/trucks`, "Next production server", nextProcess),
+    waitFor(`${baseUrl}/trucks`, "Next production server", nextProcess, () => serverOutput),
     waitFor(`${debugUrl}/json/version`, "Chrome debugging endpoint", chromeProcess),
   ]);
   browser = await openPage(debugUrl);
@@ -141,7 +97,7 @@ after(async () => {
     browser.socket.close();
     await fetch(`${debugUrl}/json/close/${browser.target.id}`).catch(() => {});
   }
-  await Promise.all([stop(chromeProcess), stop(nextProcess)]);
+  await Promise.all([stopProcess(chromeProcess), stopProcess(nextProcess)]);
   if (chromeProfile) await rm(chromeProfile, { recursive: true, force: true });
 });
 

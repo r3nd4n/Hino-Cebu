@@ -1,10 +1,20 @@
 import fs from "node:fs/promises";
 import { spawn } from "node:child_process";
 import { createRequire } from "node:module";
-import { createServer } from "node:net";
 import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+
+import {
+  evaluate,
+  exists,
+  isolatedPort,
+  openPage,
+  pressKey,
+  stopProcess,
+  trackProcess,
+  waitFor,
+} from "../../../tests/support/browser-services.mjs";
 
 const require = createRequire(import.meta.url);
 const projectRoot = path.resolve(".");
@@ -22,54 +32,6 @@ const routes = [
   "/about",
 ];
 const widths = [390, 768, 1024, 1440];
-
-async function isolatedPort() {
-  return new Promise((resolve, reject) => {
-    const socket = createServer();
-    socket.unref();
-    socket.once("error", reject);
-    socket.listen(0, "127.0.0.1", () => {
-      const address = socket.address();
-      socket.close(() => resolve(address.port));
-    });
-  });
-}
-
-async function exists(location) {
-  try {
-    await fs.stat(location);
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-async function waitFor(url, label, processHandle, output = () => "") {
-  const deadline = Date.now() + 30_000;
-  let lastError;
-  while (Date.now() < deadline) {
-    if (processHandle?.exitCode !== null) throw new Error(`${label} exited before readiness.\n${output()}`);
-    try {
-      const response = await fetch(url, { signal: AbortSignal.timeout(1_000) });
-      if (response.ok) return;
-      lastError = new Error(`readiness returned ${response.status}`);
-    } catch (error) {
-      lastError = error;
-    }
-    await new Promise((resolve) => setTimeout(resolve, 150));
-  }
-  throw new Error(`${label} did not become ready: ${lastError?.message ?? "unknown error"}\n${output()}`);
-}
-
-async function stopProcess(processHandle) {
-  if (!processHandle || processHandle.exitCode !== null) return;
-  processHandle.kill("SIGTERM");
-  await Promise.race([
-    new Promise((resolve) => processHandle.once("exit", resolve)),
-    new Promise((resolve) => setTimeout(resolve, 2_000)),
-  ]);
-  if (processHandle.exitCode === null) processHandle.kill("SIGKILL");
-}
 
 async function startOwnedServices() {
   if (baseUrl && debugUrl) return async () => {};
@@ -95,18 +57,18 @@ async function startOwnedServices() {
   debugUrl = `http://127.0.0.1:${chromePort}`;
   const chromeProfile = await fs.mkdtemp(path.join(os.tmpdir(), "hino-phase3-audit-"));
   let serverOutput = "";
-  const nextProcess = spawn(process.execPath, [require.resolve("next/dist/bin/next"), "start", "--hostname", "127.0.0.1", "--port", String(nextPort)], {
+  const nextProcess = trackProcess(spawn(process.execPath, [require.resolve("next/dist/bin/next"), "start", "--hostname", "127.0.0.1", "--port", String(nextPort)], {
     cwd: projectRoot,
     env: { ...process.env, NEXT_TELEMETRY_DISABLED: "1", NODE_ENV: "production" },
     stdio: ["ignore", "pipe", "pipe"],
     windowsHide: true,
-  });
+  }));
   nextProcess.stdout.on("data", (chunk) => { serverOutput += chunk; });
   nextProcess.stderr.on("data", (chunk) => { serverOutput += chunk; });
-  const chromeProcess = spawn(chromePath, [
+  const chromeProcess = trackProcess(spawn(chromePath, [
     "--headless=new", "--disable-gpu", "--no-first-run", "--no-default-browser-check",
     `--remote-debugging-port=${chromePort}`, `--user-data-dir=${chromeProfile}`, "about:blank",
-  ], { stdio: "ignore", windowsHide: true });
+  ], { stdio: "ignore", windowsHide: true }));
 
   try {
     await Promise.all([
@@ -125,67 +87,12 @@ async function startOwnedServices() {
   };
 }
 
-export class Cdp {
-  constructor(socket) {
-    this.socket = socket;
-    this.nextId = 1;
-    this.pending = new Map();
-    socket.addEventListener("message", ({ data }) => {
-      const message = JSON.parse(data);
-      if (!message.id) return;
-      const waiter = this.pending.get(message.id);
-      if (!waiter) return;
-      this.pending.delete(message.id);
-      if (message.error) waiter.reject(new Error(message.error.message));
-      else waiter.resolve(message.result);
-    });
-  }
-
-  send(method, params = {}) {
-    const id = this.nextId++;
-    this.socket.send(JSON.stringify({ id, method, params }));
-    return new Promise((resolve, reject) => this.pending.set(id, { resolve, reject }));
-  }
-}
-
-export async function openPage(chromeDebugUrl = debugUrl) {
-  const response = await fetch(`${chromeDebugUrl}/json/new?${encodeURIComponent("about:blank")}`, { method: "PUT" });
-  if (!response.ok) throw new Error(`Chrome target creation failed: ${response.status}`);
-  const target = await response.json();
-  const socket = new WebSocket(target.webSocketDebuggerUrl);
-  await new Promise((resolve, reject) => {
-    socket.addEventListener("open", resolve, { once: true });
-    socket.addEventListener("error", reject, { once: true });
-  });
-  const cdp = new Cdp(socket);
-  await Promise.all([cdp.send("Page.enable"), cdp.send("Runtime.enable")]);
-  return { cdp, socket, target };
-}
-
-export async function evaluate(cdp, expression) {
-  const result = await cdp.send("Runtime.evaluate", {
-    expression,
-    awaitPromise: true,
-    returnByValue: true,
-  });
-  if (result.exceptionDetails) throw new Error(result.exceptionDetails.text ?? "Browser evaluation failed");
-  return result.result.value;
-}
-
 export async function navigate(cdp, url) {
   await cdp.send("Page.navigate", { url });
   await new Promise((resolve) => setTimeout(resolve, 550));
   await evaluate(cdp, `new Promise(resolve => document.readyState === "complete" ? resolve() : addEventListener("load", resolve, { once: true }))`);
   await new Promise((resolve) => setTimeout(resolve, 200));
   await evaluate(cdp, `new Promise(async resolve => { for (let y = 0; y < document.documentElement.scrollHeight; y += 700) { scrollTo(0, y); await new Promise(r => setTimeout(r, 45)); } scrollTo(0, document.documentElement.scrollHeight); await new Promise(r => setTimeout(r, 250)); await Promise.race([Promise.all([...document.images].map(image => image.decode().catch(() => null))), new Promise(r => setTimeout(r, 1200))]); scrollTo(0, 0); await new Promise(r => setTimeout(r, 120)); resolve(); })`);
-}
-
-export async function pressKey(cdp, key, code = key, { shift = false } = {}) {
-  const virtualKeyCode = key === "Enter" ? 13 : key === "Escape" ? 27 : key === "Tab" ? 9 : 0;
-  const modifiers = shift ? 8 : 0;
-  await cdp.send("Input.dispatchKeyEvent", { type: "rawKeyDown", key, code, modifiers, windowsVirtualKeyCode: virtualKeyCode, nativeVirtualKeyCode: virtualKeyCode });
-  if (key === "Enter") await cdp.send("Input.dispatchKeyEvent", { type: "char", key, code, text: "\r", unmodifiedText: "\r", windowsVirtualKeyCode: virtualKeyCode, nativeVirtualKeyCode: virtualKeyCode });
-  await cdp.send("Input.dispatchKeyEvent", { type: "keyUp", key, code, modifiers, windowsVirtualKeyCode: virtualKeyCode, nativeVirtualKeyCode: virtualKeyCode });
 }
 
 const auditExpression = `(() => {
@@ -301,7 +208,7 @@ async function screenshot(cdp, file) {
 
 async function runAudit() {
   await fs.mkdir(evidenceDir, { recursive: true });
-  const { cdp, socket, target } = await openPage();
+  const { cdp, socket, target } = await openPage(debugUrl);
   const matrix = [];
   try {
     for (const width of widths) {
