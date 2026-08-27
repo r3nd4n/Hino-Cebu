@@ -115,7 +115,7 @@ test("Contact retains the shared shell and the mobile action cannot mint topics"
   assert.match(layout, /<Header phone=\{publicContact\.phone\}\s*\/>[\s\S]*\{children\}[\s\S]*<Footer\s*\/>[\s\S]*<MobileActionBar phone=\{publicContact\.phone\}\s*\/>/);
   assert.equal((page.match(/<main\b/g) ?? []).length, 1);
   assert.match(page, /<main[^>]+id="main-content"/);
-  assert.match(navigation, /href: "\/contact"/);
+  assert.doesNotMatch(navigation, /href: "\/contact"/);
   assert.match(page, /<section[^>]+id="inquiry"/);
   assert.match(page, /publicContact\.phone\.status === "approved"/);
   assert.match(mobileAction, /usePathname\(\)/);

@@ -17,7 +17,6 @@ export const primaryNavigation: readonly NavigationItem[] = [
   },
   { label: "Parts & Service", href: "/parts-service" },
   { label: "About", href: "/about" },
-  { label: "Contact", href: "/contact" },
 ] as const;
 
 export const legalNavigation = [

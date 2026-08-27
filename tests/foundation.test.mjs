@@ -11,7 +11,7 @@ test("approved navigation excludes promotions", async () => {
   assert.match(navigation, /label: "Trucks"/);
   assert.match(navigation, /label: "Parts & Service"/);
   assert.match(navigation, /label: "About"/);
-  assert.match(navigation, /label: "Contact"/);
+  assert.doesNotMatch(navigation, /label: "Contact"/);
 });
 
 test("site configuration keeps candidate Cebu facts behind approval status", async () => {
@@ -35,6 +35,7 @@ test("the public shell exports desktop and mobile conversion actions", async () 
   assert.match(header, /export function Header/);
   assert.match(header, /phone\.status === "approved"/);
   assert.match(header, /href="\/contact#inquiry"/);
+  assert.match(footer, /href="\/contact#inquiry"/);
   assert.match(mobileMenu, /Request a Quote/);
   assert.match(mobileMenu, /event\.key === "Escape"/);
   assert.match(mobileActionBar, /Call/);
