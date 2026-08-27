@@ -113,10 +113,11 @@ test("mobile menu owns focus and makes covered page regions inert", async () => 
       activeInside: panel.contains(document.activeElement),
       inert: [document.querySelector('main'), document.querySelector('.site-footer'), document.querySelector('.mobile-action-bar')].every(element => element?.inert),
       identityInert: document.querySelector('.site-identity')?.inert === true,
+      skipLinkInert: document.querySelector('.skip-link')?.inert === true,
       overflow: document.body.style.overflow,
     };
   })()`);
-  assert.deepEqual(opened, { firstFocused: true, activeInside: true, inert: true, identityInert: true, overflow: "hidden" });
+  assert.deepEqual(opened, { firstFocused: true, activeInside: true, inert: true, identityInert: true, skipLinkInert: true, overflow: "hidden" });
 
   await evaluate(`(() => { const items=[...document.querySelectorAll('.mobile-menu__panel a')]; items.at(-1).focus(); })()`);
   await key("Tab");
@@ -130,8 +131,9 @@ test("mobile menu owns focus and makes covered page regions inert", async () => 
     restored: document.activeElement === document.querySelector('.mobile-menu__trigger'),
     inertCleared: [document.querySelector('main'), document.querySelector('.site-footer'), document.querySelector('.mobile-action-bar')].every(element => !element?.inert),
     identityRestored: document.querySelector('.site-identity')?.inert === false,
+    skipLinkRestored: document.querySelector('.skip-link')?.inert === false,
     overflow: document.body.style.overflow,
-  })`), { closed: true, restored: true, inertCleared: true, identityRestored: true, overflow: "" });
+  })`), { closed: true, restored: true, inertCleared: true, identityRestored: true, skipLinkRestored: true, overflow: "" });
 });
 
 test("unresolved mobile inquiry action spans the available bar width", async () => {

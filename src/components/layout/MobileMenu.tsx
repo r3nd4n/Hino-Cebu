@@ -28,6 +28,7 @@ export function MobileMenu({ navigation, phone }: MobileMenuProps) {
     const previousOverflow = document.body.style.overflow;
     const trigger = triggerRef.current;
     const menuRoot = trigger?.closest<HTMLElement>(".mobile-menu");
+    const skipLink = menuRoot?.closest<HTMLElement>(".site-header")?.querySelector<HTMLElement>(".skip-link");
     const headerSiblings = [...(menuRoot?.parentElement?.children ?? [])].filter(
       (element): element is HTMLElement => element instanceof HTMLElement && element !== menuRoot,
     );
@@ -35,6 +36,7 @@ export function MobileMenu({ navigation, phone }: MobileMenuProps) {
       document.querySelector<HTMLElement>("main"),
       document.querySelector<HTMLElement>(".site-footer"),
       document.querySelector<HTMLElement>(".mobile-action-bar"),
+      skipLink,
       ...headerSiblings,
     ].filter((element): element is HTMLElement => element !== null);
     const previousInert = obscuredElements.map((element) => ({ element, inert: element.inert }));
