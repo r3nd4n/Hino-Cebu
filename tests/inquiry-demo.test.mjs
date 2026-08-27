@@ -41,6 +41,26 @@ async function validate(draft) {
   `);
 }
 
+async function transition(status, event, draft = validDraft) {
+  return runTypeScript(`
+    const { registerHooks } = await import('node:module');
+    registerHooks({
+      resolve(specifier, context, nextResolve) {
+        if (specifier.startsWith('@/')) {
+          return nextResolve(new URL('./src/' + specifier.slice(2) + '.ts', import.meta.url).href, context);
+        }
+        return nextResolve(specifier, context);
+      },
+    });
+    const { transitionInquiry } = await import('./src/lib/inquiry-demo.ts');
+    process.stdout.write(JSON.stringify(transitionInquiry({
+      status: ${JSON.stringify(status)},
+      event: ${JSON.stringify(event)},
+      draft: ${JSON.stringify(draft)},
+    })));
+  `);
+}
+
 const topics = [
   "general",
   "200-series",
@@ -134,6 +154,42 @@ test("valid inquiry drafts return only the approved local confirmation", async (
     assert.doesNotMatch(serialized, new RegExp(forbidden));
 });
 
+test("invalid activation stays idle with ordered field errors", async () => {
+  const result = await transition("idle", "activate", {});
+
+  assert.equal(result.outcome, "invalid");
+  assert.equal(result.nextStatus, "idle");
+  assert.deepEqual(Object.keys(result.errors), ["inquiryTopic", "name", "mobile", "consent"]);
+});
+
+test("valid activation enters one local pending transition", async () => {
+  assert.deepEqual(await transition("idle", "activate"), {
+    outcome: "accepted-local",
+    nextStatus: "loading",
+  });
+});
+
+test("activation while pending is ignored without revalidating", async () => {
+  assert.deepEqual(await transition("loading", "activate", {}), {
+    outcome: "duplicate-pending",
+    nextStatus: "loading",
+  });
+});
+
+test("pending completion returns only the local confirmation", async () => {
+  const result = await transition("loading", "complete");
+
+  assert.deepEqual(result, {
+    outcome: "completed-local",
+    nextStatus: "success",
+    message: "Thank you for your interest in Hino Cebu.",
+  });
+
+  const serialized = JSON.stringify(result).toLowerCase();
+  for (const forbidden of ["send", "sent", "received", "persist", "provider", "follow up", "follow-up"])
+    assert.doesNotMatch(serialized, new RegExp(forbidden));
+});
+
 test("Contact normalizes server-owned query context before the client boundary", async () => {
   const page = await readFile(new URL("../src/app/contact/page.tsx", import.meta.url), "utf8");
 
@@ -176,13 +232,13 @@ test("InquiryForm preserves the normalized origin and follows the accessible fie
   assert.match(form, /aria-describedby/);
   assert.match(form, /aria-live="polite"/);
   assert.match(form, /disabled=\{isLoading\}/);
-  assert.match(form, /if\s*\(status\s*===\s*"loading"\)\s*return/);
+  assert.match(form, /transitionInquiry/);
   assert.match(form, /\.focus\(\)/);
   assert.match(form, /window\.setTimeout\([^,]+,\s*300\)/);
   assert.match(form, /Thank you for your interest in Hino Cebu\./);
   assert.match(form, /phone\.status === "approved"/);
   assert.match(form, /Local phone details are awaiting confirmation\./);
-  assert.match(form, /We couldn't send your inquiry right now\. Please try again\./);
+  assert.doesNotMatch(form, /failure|catch\s*\{|couldn.t send|\bsend\b|\bsent\b|\breceived\b|follow up/i);
   assert.doesNotMatch(form, /fetch\s*\(|use server|process\.env|localStorage|sessionStorage|leadId|thank-you|resend|google sheets|provider/i);
 });
 
