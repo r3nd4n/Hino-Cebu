@@ -2,7 +2,7 @@
 
 **Result:** APPROVED
 
-**Production build inspected:** 2026-08-27 fresh `next build`, served with `next start` at `127.0.0.1:4310`
+**Production build inspected:** 2026-08-27T13:18:23.935Z from a fresh `next build`, served by the audit on an isolated ephemeral `next start` port
 **Browser:** Headless Chrome 151 via the Chrome DevTools Protocol
 **Evidence:** [`03-10-evidence/browser-audit.json`](./03-10-evidence/browser-audit.json) and 32 full-page PNG captures in [`03-10-evidence/`](./03-10-evidence/)
 
@@ -15,7 +15,7 @@ npm run build && npm test && npm run lint
 ```
 
 - Build: PASS; Next generated `/trucks`, four finite truck slugs, `/parts-service`, `/contact`, and `/about`.
-- Tests: PASS, 50/50; the glob included `tests/phase3-runtime-contracts.test.mjs`, which consumed the immediately preceding fresh `.next` output.
+- Tests: PASS, 58/58; the glob included both `tests/phase3-runtime-contracts.test.mjs` and `tests/phase3-browser-interactions.test.mjs`. The runtime suite consumed the immediately preceding fresh `.next` output.
 - Lint: PASS, exit 0 with no warnings.
 
 ## Exact route and viewport matrix
@@ -48,7 +48,9 @@ The captures show the required one-column phone composition, two-column tablet c
 ## Keyboard, focus, zoom, and motion
 
 - Keyboard Tab exposed and focused the skip link at `top: 16px` with a visible 3px red focus shadow; Enter moved focus to `main#main-content`.
-- The 390px mobile-menu trigger opened from keyboard activation, locked body scrolling, closed on Escape, and restored focus to the trigger.
+- The 390px mobile-menu trigger opened from keyboard activation, moved focus to the first panel link, and kept active focus inside the panel.
+- Main, footer, and the fixed quick-action bar were natively inert while the panel was open. Forward Tab wrapped from the last panel action to the first, and Shift+Tab wrapped from first to last.
+- Escape closed the menu, restored focus to the trigger, cleared background inertness, and restored the prior body overflow value.
 - Page actions, cards, form controls, and inquiry links retained browser focusability and logical document order.
 - The 200% zoom probe retained reflow without horizontal overflow. The fixed mobile action bar measured 61px against 64px body clearance, and the final control remained fully operable above it.
 - With `prefers-reduced-motion: reduce`, root scroll behavior computed to `auto`, card transform computed to `none`, and the largest transition duration computed to `0.01ms`.
@@ -58,13 +60,15 @@ The captures show the required one-column phone composition, two-column tablet c
 - Arbitrary topic input normalized to `general`; `?topic=parts` prefilled `parts`.
 - The visible topic remained editable (`parts` changed to `service`) while the executable transition suite separately preserved the normalized origin.
 - Empty submission focused `name`, marked `name`, `mobile`, and `consent` invalid in order, and associated every invalid control with its textual error via `aria-describedby`.
-- Valid activation produced one disabled loading transition with `Preparing your next stepâ€¦` and the polite live text `Checking your detailsâ€¦`; immediate duplicate activation did not create another transition.
+- Valid activation produced one disabled loading transition with `Preparing your next step…` and the polite live text `Checking your details…`; immediate duplicate activation did not create another transition.
 - Completion focused the confirmation heading inside a polite live region and displayed only `Thank you for your interest in Hino Cebu.` plus the unresolved-phone fallback.
+- `Start another inquiry` was a real button in the unresolved-phone branch. Activating it restored `parts` from the normalized initial context, cleared name, mobile, email, company, message, consent, errors, and success status, then focused `inquiryTopic`.
+- Homepage empty submission exposed `aria-invalid="true"` on consent, retained its visible `aria-describedby` error, and focused the first invalid field (`quote-name`).
 - No submission failure, sent, received, promised follow-up, delivery, lead-ID, or provider claim appeared. The Parts & Service phrase `Arrange the appropriate follow-up` is operational conversation guidance, not a submission/delivery claim.
 
 ## Fact, provenance, and scope safety
 
-Across all 32 production responses and browser DOMs:
+Across all 32 route/viewport browser cells, plus fresh production HTML for the homepage and eight Phase 3 routes:
 
 - Candidate phone `(032) 346 3322` / `tel:+63323463322`, candidate address `8WC6+Q46...`, and candidate hours did not appear.
 - There were zero active `tel:`, Google Maps, or map-app links.
@@ -75,13 +79,13 @@ Across all 32 production responses and browser DOMs:
 
 ## Evidence reproducibility
 
-Run the already-versioned browser probe against a fresh production preview:
+After a fresh build, run the already-versioned browser probe; it owns isolated Next and Chrome processes and tears them down automatically:
 
 ```text
 node .planning/phases/03-truck-discovery-local-support-routes/03-10-browser-audit.mjs
 ```
 
-The probe writes the machine-readable result and refreshes all 32 PNG captures. It installs no package and uses the locally installed Chrome browser plus Node's built-in WebSocket implementation.
+The probe writes the machine-readable result and refreshes all 32 PNG captures. It installs no package, auto-discovers standard Windows Chrome locations (or accepts `CHROME_PATH`), and uses Node's built-in WebSocket implementation. The previous acceptance run covered only menu open/Escape and inquiry success; this refreshed run supersedes those limited claims with direct containment, inert-cleanup, homepage-consent, and inquiry-reset observations.
 
 ## Approval
 

@@ -1,9 +1,15 @@
 import fs from "node:fs/promises";
+import { spawn } from "node:child_process";
+import { createRequire } from "node:module";
+import { createServer } from "node:net";
+import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-const baseUrl = process.env.PHASE3_BASE_URL ?? "http://127.0.0.1:4310";
-const debugUrl = process.env.CHROME_DEBUG_URL ?? "http://127.0.0.1:9222";
+const require = createRequire(import.meta.url);
+const projectRoot = path.resolve(".");
+let baseUrl = process.env.PHASE3_BASE_URL;
+let debugUrl = process.env.CHROME_DEBUG_URL;
 const evidenceDir = path.resolve(".planning/phases/03-truck-discovery-local-support-routes/03-10-evidence");
 const routes = [
   "/trucks",
@@ -16,6 +22,108 @@ const routes = [
   "/about",
 ];
 const widths = [390, 768, 1024, 1440];
+
+async function isolatedPort() {
+  return new Promise((resolve, reject) => {
+    const socket = createServer();
+    socket.unref();
+    socket.once("error", reject);
+    socket.listen(0, "127.0.0.1", () => {
+      const address = socket.address();
+      socket.close(() => resolve(address.port));
+    });
+  });
+}
+
+async function exists(location) {
+  try {
+    await fs.stat(location);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+async function waitFor(url, label, processHandle, output = () => "") {
+  const deadline = Date.now() + 30_000;
+  let lastError;
+  while (Date.now() < deadline) {
+    if (processHandle?.exitCode !== null) throw new Error(`${label} exited before readiness.\n${output()}`);
+    try {
+      const response = await fetch(url, { signal: AbortSignal.timeout(1_000) });
+      if (response.ok) return;
+      lastError = new Error(`readiness returned ${response.status}`);
+    } catch (error) {
+      lastError = error;
+    }
+    await new Promise((resolve) => setTimeout(resolve, 150));
+  }
+  throw new Error(`${label} did not become ready: ${lastError?.message ?? "unknown error"}\n${output()}`);
+}
+
+async function stopProcess(processHandle) {
+  if (!processHandle || processHandle.exitCode !== null) return;
+  processHandle.kill("SIGTERM");
+  await Promise.race([
+    new Promise((resolve) => processHandle.once("exit", resolve)),
+    new Promise((resolve) => setTimeout(resolve, 2_000)),
+  ]);
+  if (processHandle.exitCode === null) processHandle.kill("SIGKILL");
+}
+
+async function startOwnedServices() {
+  if (baseUrl && debugUrl) return async () => {};
+  if (baseUrl || debugUrl) throw new Error("Set both PHASE3_BASE_URL and CHROME_DEBUG_URL, or neither so the audit owns both services.");
+  if (!(await exists(path.join(projectRoot, ".next", "BUILD_ID")))) {
+    throw new Error("Browser acceptance requires a fresh production build. Run `npm run build` first.");
+  }
+
+  const chromeCandidates = [
+    process.env.CHROME_PATH,
+    "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+    "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
+    process.env.LOCALAPPDATA && path.join(process.env.LOCALAPPDATA, "Google", "Chrome", "Application", "chrome.exe"),
+  ].filter(Boolean);
+  let chromePath;
+  for (const candidate of chromeCandidates) {
+    if (await exists(candidate)) { chromePath = candidate; break; }
+  }
+  if (!chromePath) throw new Error("Chrome was not found. Set CHROME_PATH to an installed Chrome executable.");
+
+  const [nextPort, chromePort] = await Promise.all([isolatedPort(), isolatedPort()]);
+  baseUrl = `http://127.0.0.1:${nextPort}`;
+  debugUrl = `http://127.0.0.1:${chromePort}`;
+  const chromeProfile = await fs.mkdtemp(path.join(os.tmpdir(), "hino-phase3-audit-"));
+  let serverOutput = "";
+  const nextProcess = spawn(process.execPath, [require.resolve("next/dist/bin/next"), "start", "--hostname", "127.0.0.1", "--port", String(nextPort)], {
+    cwd: projectRoot,
+    env: { ...process.env, NEXT_TELEMETRY_DISABLED: "1", NODE_ENV: "production" },
+    stdio: ["ignore", "pipe", "pipe"],
+    windowsHide: true,
+  });
+  nextProcess.stdout.on("data", (chunk) => { serverOutput += chunk; });
+  nextProcess.stderr.on("data", (chunk) => { serverOutput += chunk; });
+  const chromeProcess = spawn(chromePath, [
+    "--headless=new", "--disable-gpu", "--no-first-run", "--no-default-browser-check",
+    `--remote-debugging-port=${chromePort}`, `--user-data-dir=${chromeProfile}`, "about:blank",
+  ], { stdio: "ignore", windowsHide: true });
+
+  try {
+    await Promise.all([
+      waitFor(`${baseUrl}/trucks`, "Next production server", nextProcess, () => serverOutput),
+      waitFor(`${debugUrl}/json/version`, "Chrome debugging endpoint", chromeProcess),
+    ]);
+  } catch (error) {
+    await Promise.all([stopProcess(chromeProcess), stopProcess(nextProcess)]);
+    await fs.rm(chromeProfile, { recursive: true, force: true });
+    throw error;
+  }
+
+  return async () => {
+    await Promise.all([stopProcess(chromeProcess), stopProcess(nextProcess)]);
+    await fs.rm(chromeProfile, { recursive: true, force: true });
+  };
+}
 
 export class Cdp {
   constructor(socket) {
@@ -191,7 +299,7 @@ async function screenshot(cdp, file) {
   await fs.writeFile(file, Buffer.from(data, "base64"));
 }
 
-async function run() {
+async function runAudit() {
   await fs.mkdir(evidenceDir, { recursive: true });
   const { cdp, socket, target } = await openPage();
   const matrix = [];
@@ -235,11 +343,30 @@ async function run() {
     await evaluate(cdp, `document.querySelector('.mobile-menu__trigger').focus()`);
     await pressKey(cdp, "Enter", "Enter");
     await new Promise(r => setTimeout(r, 50));
-    const menuOpen = await evaluate(cdp, `document.querySelector('.mobile-menu__trigger').getAttribute('aria-expanded') === 'true' && getComputedStyle(document.body).overflow === 'hidden'`);
+    const menuOpen = await evaluate(cdp, `(() => {
+      const panel=document.querySelector('.mobile-menu__panel');
+      return {
+        expanded: document.querySelector('.mobile-menu__trigger').getAttribute('aria-expanded') === 'true',
+        firstFocused: document.activeElement === panel?.querySelector('a'),
+        activeInside: panel?.contains(document.activeElement) ?? false,
+        backgroundInert: [document.querySelector('main'), document.querySelector('.site-footer'), document.querySelector('.mobile-action-bar')].every(element => element?.inert),
+        overflow: document.body.style.overflow,
+      };
+    })()`);
+    await evaluate(cdp, `(() => { const items=[...document.querySelectorAll('.mobile-menu__panel a')]; items.at(-1).focus(); })()`);
+    await pressKey(cdp, "Tab", "Tab");
+    const forwardWrapped = await evaluate(cdp, `document.activeElement === document.querySelector('.mobile-menu__panel a')`);
+    await pressKey(cdp, "Tab", "Tab", { shift: true });
+    const backwardWrapped = await evaluate(cdp, `document.activeElement === [...document.querySelectorAll('.mobile-menu__panel a')].at(-1)`);
     await pressKey(cdp, "Escape", "Escape");
     await new Promise(r => setTimeout(r, 50));
-    const menuClosed = await evaluate(cdp, `({ closed: document.querySelector('.mobile-menu__trigger').getAttribute('aria-expanded') === 'false', focusRestored: document.activeElement === document.querySelector('.mobile-menu__trigger') })`);
-    const keyboard = { skipFocus, skipTarget, menuOpen, ...menuClosed };
+    const menuClosed = await evaluate(cdp, `({
+      closed: document.querySelector('.mobile-menu__trigger').getAttribute('aria-expanded') === 'false',
+      focusRestored: document.activeElement === document.querySelector('.mobile-menu__trigger'),
+      inertCleared: [document.querySelector('main'), document.querySelector('.site-footer'), document.querySelector('.mobile-action-bar')].every(element => !element?.inert),
+      overflowRestored: document.body.style.overflow === '',
+    })`);
+    const keyboard = { skipFocus, skipTarget, menuOpen, forwardWrapped, backwardWrapped, ...menuClosed };
 
     await cdp.send("Emulation.setDeviceMetricsOverride", { width: 195, height: 450, deviceScaleFactor: 2, mobile: true });
     await navigate(cdp, `${baseUrl}/trucks`);
@@ -256,9 +383,10 @@ async function run() {
     const fallbackTopic = await evaluate(cdp, `document.querySelector('[name="inquiryTopic"]').value`);
     await navigate(cdp, `${baseUrl}/contact?topic=parts#inquiry`);
     const form = await evaluate(cdp, `(async () => {
+      const set = (selector, value) => { const e=document.querySelector(selector); const descriptor=Object.getOwnPropertyDescriptor(Object.getPrototypeOf(e), 'value'); descriptor.set.call(e,value); e.dispatchEvent(new Event('input',{bubbles:true})); e.dispatchEvent(new Event('change',{bubbles:true})); };
       const select = document.querySelector('[name="inquiryTopic"]');
       const allowedPrefill = select.value;
-      select.value = 'service'; select.dispatchEvent(new Event('change', { bubbles: true }));
+      set('[name="inquiryTopic"]', 'service');
       const editedTopic = select.value;
       document.querySelector('form button[type="submit"]').click();
       await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
@@ -267,22 +395,50 @@ async function run() {
         errors: [...document.querySelectorAll('[aria-invalid="true"]')].map(e => e.name),
         described: [...document.querySelectorAll('[aria-invalid="true"]')].every(e => e.getAttribute('aria-describedby') && document.getElementById(e.getAttribute('aria-describedby'))),
       };
-      const set = (selector, value) => { const e=document.querySelector(selector); const descriptor=Object.getOwnPropertyDescriptor(Object.getPrototypeOf(e), 'value'); descriptor.set.call(e,value); e.dispatchEvent(new Event('input',{bubbles:true})); e.dispatchEvent(new Event('change',{bubbles:true})); };
       set('[name="name"]', 'Test User'); set('[name="mobile"]', '09171234567');
       const consent=document.querySelector('[name="consent"]'); consent.click();
-      const submit=document.querySelector('form button[type="submit"]'); submit.click(); submit.click();
-      await new Promise(r => setTimeout(r, 30));
-      const loading = { disabled: submit.disabled, label: submit.innerText, live: document.querySelector('.form-message').innerText };
+      await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+      const submit=document.querySelector('form button[type="submit"]'); submit.click();
+      await new Promise(r => requestAnimationFrame(r));
+      const loading = { disabled: submit.disabled, label: submit.textContent.trim(), live: document.querySelector('.form-message').textContent.trim() };
+      submit.click();
+      const duplicate = { disabled: submit.disabled, label: submit.textContent.trim(), live: document.querySelector('.form-message').textContent.trim() };
       await new Promise(r => setTimeout(r, 400));
       const heading=document.querySelector('.inquiry-confirmation h2');
-      return { allowedPrefill, editedTopic, invalid, loading, success: { heading: heading?.innerText, focused: document.activeElement === heading, liveRegion: document.querySelector('.inquiry-confirmation')?.getAttribute('aria-live'), text: document.querySelector('.inquiry-confirmation')?.innerText } };
+      const success = { heading: heading?.textContent.trim(), focused: document.activeElement === heading, liveRegion: document.querySelector('.inquiry-confirmation')?.getAttribute('aria-live'), text: document.querySelector('.inquiry-confirmation')?.innerText };
+      document.querySelector('.inquiry-confirmation button').click();
+      await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+      return {
+        allowedPrefill, editedTopic, invalid, loading, duplicate, success,
+        reset: {
+          topic: document.querySelector('[name="inquiryTopic"]').value,
+          fields: ['name','mobile','email','company','message'].map(name => document.querySelector('[name="' + name + '"]').value),
+          consent: document.querySelector('[name="consent"]').checked,
+          errors: document.querySelectorAll('.field-error').length,
+          focused: document.activeElement?.getAttribute('name'),
+        },
+      };
     })()`);
-    const interactions = { keyboard, zoom, topics: { fallbackTopic, ...form } };
+    await navigate(cdp, `${baseUrl}/`);
+    const homepageConsent = await evaluate(cdp, `(async () => {
+      document.querySelector('.homepage-quote button[type="submit"]').click();
+      await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+      const consent=document.querySelector('#quote-consent'); const error=document.getElementById(consent.getAttribute('aria-describedby'));
+      return { invalid: consent.getAttribute('aria-invalid'), described: Boolean(error?.innerText), firstFocus: document.activeElement?.id };
+    })()`);
+    const interactions = { keyboard, zoom, homepageConsent, topics: { fallbackTopic, ...form } };
     const report = { generatedAt: new Date().toISOString(), baseUrl, matrix, interactions };
     await fs.writeFile(path.join(evidenceDir, "browser-audit.json"), JSON.stringify(report, null, 2));
     const failed = matrix.filter(cell => cell.result === "FAIL");
-    console.log(JSON.stringify({ cells: matrix.length, passed: matrix.length - failed.length, failed: failed.map(({ route, width, failures }) => ({ route, width, failures })), interactions }, null, 2));
-    if (failed.length) process.exitCode = 1;
+    const interactionFailures = [];
+    if (!menuOpen.expanded || !menuOpen.firstFocused || !menuOpen.activeInside || !menuOpen.backgroundInert || menuOpen.overflow !== "hidden") interactionFailures.push("mobile menu open/focus/inert state");
+    if (!forwardWrapped || !backwardWrapped || !menuClosed.closed || !menuClosed.focusRestored || !menuClosed.inertCleared || !menuClosed.overflowRestored) interactionFailures.push("mobile menu containment/cleanup state");
+    if (homepageConsent.invalid !== "true" || !homepageConsent.described || homepageConsent.firstFocus !== "quote-name") interactionFailures.push("homepage consent invalid state");
+    if (fallbackTopic !== "general" || form.allowedPrefill !== "parts" || form.editedTopic !== "service" || form.invalid.focus !== "name" || !form.invalid.described) interactionFailures.push("Contact topic/invalid state");
+    if (!form.loading.disabled || JSON.stringify(form.duplicate) !== JSON.stringify(form.loading) || !form.success.focused || form.success.liveRegion !== "polite") interactionFailures.push("Contact loading/success state");
+    if (form.reset.topic !== "parts" || form.reset.fields.some(Boolean) || form.reset.consent || form.reset.errors || form.reset.focused !== "inquiryTopic") interactionFailures.push("Contact reset state");
+    console.log(JSON.stringify({ cells: matrix.length, passed: matrix.length - failed.length, failed: failed.map(({ route, width, failures }) => ({ route, width, failures })), interactionFailures, interactions }, null, 2));
+    if (failed.length || interactionFailures.length) process.exitCode = 1;
   } finally {
     socket.close();
     await fetch(`${debugUrl}/json/close/${target.id}`).catch(() => {});
@@ -290,5 +446,10 @@ async function run() {
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
-  await run();
+  const stopServices = await startOwnedServices();
+  try {
+    await runAudit();
+  } finally {
+    await stopServices();
+  }
 }
