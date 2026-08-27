@@ -243,7 +243,10 @@ test("InquiryForm preserves the normalized origin and follows the accessible fie
 });
 
 test("Contact gates local facts and keeps truthful unresolved statuses", async () => {
-  const page = await readFile(new URL("../src/app/contact/page.tsx", import.meta.url), "utf8");
+  const [page, contactEmail] = await Promise.all([
+    readFile(new URL("../src/app/contact/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../src/components/contact/ContactEmail.tsx", import.meta.url), "utf8"),
+  ]);
 
   assert.match(page, /publicContact\.phone\.status === "approved"/);
   assert.match(page, /publicContact\.address\.status === "approved"/);
@@ -251,7 +254,9 @@ test("Contact gates local facts and keeps truthful unresolved statuses", async (
   assert.match(page, /Phone: awaiting confirmation/);
   assert.match(page, /Address: awaiting confirmation/);
   assert.match(page, /Hours: awaiting confirmation/);
-  assert.match(page, /Email: awaiting confirmation/);
+  assert.match(page, /<ContactEmail email=\{publicContact\.email\}/);
+  assert.match(contactEmail, /Email: awaiting confirmation/);
+  assert.match(contactEmail, /email\.status === "approved"/);
   assert.match(page, /Verified directions link: awaiting confirmation/);
   assert.match(page, /Map and directions: awaiting confirmation/);
   assert.doesNotMatch(page, /<iframe|encodeURIComponent\(|Google Maps/);

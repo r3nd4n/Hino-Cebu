@@ -36,6 +36,7 @@ const contactFixture = ({
       phoneStatus,
     ),
     address: configuredFact("Candidate address", addressStatus),
+    email: configuredFact(null, "unresolved"),
     directionsUrl: configuredFact("https://maps.example.test/candidate", directionsStatus),
   },
   hours: configuredFact(
@@ -73,6 +74,7 @@ test("homepage receives only the central public contact projection", async () =>
   assert.deepEqual(unresolved, {
     phone: { status: "awaiting-confirmation" },
     address: { status: "awaiting-confirmation" },
+    email: { status: "awaiting-confirmation" },
     directions: { status: "awaiting-confirmation" },
     hours: { status: "awaiting-confirmation" },
   });
