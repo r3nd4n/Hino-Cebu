@@ -33,7 +33,6 @@ export function TruckCard({ series, image }: TruckCardProps) {
         .truck-listing-card { background: var(--color-paper); border: 1px solid var(--color-border); border-radius: var(--radius-card); box-shadow: var(--shadow-card); color: inherit; display: flex; flex-direction: column; min-width: 0; overflow: hidden; text-decoration: none; transition: box-shadow 180ms ease, transform 180ms ease; }
         .truck-listing-card:hover, .truck-listing-card:focus-visible { box-shadow: var(--shadow-elevated); transform: translateY(-3px); }
         .truck-listing-card__media { align-items: center; aspect-ratio: 4 / 5; background: #f7f7f5; display: flex; justify-content: center; overflow: hidden; }
-        .truck-listing-card__media :global(img) { height: 100%; object-fit: contain; width: 100%; }
         .truck-listing-card__body { display: flex; flex: 1; flex-direction: column; padding: var(--space-lg); }
         .truck-listing-card h2 { font-size: clamp(1.5rem, 2vw, 2rem); margin-top: var(--space-sm); }
         .truck-listing-card__body > p:not(.eyebrow) { color: var(--color-muted-ink); font-size: .925rem; margin: var(--space-md) 0 0; }

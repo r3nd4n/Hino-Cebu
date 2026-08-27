@@ -99,7 +99,6 @@ export function TruckSeriesPage({ series, image }: TruckSeriesPageProps) {
         .series-applications__grid, .series-highlights__grid { display: grid; gap: var(--space-md); margin-top: var(--space-xl); }
         .series-applications__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
         .series-application-card, .series-highlight-card { border: 1px solid var(--color-border); padding: var(--space-xl); }
-        .series-application-card :global(svg) { color: var(--color-red); }
         .series-application-card h3, .series-highlight-card h3 { margin-top: var(--space-lg); }
         .series-application-card p, .series-highlight-card p { color: var(--color-muted-ink); }
         .series-application-card small { display: block; font-weight: 700; margin-top: var(--space-lg); }

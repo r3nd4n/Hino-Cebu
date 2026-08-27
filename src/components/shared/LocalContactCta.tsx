@@ -41,8 +41,6 @@ export function LocalContactCta({
         .local-contact-cta h2 { margin-top: var(--space-sm); max-width: 18ch; }
         .local-contact-cta__panel > div > p:last-child { color: #d6d9da; margin: var(--space-md) 0 0; max-width: 40rem; }
         .local-contact-cta__actions { display: flex; flex: 0 0 auto; flex-wrap: wrap; gap: var(--space-md); }
-        .local-contact-cta__actions :global(.button) { gap: var(--space-sm); }
-        .local-contact-cta__actions :global(.button--secondary) { border-color: var(--color-paper); color: var(--color-paper); }
         @media (max-width: 900px) { .local-contact-cta__panel { align-items: stretch; flex-direction: column; } }
         @media (max-width: 539px) { .local-contact-cta__actions { display: grid; } }
       `}</style>

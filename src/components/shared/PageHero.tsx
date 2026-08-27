@@ -39,9 +39,7 @@ export function PageHero({ eyebrow, title, description, actions, image }: PageHe
         .page-hero__content > p:not(.eyebrow) { color: #d6d9da; font-size: clamp(1rem, 1.4vw, 1.15rem); margin: var(--space-lg) 0 0; max-width: 42rem; }
         .page-hero h1 { margin-top: var(--space-sm); max-width: 12ch; }
         .page-hero__actions { display: flex; flex-wrap: wrap; gap: var(--space-md); margin-top: var(--space-xl); }
-        .page-hero__actions :global(.button--secondary) { border-color: var(--color-paper); color: var(--color-paper); }
         .page-hero__media { align-items: center; aspect-ratio: 4 / 3; background: #f7f7f5; display: flex; justify-content: center; overflow: hidden; }
-        .page-hero__media :global(img) { height: 100%; object-fit: contain; width: 100%; }
         @media (max-width: 767px) { .page-hero__grid--media { grid-template-columns: 1fr; } .page-hero__media { grid-row: 1; } .page-hero__actions { display: grid; } }
       `}</style>
     </section>

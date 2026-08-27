@@ -202,6 +202,12 @@ main#main-content .truck-listing-card__media,
 main#main-content .page-hero__media { contain: layout paint; }
 main#main-content .truck-listing-card__media img,
 main#main-content .page-hero__media img { display: block; height: 100%; object-fit: contain; width: 100%; }
+main#main-content .page-hero__actions .button--secondary { border-color: var(--color-paper); color: var(--color-paper); }
+main#main-content .local-contact-cta__actions .button--secondary { border-color: var(--color-paper); color: var(--color-paper); }
+main#main-content .page-hero__actions .button--secondary:hover { background: rgb(255 255 255 / 12%); }
+main#main-content .local-contact-cta__actions .button--secondary:hover { background: rgb(255 255 255 / 12%); }
+main#main-content .local-contact-cta__actions .button { gap: var(--space-sm); }
+main#main-content .series-application-card svg { color: var(--color-red); }
 main#main-content .contact-inquiry__form { max-width: 40rem; width: 100%; }
 main#main-content .contact-inquiry input:not([type="checkbox"]),
 main#main-content .contact-inquiry select,
