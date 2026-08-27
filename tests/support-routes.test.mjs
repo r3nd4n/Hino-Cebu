@@ -1,8 +1,8 @@
 import assert from "node:assert/strict";
 import { createRequire } from "node:module";
 import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
-import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { renderToStaticMarkup } from "react-dom/server";
 import test from "node:test";
 import ts from "typescript";
@@ -26,7 +26,9 @@ const renderContactEmail = async (email) => {
     },
     fileName: "ContactEmail.tsx",
   });
-  const fixtureDirectory = await mkdtemp(join(tmpdir(), "hino-contact-email-"));
+  const fixtureDirectory = await mkdtemp(
+    fileURLToPath(new URL("./.tmp-contact-email-", import.meta.url)),
+  );
   const fixtureModule = join(fixtureDirectory, "ContactEmail.cjs");
 
   try {

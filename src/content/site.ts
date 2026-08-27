@@ -29,6 +29,12 @@ type ApprovedAddress = {
   display: string;
 };
 
+export type ApprovedEmail = {
+  status: "approved";
+  display: string;
+  href: `mailto:${string}`;
+};
+
 type ApprovedDirections = {
   status: "approved";
   href: string;
@@ -42,6 +48,7 @@ type ApprovedHours = {
 export interface PublicContact {
   phone: ApprovedPhone | AwaitingConfirmation;
   address: ApprovedAddress | AwaitingConfirmation;
+  email: ApprovedEmail | AwaitingConfirmation;
   directions: ApprovedDirections | AwaitingConfirmation;
   hours: ApprovedHours | AwaitingConfirmation;
 }
@@ -50,6 +57,7 @@ interface LocalFactConfiguration {
   contact: {
     phone: ConfiguredValue<PhoneValue>;
     address: ConfiguredValue<string>;
+    email: ConfiguredValue<string | null>;
     directionsUrl: ConfiguredValue<string | null>;
   };
   hours: ConfiguredValue<readonly HoursRow[]>;
@@ -59,8 +67,16 @@ const awaitingConfirmation = (): AwaitingConfirmation => ({
   status: "awaiting-confirmation",
 });
 
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const unsafeEmailCharacters = /[\u0000-\u001f\u007f\s?#]/;
+
 export function projectPublicContact(config: LocalFactConfiguration): PublicContact {
   const addressApproved = config.contact.address.status === "approved";
+  const email = config.contact.email.value?.trim() ?? "";
+  const emailApproved =
+    config.contact.email.status === "approved" &&
+    emailPattern.test(email) &&
+    !unsafeEmailCharacters.test(email);
 
   return {
     phone:
@@ -69,6 +85,9 @@ export function projectPublicContact(config: LocalFactConfiguration): PublicCont
         : awaitingConfirmation(),
     address: addressApproved
       ? { status: "approved", display: config.contact.address.value }
+      : awaitingConfirmation(),
+    email: emailApproved
+      ? { status: "approved", display: email, href: `mailto:${email}` }
       : awaitingConfirmation(),
     directions:
       addressApproved &&

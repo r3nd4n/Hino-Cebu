@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { MapPin, Phone } from "lucide-react";
 
 import { InquiryForm } from "@/components/contact/InquiryForm";
+import { ContactEmail } from "@/components/contact/ContactEmail";
 import { PageHero } from "@/components/shared/PageHero";
 import { ButtonLink } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
@@ -62,7 +63,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                 ))}
               </dl>
             ) : <p>Hours: awaiting confirmation</p>}
-            <p>Email: awaiting confirmation</p>
+            <ContactEmail email={publicContact.email} />
             {publicContact.directions.status === "approved" ? (
               <a href={publicContact.directions.href} rel="noreferrer" target="_blank">Open verified directions</a>
             ) : <p>Verified directions link: awaiting confirmation</p>}
