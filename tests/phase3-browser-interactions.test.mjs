@@ -200,6 +200,36 @@ test("homepage consent exposes and describes its invalid state", async () => {
   assert.deepEqual(invalid, { invalid: "true", described: true, firstFocus: "quote-name" });
 });
 
+test("Contact remounts its inquiry draft when same-document topic context changes", async () => {
+  await navigate("/contact?topic=parts#inquiry");
+  const transition = await evaluate(`(async () => {
+    const marker = crypto.randomUUID();
+    window.__phase3DocumentMarker = marker;
+    const name = document.querySelector('[name="name"]');
+    const descriptor = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(name), 'value');
+    descriptor.set.call(name, 'Stale visitor draft');
+    name.dispatchEvent(new Event('input', { bubbles: true }));
+    history.pushState(null, '', '/contact?topic=service#inquiry');
+    const deadline = Date.now() + 5000;
+    while (Date.now() < deadline && document.querySelector('[name="inquiryTopic"]')?.value !== 'service') {
+      await new Promise(resolve => setTimeout(resolve, 50));
+    }
+    return {
+      sameDocument: window.__phase3DocumentMarker === marker,
+      topic: document.querySelector('[name="inquiryTopic"]')?.value,
+      name: document.querySelector('[name="name"]')?.value,
+      path: location.pathname + location.search,
+    };
+  })()`);
+
+  assert.deepEqual(transition, {
+    sameDocument: true,
+    topic: "service",
+    name: "",
+    path: "/contact?topic=service",
+  });
+});
+
 test("Contact renders the complete normalized local inquiry lifecycle through reset", async () => {
   await navigate("/contact?topic=arbitrary#inquiry");
   assert.equal(await evaluate(`document.querySelector('[name="inquiryTopic"]').value`), "general");

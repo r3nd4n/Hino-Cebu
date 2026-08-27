@@ -42,7 +42,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                 </a>
               ) : null}
             </div>
-            <InquiryForm initialTopic={initialTopic} phone={publicContact.phone} />
+            <InquiryForm key={initialTopic} initialTopic={initialTopic} phone={publicContact.phone} />
           </div>
 
           <aside aria-labelledby="contact-details-heading" className="contact-details">

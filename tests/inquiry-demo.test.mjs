@@ -244,7 +244,8 @@ test("Contact normalizes server-owned query context before the client boundary",
   assert.match(page, /searchParams:\s*Promise/);
   assert.match(page, /await\s+searchParams/);
   assert.match(page, /normalizeInquiryTopic\([^)]*topic[^)]*\)/);
-  assert.match(page, /<InquiryForm\s+initialTopic=\{[A-Za-z]+Topic\}\s+phone=\{publicContact\.phone\}/);
+  assert.match(page, /<InquiryForm\s+key=\{initialTopic\}\s+initialTopic=\{initialTopic\}\s+phone=\{publicContact\.phone\}/);
+  assert.equal((page.match(/key=\{initialTopic\}/g) ?? []).length, 1);
   assert.doesNotMatch(page, /<InquiryForm[^>]*(?:searchParams|query)=/);
   assert.doesNotMatch(page, /dangerouslySetInnerHTML|process\.env|fetch\s*\(|use server|server action/i);
 });
