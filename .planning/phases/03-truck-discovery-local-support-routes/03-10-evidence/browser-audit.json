@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-08-27T13:18:23.935Z",
-  "baseUrl": "http://127.0.0.1:60218",
+  "generatedAt": "2026-08-27T14:26:00.092Z",
+  "baseUrl": "http://127.0.0.1:60966",
   "matrix": [
     {
       "route": "/trucks",
@@ -1133,9 +1133,9 @@
         "viewport": {
           "width": 768,
           "height": 900,
-          "visualWidth": 753
+          "visualWidth": 768
         },
-        "scrollWidth": 753,
+        "scrollWidth": 768,
         "scrollHeight": 2852,
         "overflowElements": [],
         "brokenImages": [],
@@ -1149,7 +1149,7 @@
             "contrast": 4.72,
             "borderContrast": null,
             "target": {
-              "width": 141,
+              "width": 144,
               "height": 72
             }
           },
@@ -3221,6 +3221,7 @@
         "firstFocused": true,
         "activeInside": true,
         "backgroundInert": true,
+        "identityInert": true,
         "overflow": "hidden"
       },
       "forwardWrapped": true,
@@ -3228,6 +3229,7 @@
       "closed": true,
       "focusRestored": true,
       "inertCleared": true,
+      "identityRestored": true,
       "overflowRestored": true
     },
     "zoom": {
