@@ -173,7 +173,7 @@ test("rich series have exactly three qualified highlights while lightweight seri
   }
 
   for (const slug of ["200-series", "bus-puv"]) {
-    const block = content.match(new RegExp(`slug: "${slug}"[\\s\\S]*?(?=\\n\\s*\\{\\n\\s*slug:|\\n\\s*\\]\\s+as const;)`))?.[0] ?? "";
+    const block = content.match(new RegExp(`slug: "${slug}"[\\s\\S]*?(?=\\r?\\n\\s*\\{\\r?\\n\\s*slug:|\\r?\\n\\s*\\]\\s+as const;)`))?.[0] ?? "";
     assert.match(block, /mode: "lightweight"/);
     assert.doesNotMatch(block, /highlights:/);
   }
