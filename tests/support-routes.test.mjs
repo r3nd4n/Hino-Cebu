@@ -190,6 +190,39 @@ test("Parts & Service route preserves path hierarchy and contextual contact acti
   assert.doesNotMatch(page, prohibitedPublicClaims);
 });
 
+test("truck and support actions stay inquiry-first until the configured phone is approved", async () => {
+  const [{ projectPublicContact }, template, partsService, trucks] = await Promise.all([
+    loadSiteModule(),
+    readSource("src/components/trucks/TruckSeriesPage.tsx"),
+    readSource("src/app/parts-service/page.tsx"),
+    readSource("src/content/trucks.ts"),
+  ]);
+
+  const unresolved = projectPublicContact(contactFixture());
+  assert.deepEqual(unresolved.phone, { status: "awaiting-confirmation" });
+  assert.doesNotMatch(JSON.stringify(unresolved), /\(032\) 346 3322|tel:\+63323463322/);
+
+  for (const slug of ["200-series", "300-series", "500-series", "bus-puv"]) {
+    assert.match(trucks, new RegExp(`slug: "${slug}"`));
+  }
+  assert.match(template, /inquiryHref\(series\.slug\)/);
+  assert.match(partsService, /inquiryHref\("general"\)/);
+  assert.doesNotMatch(template, /or call Hino Cebu/i);
+
+  const approved = projectPublicContact(contactFixture({ phoneStatus: "approved" }));
+  assert.deepEqual(approved.phone, {
+    status: "approved",
+    display: "(032) 346 3322",
+    href: "tel:+63323463322",
+  });
+  for (const source of [template, partsService]) {
+    assert.match(source, /publicContact\.phone\.status === "approved"/);
+    assert.match(source, /href=\{publicContact\.phone\.href\}/);
+    assert.match(source, /publicContact\.phone\.display/);
+    assert.doesNotMatch(source, /tel:\+63323463322/);
+  }
+});
+
 test("About content projects reviewed national background without provenance", async () => {
   const about = await readSource("src/content/about.ts");
 
