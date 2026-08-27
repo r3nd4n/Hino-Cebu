@@ -32,7 +32,7 @@ Five MVP phases deliver a conversion-first Hino Cebu website from safe foundatio
 **Goal:** Extend the conversion system across vehicles, parts/service, contact, and local-dealer information.
 **Mode:** mvp
 **Requirements:** DISC-01, DISC-02, DISC-03, DISC-04
-**Plans:** 10/10 plans complete
+**Plans:** 10/14 plans complete
 
 Plans:
 **Wave 1**
@@ -65,6 +65,16 @@ Plans:
 **Wave 7** *(blocked on Wave 6 completion)*
 
 - [x] 03-10-PLAN.md — Verify responsive, keyboard, motion, form, and fact-safety closure.
+
+**Wave 8** *(second gap-closure pass; blocked on Wave 7 completion)*
+
+- [ ] 03-11-PLAN.md — Project and render approved email without weakening unresolved fact safety.
+- [ ] 03-12-PLAN.md — Replace the dead inquiry restart link with a clean, focus-managed reset transition.
+- [ ] 03-13-PLAN.md — Contain mobile-menu focus and close mobile-bar/homepage validation warnings.
+
+**Wave 9** *(blocked on Wave 8 completion)*
+
+- [ ] 03-14-PLAN.md — Extend fresh production and rendered-browser contracts, then refresh acceptance evidence.
 
 **Success Criteria:**
 
