@@ -44,9 +44,10 @@ const sourcedAboutContent: SourcedAboutContent = {
     ],
   },
   practicalSupport: {
-    eyebrow: "Visit or contact",
+    eyebrow: "Local information",
     title: "Practical Cebu information",
-    description: "Use the configured details below to plan a visit or start a local conversation.",
+    description:
+      "Confirmed local details appear below as available. You can start an inquiry while any detail awaits confirmation.",
   },
   provenance: {
     publisher: "Hino Motors Philippines",

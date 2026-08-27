@@ -283,7 +283,7 @@ test("Contact and About keep all unresolved local facts behind inquiry-first fal
     hours: { status: "awaiting-confirmation" },
   });
 
-  for (const [name, source] of [["Contact", contact], ["About", about]]) {
+  for (const source of [contact, about]) {
     assert.match(source, /Phone: awaiting confirmation/);
     assert.match(source, /Address: awaiting confirmation/);
     assert.match(source, /Hours: awaiting confirmation/);

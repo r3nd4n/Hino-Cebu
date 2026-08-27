@@ -63,7 +63,9 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
               </dl>
             ) : <p>Hours: awaiting confirmation</p>}
             <p>Email: awaiting confirmation</p>
-            <p>Verified directions link: awaiting confirmation</p>
+            {publicContact.directions.status === "approved" ? (
+              <a href={publicContact.directions.href} rel="noreferrer" target="_blank">Open verified directions</a>
+            ) : <p>Verified directions link: awaiting confirmation</p>}
           </aside>
         </div>
       </section>

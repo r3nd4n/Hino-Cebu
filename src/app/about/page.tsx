@@ -82,6 +82,15 @@ export default function AboutPage() {
                 <p>Hours: awaiting confirmation</p>
               )}
             </article>
+            <article>
+              <Icon icon={MapPin} size={24} />
+              <h3>Directions</h3>
+              {publicContact.directions.status === "approved" ? (
+                <a href={publicContact.directions.href} rel="noreferrer" target="_blank">Open verified directions</a>
+              ) : (
+                <p>Directions: awaiting confirmation</p>
+              )}
+            </article>
           </div>
           <div className="about-practical__actions">
             <ButtonLink href={inquiryHref("general")}>Start an Inquiry<Icon icon={ArrowUpRight} size={17} /></ButtonLink>
@@ -112,7 +121,7 @@ export default function AboutPage() {
         .about-national p:not(.eyebrow) { color: #d6d9da; font-size: 1.05rem; }
         .about-practical { background: var(--color-muted-surface); }
         .about-practical__intro { margin-top: var(--space-md); }
-        .about-practical__grid { display: grid; gap: var(--space-md); grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: var(--space-xl); }
+        .about-practical__grid { display: grid; gap: var(--space-md); grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: var(--space-xl); }
         .about-practical article { background: var(--color-paper); border: 1px solid var(--color-border); padding: var(--space-xl); }
         .about-practical article > :global(svg) { color: var(--color-red); }
         .about-practical h3 { margin-top: var(--space-md); }
@@ -124,6 +133,7 @@ export default function AboutPage() {
         .about-practical__actions { display: flex; flex-wrap: wrap; gap: var(--space-md); margin-top: var(--space-xl); }
         .about-practical__actions :global(.button) { gap: var(--space-sm); }
         @media (max-width: 767px) { .about-local__grid, .about-practical__grid { grid-template-columns: 1fr; } .about-practical__actions { display: grid; } }
+        @media (min-width: 768px) and (max-width: 1023px) { .about-practical__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
       `}</style>
     </main>
   );
