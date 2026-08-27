@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-08-27T14:26:00.092Z",
-  "baseUrl": "http://127.0.0.1:60966",
+  "generatedAt": "2026-08-27T16:43:31.377Z",
+  "baseUrl": "http://127.0.0.1:61912",
   "matrix": [
     {
       "route": "/trucks",
@@ -1044,9 +1044,9 @@
         "viewport": {
           "width": 768,
           "height": 900,
-          "visualWidth": 768
+          "visualWidth": 753
         },
-        "scrollWidth": 768,
+        "scrollWidth": 753,
         "scrollHeight": 2924,
         "overflowElements": [],
         "brokenImages": [],
@@ -1060,7 +1060,7 @@
             "contrast": 4.72,
             "borderContrast": null,
             "target": {
-              "width": 144,
+              "width": 141,
               "height": 72
             }
           },
@@ -1133,9 +1133,9 @@
         "viewport": {
           "width": 768,
           "height": 900,
-          "visualWidth": 768
+          "visualWidth": 753
         },
-        "scrollWidth": 768,
+        "scrollWidth": 753,
         "scrollHeight": 2852,
         "overflowElements": [],
         "brokenImages": [],
@@ -1149,7 +1149,7 @@
             "contrast": 4.72,
             "borderContrast": null,
             "target": {
-              "width": 144,
+              "width": 141,
               "height": 72
             }
           },
@@ -3222,6 +3222,7 @@
         "activeInside": true,
         "backgroundInert": true,
         "identityInert": true,
+        "skipLinkInert": true,
         "overflow": "hidden"
       },
       "forwardWrapped": true,
@@ -3230,6 +3231,7 @@
       "focusRestored": true,
       "inertCleared": true,
       "identityRestored": true,
+      "skipLinkRestored": true,
       "overflowRestored": true
     },
     "zoom": {
