@@ -1,0 +1,3257 @@
+{
+  "generatedAt": "2026-08-27T05:00:24.298Z",
+  "baseUrl": "http://127.0.0.1:4310",
+  "matrix": [
+    {
+      "route": "/trucks",
+      "width": 390,
+      "result": "PASS",
+      "failures": [],
+      "audit": {
+        "title": "Explore Hino trucks | Hino Cebu",
+        "h1Count": 1,
+        "viewport": {
+          "width": 390,
+          "height": 900,
+          "visualWidth": 390
+        },
+        "scrollWidth": 390,
+        "scrollHeight": 5284,
+        "overflowElements": [],
+        "brokenImages": [],
+        "actions": [
+          {
+            "label": "REQUEST INFORMATION",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 350,
+              "height": 47
+            }
+          },
+          {
+            "label": "LIGHT-DUTY TRUCK HINO 200 SERIES Compact and practical for urban delivery and everyday commercial us",
+            "selector": "truck-listing-card",
+            "foreground": "rgb(17, 17, 17)",
+            "background": "rgb(255, 255, 255)",
+            "border": "rgb(217, 220, 221)",
+            "contrast": 18.88,
+            "borderContrast": 1.38,
+            "target": {
+              "width": 350,
+              "height": 762
+            }
+          },
+          {
+            "label": "LIGHT / MEDIUM-DUTY TRUCK HINO 300 SERIES A versatile Hino platform for growing businesses, fleets, ",
+            "selector": "truck-listing-card",
+            "foreground": "rgb(17, 17, 17)",
+            "background": "rgb(255, 255, 255)",
+            "border": "rgb(217, 220, 221)",
+            "contrast": 18.88,
+            "borderContrast": 1.38,
+            "target": {
+              "width": 350,
+              "height": 784
+            }
+          },
+          {
+            "label": "MEDIUM / HEAVY-DUTY TRUCK HINO 500 SERIES Built for demanding cargo, construction, hauling, and flee",
+            "selector": "truck-listing-card",
+            "foreground": "rgb(17, 17, 17)",
+            "background": "rgb(255, 255, 255)",
+            "border": "rgb(217, 220, 221)",
+            "contrast": 18.88,
+            "borderContrast": 1.38,
+            "target": {
+              "width": 350,
+              "height": 762
+            }
+          },
+          {
+            "label": "PASSENGER TRANSPORT HINO BUS & PUV Commercial passenger solutions supported by Hino engineering and ",
+            "selector": "truck-listing-card",
+            "foreground": "rgb(17, 17, 17)",
+            "background": "rgb(255, 255, 255)",
+            "border": "rgb(217, 220, 221)",
+            "contrast": 18.88,
+            "borderContrast": 1.38,
+            "target": {
+              "width": 350,
+              "height": 763
+            }
+          },
+          {
+            "label": "TELL US WHAT YOUR BUSINESS NEEDS",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 286,
+              "height": 68
+            }
+          },
+          {
+            "label": "INQUIRE",
+            "selector": "",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgb(255, 255, 255)",
+            "contrast": 4.72,
+            "borderContrast": null,
+            "target": {
+              "width": 175,
+              "height": 44
+            }
+          }
+        ],
+        "darkSecondary": [],
+        "smallestTarget": 18,
+        "mobileClearance": {
+          "bodyPaddingBottom": 64,
+          "barHeight": 61,
+          "passes": true
+        },
+        "inquiryLinks": [
+          "/contact",
+          "/contact#inquiry",
+          "/contact?topic=general#inquiry",
+          "/contact?topic=general#inquiry",
+          "/contact",
+          "/contact#inquiry",
+          "/contact#inquiry"
+        ],
+        "candidateFactLeaks": [],
+        "activeOperationalLinks": [],
+        "forbiddenCopy": [],
+        "awaitingStates": [
+          "Phone: awaiting confirmation",
+          "Address: awaiting confirmation",
+          "Hours: awaiting confirmation"
+        ],
+        "motion": {
+          "rootScrollBehavior": "auto",
+          "maxTransitionMs": 0.01,
+          "cardTransform": "none"
+        }
+      }
+    },
+    {
+      "route": "/trucks/200-series",
+      "width": 390,
+      "result": "PASS",
+      "failures": [],
+      "audit": {
+        "title": "Hino 200 Series | Hino Cebu",
+        "h1Count": 1,
+        "viewport": {
+          "width": 390,
+          "height": 900,
+          "visualWidth": 390
+        },
+        "scrollWidth": 390,
+        "scrollHeight": 3442,
+        "overflowElements": [],
+        "brokenImages": [],
+        "actions": [
+          {
+            "label": "ASK ABOUT THIS RANGE",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 350,
+              "height": 47
+            }
+          },
+          {
+            "label": "ASK ABOUT THIS RANGE",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 286,
+              "height": 47
+            }
+          },
+          {
+            "label": "INQUIRE",
+            "selector": "",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgb(255, 255, 255)",
+            "contrast": 4.72,
+            "borderContrast": null,
+            "target": {
+              "width": 175,
+              "height": 44
+            }
+          }
+        ],
+        "darkSecondary": [],
+        "smallestTarget": 18,
+        "mobileClearance": {
+          "bodyPaddingBottom": 64,
+          "barHeight": 61,
+          "passes": true
+        },
+        "inquiryLinks": [
+          "/contact",
+          "/contact#inquiry",
+          "/contact?topic=200-series#inquiry",
+          "/contact?topic=200-series#inquiry",
+          "/contact",
+          "/contact#inquiry",
+          "/contact#inquiry"
+        ],
+        "candidateFactLeaks": [],
+        "activeOperationalLinks": [],
+        "forbiddenCopy": [],
+        "awaitingStates": [
+          "Phone: awaiting confirmation",
+          "Address: awaiting confirmation",
+          "Hours: awaiting confirmation"
+        ],
+        "motion": {
+          "rootScrollBehavior": "auto",
+          "maxTransitionMs": 0.01,
+          "cardTransform": null
+        }
+      }
+    },
+    {
+      "route": "/trucks/300-series",
+      "width": 390,
+      "result": "PASS",
+      "failures": [],
+      "audit": {
+        "title": "Hino 300 Series | Hino Cebu",
+        "h1Count": 1,
+        "viewport": {
+          "width": 390,
+          "height": 900,
+          "visualWidth": 390
+        },
+        "scrollWidth": 390,
+        "scrollHeight": 4367,
+        "overflowElements": [],
+        "brokenImages": [],
+        "actions": [
+          {
+            "label": "ASK ABOUT THIS RANGE",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 350,
+              "height": 47
+            }
+          },
+          {
+            "label": "ASK ABOUT THIS RANGE",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 286,
+              "height": 47
+            }
+          },
+          {
+            "label": "INQUIRE",
+            "selector": "",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgb(255, 255, 255)",
+            "contrast": 4.72,
+            "borderContrast": null,
+            "target": {
+              "width": 175,
+              "height": 44
+            }
+          }
+        ],
+        "darkSecondary": [],
+        "smallestTarget": 18,
+        "mobileClearance": {
+          "bodyPaddingBottom": 64,
+          "barHeight": 61,
+          "passes": true
+        },
+        "inquiryLinks": [
+          "/contact",
+          "/contact#inquiry",
+          "/contact?topic=300-series#inquiry",
+          "/contact?topic=300-series#inquiry",
+          "/contact",
+          "/contact#inquiry",
+          "/contact#inquiry"
+        ],
+        "candidateFactLeaks": [],
+        "activeOperationalLinks": [],
+        "forbiddenCopy": [],
+        "awaitingStates": [
+          "Phone: awaiting confirmation",
+          "Address: awaiting confirmation",
+          "Hours: awaiting confirmation"
+        ],
+        "motion": {
+          "rootScrollBehavior": "auto",
+          "maxTransitionMs": 0.01,
+          "cardTransform": null
+        }
+      }
+    },
+    {
+      "route": "/trucks/500-series",
+      "width": 390,
+      "result": "PASS",
+      "failures": [],
+      "audit": {
+        "title": "Hino 500 Series | Hino Cebu",
+        "h1Count": 1,
+        "viewport": {
+          "width": 390,
+          "height": 900,
+          "visualWidth": 390
+        },
+        "scrollWidth": 390,
+        "scrollHeight": 4295,
+        "overflowElements": [],
+        "brokenImages": [],
+        "actions": [
+          {
+            "label": "ASK ABOUT THIS RANGE",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 350,
+              "height": 47
+            }
+          },
+          {
+            "label": "ASK ABOUT THIS RANGE",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 286,
+              "height": 47
+            }
+          },
+          {
+            "label": "INQUIRE",
+            "selector": "",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgb(255, 255, 255)",
+            "contrast": 4.72,
+            "borderContrast": null,
+            "target": {
+              "width": 175,
+              "height": 44
+            }
+          }
+        ],
+        "darkSecondary": [],
+        "smallestTarget": 18,
+        "mobileClearance": {
+          "bodyPaddingBottom": 64,
+          "barHeight": 61,
+          "passes": true
+        },
+        "inquiryLinks": [
+          "/contact",
+          "/contact#inquiry",
+          "/contact?topic=500-series#inquiry",
+          "/contact?topic=500-series#inquiry",
+          "/contact",
+          "/contact#inquiry",
+          "/contact#inquiry"
+        ],
+        "candidateFactLeaks": [],
+        "activeOperationalLinks": [],
+        "forbiddenCopy": [],
+        "awaitingStates": [
+          "Phone: awaiting confirmation",
+          "Address: awaiting confirmation",
+          "Hours: awaiting confirmation"
+        ],
+        "motion": {
+          "rootScrollBehavior": "auto",
+          "maxTransitionMs": 0.01,
+          "cardTransform": null
+        }
+      }
+    },
+    {
+      "route": "/trucks/bus-puv",
+      "width": 390,
+      "result": "PASS",
+      "failures": [],
+      "audit": {
+        "title": "Hino Bus & PUV | Hino Cebu",
+        "h1Count": 1,
+        "viewport": {
+          "width": 390,
+          "height": 900,
+          "visualWidth": 390
+        },
+        "scrollWidth": 390,
+        "scrollHeight": 3466,
+        "overflowElements": [],
+        "brokenImages": [],
+        "actions": [
+          {
+            "label": "ASK ABOUT THIS RANGE",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 350,
+              "height": 47
+            }
+          },
+          {
+            "label": "ASK ABOUT THIS RANGE",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 286,
+              "height": 47
+            }
+          },
+          {
+            "label": "INQUIRE",
+            "selector": "",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgb(255, 255, 255)",
+            "contrast": 4.72,
+            "borderContrast": null,
+            "target": {
+              "width": 175,
+              "height": 44
+            }
+          }
+        ],
+        "darkSecondary": [],
+        "smallestTarget": 18,
+        "mobileClearance": {
+          "bodyPaddingBottom": 64,
+          "barHeight": 61,
+          "passes": true
+        },
+        "inquiryLinks": [
+          "/contact",
+          "/contact#inquiry",
+          "/contact?topic=bus-puv#inquiry",
+          "/contact?topic=bus-puv#inquiry",
+          "/contact",
+          "/contact#inquiry",
+          "/contact#inquiry"
+        ],
+        "candidateFactLeaks": [],
+        "activeOperationalLinks": [],
+        "forbiddenCopy": [],
+        "awaitingStates": [
+          "Phone: awaiting confirmation",
+          "Address: awaiting confirmation",
+          "Hours: awaiting confirmation"
+        ],
+        "motion": {
+          "rootScrollBehavior": "auto",
+          "maxTransitionMs": 0.01,
+          "cardTransform": null
+        }
+      }
+    },
+    {
+      "route": "/parts-service",
+      "width": 390,
+      "result": "PASS",
+      "failures": [],
+      "audit": {
+        "title": "Parts & Service | Hino Cebu",
+        "h1Count": 1,
+        "viewport": {
+          "width": 390,
+          "height": 900,
+          "visualWidth": 390
+        },
+        "scrollWidth": 390,
+        "scrollHeight": 3888,
+        "overflowElements": [],
+        "brokenImages": [],
+        "actions": [
+          {
+            "label": "START AN INQUIRY",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 350,
+              "height": 47
+            }
+          },
+          {
+            "label": "ASK ABOUT PARTS",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 203,
+              "height": 47
+            }
+          },
+          {
+            "label": "REQUEST SERVICE INFORMATION",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 300,
+              "height": 68
+            }
+          },
+          {
+            "label": "REQUEST INFORMATION",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 286,
+              "height": 47
+            }
+          },
+          {
+            "label": "INQUIRE",
+            "selector": "",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgb(255, 255, 255)",
+            "contrast": 4.72,
+            "borderContrast": null,
+            "target": {
+              "width": 175,
+              "height": 44
+            }
+          }
+        ],
+        "darkSecondary": [],
+        "smallestTarget": 18,
+        "mobileClearance": {
+          "bodyPaddingBottom": 64,
+          "barHeight": 61,
+          "passes": true
+        },
+        "inquiryLinks": [
+          "/contact",
+          "/contact#inquiry",
+          "/contact?topic=general#inquiry",
+          "/contact?topic=parts#inquiry",
+          "/contact?topic=service#inquiry",
+          "/contact?topic=general#inquiry",
+          "/contact",
+          "/contact#inquiry",
+          "/contact#inquiry"
+        ],
+        "candidateFactLeaks": [],
+        "activeOperationalLinks": [],
+        "forbiddenCopy": [],
+        "awaitingStates": [
+          "Phone: awaiting confirmation",
+          "Address: awaiting confirmation",
+          "Hours: awaiting confirmation"
+        ],
+        "motion": {
+          "rootScrollBehavior": "auto",
+          "maxTransitionMs": 0.01,
+          "cardTransform": null
+        }
+      }
+    },
+    {
+      "route": "/contact",
+      "width": 390,
+      "result": "PASS",
+      "failures": [],
+      "audit": {
+        "title": "Contact | Hino Cebu",
+        "h1Count": 1,
+        "viewport": {
+          "width": 390,
+          "height": 900,
+          "visualWidth": 390
+        },
+        "scrollWidth": 390,
+        "scrollHeight": 3176,
+        "overflowElements": [],
+        "brokenImages": [],
+        "actions": [
+          {
+            "label": "REQUEST INFORMATION",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 216,
+              "height": 47
+            }
+          },
+          {
+            "label": "CONTACT / INQUIRE",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 286,
+              "height": 47
+            }
+          },
+          {
+            "label": "INQUIRE",
+            "selector": "",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgb(255, 255, 255)",
+            "contrast": 4.72,
+            "borderContrast": null,
+            "target": {
+              "width": 175,
+              "height": 44
+            }
+          }
+        ],
+        "darkSecondary": [],
+        "smallestTarget": 18,
+        "mobileClearance": {
+          "bodyPaddingBottom": 64,
+          "barHeight": 61,
+          "passes": true
+        },
+        "inquiryLinks": [
+          "/contact",
+          "/contact#inquiry",
+          "/contact#inquiry",
+          "/contact",
+          "/contact#inquiry",
+          "/contact#inquiry"
+        ],
+        "candidateFactLeaks": [],
+        "activeOperationalLinks": [],
+        "forbiddenCopy": [],
+        "awaitingStates": [
+          "Phone: awaiting confirmation",
+          "Address: awaiting confirmation",
+          "Hours: awaiting confirmation",
+          "Email: awaiting confirmation",
+          "Verified directions link: awaiting confirmation",
+          "Map and directions: awaiting confirmation",
+          "Phone: awaiting confirmation",
+          "Address: awaiting confirmation",
+          "Hours: awaiting confirmation"
+        ],
+        "motion": {
+          "rootScrollBehavior": "auto",
+          "maxTransitionMs": 0.01,
+          "cardTransform": null
+        }
+      }
+    },
+    {
+      "route": "/about",
+      "width": 390,
+      "result": "PASS",
+      "failures": [],
+      "audit": {
+        "title": "About | Hino Cebu",
+        "h1Count": 1,
+        "viewport": {
+          "width": 390,
+          "height": 900,
+          "visualWidth": 390
+        },
+        "scrollWidth": 390,
+        "scrollHeight": 4052,
+        "overflowElements": [],
+        "brokenImages": [],
+        "actions": [
+          {
+            "label": "START AN INQUIRY",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 350,
+              "height": 47
+            }
+          },
+          {
+            "label": "REQUEST INFORMATION",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 286,
+              "height": 47
+            }
+          },
+          {
+            "label": "INQUIRE",
+            "selector": "",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgb(255, 255, 255)",
+            "contrast": 4.72,
+            "borderContrast": null,
+            "target": {
+              "width": 175,
+              "height": 44
+            }
+          }
+        ],
+        "darkSecondary": [],
+        "smallestTarget": 18,
+        "mobileClearance": {
+          "bodyPaddingBottom": 64,
+          "barHeight": 61,
+          "passes": true
+        },
+        "inquiryLinks": [
+          "/contact",
+          "/contact#inquiry",
+          "/contact?topic=general#inquiry",
+          "/contact?topic=general#inquiry",
+          "/contact",
+          "/contact#inquiry",
+          "/contact#inquiry"
+        ],
+        "candidateFactLeaks": [],
+        "activeOperationalLinks": [],
+        "forbiddenCopy": [],
+        "awaitingStates": [
+          "Address: awaiting confirmation",
+          "Phone: awaiting confirmation",
+          "Hours: awaiting confirmation",
+          "Directions: awaiting confirmation",
+          "Phone: awaiting confirmation",
+          "Address: awaiting confirmation",
+          "Hours: awaiting confirmation"
+        ],
+        "motion": {
+          "rootScrollBehavior": "auto",
+          "maxTransitionMs": 0.01,
+          "cardTransform": null
+        }
+      }
+    },
+    {
+      "route": "/trucks",
+      "width": 768,
+      "result": "PASS",
+      "failures": [],
+      "audit": {
+        "title": "Explore Hino trucks | Hino Cebu",
+        "h1Count": 1,
+        "viewport": {
+          "width": 768,
+          "height": 900,
+          "visualWidth": 768
+        },
+        "scrollWidth": 768,
+        "scrollHeight": 2996,
+        "overflowElements": [],
+        "brokenImages": [],
+        "actions": [
+          {
+            "label": "Contact / Inquire",
+            "selector": "site-header__phone",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgb(255, 255, 255)",
+            "contrast": 4.72,
+            "borderContrast": null,
+            "target": {
+              "width": 144,
+              "height": 72
+            }
+          },
+          {
+            "label": "REQUEST INFORMATION",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 216,
+              "height": 47
+            }
+          },
+          {
+            "label": "LIGHT-DUTY TRUCK HINO 200 SERIES Compact and practical for urban delivery and everyday commercial us",
+            "selector": "truck-listing-card",
+            "foreground": "rgb(17, 17, 17)",
+            "background": "rgb(255, 255, 255)",
+            "border": "rgb(217, 220, 221)",
+            "contrast": 18.88,
+            "borderContrast": 1.38,
+            "target": {
+              "width": 344,
+              "height": 777
+            }
+          },
+          {
+            "label": "LIGHT / MEDIUM-DUTY TRUCK HINO 300 SERIES A versatile Hino platform for growing businesses, fleets, ",
+            "selector": "truck-listing-card",
+            "foreground": "rgb(17, 17, 17)",
+            "background": "rgb(255, 255, 255)",
+            "border": "rgb(217, 220, 221)",
+            "contrast": 18.88,
+            "borderContrast": 1.38,
+            "target": {
+              "width": 344,
+              "height": 777
+            }
+          },
+          {
+            "label": "MEDIUM / HEAVY-DUTY TRUCK HINO 500 SERIES Built for demanding cargo, construction, hauling, and flee",
+            "selector": "truck-listing-card",
+            "foreground": "rgb(17, 17, 17)",
+            "background": "rgb(255, 255, 255)",
+            "border": "rgb(217, 220, 221)",
+            "contrast": 18.88,
+            "borderContrast": 1.38,
+            "target": {
+              "width": 344,
+              "height": 756
+            }
+          },
+          {
+            "label": "PASSENGER TRANSPORT HINO BUS & PUV Commercial passenger solutions supported by Hino engineering and ",
+            "selector": "truck-listing-card",
+            "foreground": "rgb(17, 17, 17)",
+            "background": "rgb(255, 255, 255)",
+            "border": "rgb(217, 220, 221)",
+            "contrast": 18.88,
+            "borderContrast": 1.38,
+            "target": {
+              "width": 344,
+              "height": 756
+            }
+          },
+          {
+            "label": "TELL US WHAT YOUR BUSINESS NEEDS",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 346,
+              "height": 47
+            }
+          }
+        ],
+        "darkSecondary": [],
+        "smallestTarget": 18,
+        "mobileClearance": {
+          "bodyPaddingBottom": 0,
+          "barHeight": 0,
+          "passes": true
+        },
+        "inquiryLinks": [
+          "/contact",
+          "/contact#inquiry",
+          "/contact?topic=general#inquiry",
+          "/contact?topic=general#inquiry",
+          "/contact",
+          "/contact#inquiry",
+          "/contact#inquiry"
+        ],
+        "candidateFactLeaks": [],
+        "activeOperationalLinks": [],
+        "forbiddenCopy": [],
+        "awaitingStates": [
+          "Phone: awaiting confirmation",
+          "Address: awaiting confirmation",
+          "Hours: awaiting confirmation"
+        ],
+        "motion": {
+          "rootScrollBehavior": "auto",
+          "maxTransitionMs": 0.01,
+          "cardTransform": "none"
+        }
+      }
+    },
+    {
+      "route": "/trucks/200-series",
+      "width": 768,
+      "result": "PASS",
+      "failures": [],
+      "audit": {
+        "title": "Hino 200 Series | Hino Cebu",
+        "h1Count": 1,
+        "viewport": {
+          "width": 768,
+          "height": 900,
+          "visualWidth": 768
+        },
+        "scrollWidth": 768,
+        "scrollHeight": 2124,
+        "overflowElements": [],
+        "brokenImages": [],
+        "actions": [
+          {
+            "label": "Contact / Inquire",
+            "selector": "site-header__phone",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgb(255, 255, 255)",
+            "contrast": 4.72,
+            "borderContrast": null,
+            "target": {
+              "width": 144,
+              "height": 72
+            }
+          },
+          {
+            "label": "ASK ABOUT THIS RANGE",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 219,
+              "height": 47
+            }
+          },
+          {
+            "label": "ASK ABOUT THIS RANGE",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 244,
+              "height": 47
+            }
+          }
+        ],
+        "darkSecondary": [],
+        "smallestTarget": 18,
+        "mobileClearance": {
+          "bodyPaddingBottom": 0,
+          "barHeight": 0,
+          "passes": true
+        },
+        "inquiryLinks": [
+          "/contact",
+          "/contact#inquiry",
+          "/contact?topic=200-series#inquiry",
+          "/contact?topic=200-series#inquiry",
+          "/contact",
+          "/contact#inquiry",
+          "/contact#inquiry"
+        ],
+        "candidateFactLeaks": [],
+        "activeOperationalLinks": [],
+        "forbiddenCopy": [],
+        "awaitingStates": [
+          "Phone: awaiting confirmation",
+          "Address: awaiting confirmation",
+          "Hours: awaiting confirmation"
+        ],
+        "motion": {
+          "rootScrollBehavior": "auto",
+          "maxTransitionMs": 0.01,
+          "cardTransform": null
+        }
+      }
+    },
+    {
+      "route": "/trucks/300-series",
+      "width": 768,
+      "result": "PASS",
+      "failures": [],
+      "audit": {
+        "title": "Hino 300 Series | Hino Cebu",
+        "h1Count": 1,
+        "viewport": {
+          "width": 768,
+          "height": 900,
+          "visualWidth": 768
+        },
+        "scrollWidth": 768,
+        "scrollHeight": 2924,
+        "overflowElements": [],
+        "brokenImages": [],
+        "actions": [
+          {
+            "label": "Contact / Inquire",
+            "selector": "site-header__phone",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgb(255, 255, 255)",
+            "contrast": 4.72,
+            "borderContrast": null,
+            "target": {
+              "width": 144,
+              "height": 72
+            }
+          },
+          {
+            "label": "ASK ABOUT THIS RANGE",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 219,
+              "height": 47
+            }
+          },
+          {
+            "label": "ASK ABOUT THIS RANGE",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 244,
+              "height": 47
+            }
+          }
+        ],
+        "darkSecondary": [],
+        "smallestTarget": 18,
+        "mobileClearance": {
+          "bodyPaddingBottom": 0,
+          "barHeight": 0,
+          "passes": true
+        },
+        "inquiryLinks": [
+          "/contact",
+          "/contact#inquiry",
+          "/contact?topic=300-series#inquiry",
+          "/contact?topic=300-series#inquiry",
+          "/contact",
+          "/contact#inquiry",
+          "/contact#inquiry"
+        ],
+        "candidateFactLeaks": [],
+        "activeOperationalLinks": [],
+        "forbiddenCopy": [],
+        "awaitingStates": [
+          "Phone: awaiting confirmation",
+          "Address: awaiting confirmation",
+          "Hours: awaiting confirmation"
+        ],
+        "motion": {
+          "rootScrollBehavior": "auto",
+          "maxTransitionMs": 0.01,
+          "cardTransform": null
+        }
+      }
+    },
+    {
+      "route": "/trucks/500-series",
+      "width": 768,
+      "result": "PASS",
+      "failures": [],
+      "audit": {
+        "title": "Hino 500 Series | Hino Cebu",
+        "h1Count": 1,
+        "viewport": {
+          "width": 768,
+          "height": 900,
+          "visualWidth": 768
+        },
+        "scrollWidth": 768,
+        "scrollHeight": 2852,
+        "overflowElements": [],
+        "brokenImages": [],
+        "actions": [
+          {
+            "label": "Contact / Inquire",
+            "selector": "site-header__phone",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgb(255, 255, 255)",
+            "contrast": 4.72,
+            "borderContrast": null,
+            "target": {
+              "width": 144,
+              "height": 72
+            }
+          },
+          {
+            "label": "ASK ABOUT THIS RANGE",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 219,
+              "height": 47
+            }
+          },
+          {
+            "label": "ASK ABOUT THIS RANGE",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 244,
+              "height": 47
+            }
+          }
+        ],
+        "darkSecondary": [],
+        "smallestTarget": 18,
+        "mobileClearance": {
+          "bodyPaddingBottom": 0,
+          "barHeight": 0,
+          "passes": true
+        },
+        "inquiryLinks": [
+          "/contact",
+          "/contact#inquiry",
+          "/contact?topic=500-series#inquiry",
+          "/contact?topic=500-series#inquiry",
+          "/contact",
+          "/contact#inquiry",
+          "/contact#inquiry"
+        ],
+        "candidateFactLeaks": [],
+        "activeOperationalLinks": [],
+        "forbiddenCopy": [],
+        "awaitingStates": [
+          "Phone: awaiting confirmation",
+          "Address: awaiting confirmation",
+          "Hours: awaiting confirmation"
+        ],
+        "motion": {
+          "rootScrollBehavior": "auto",
+          "maxTransitionMs": 0.01,
+          "cardTransform": null
+        }
+      }
+    },
+    {
+      "route": "/trucks/bus-puv",
+      "width": 768,
+      "result": "PASS",
+      "failures": [],
+      "audit": {
+        "title": "Hino Bus & PUV | Hino Cebu",
+        "h1Count": 1,
+        "viewport": {
+          "width": 768,
+          "height": 900,
+          "visualWidth": 768
+        },
+        "scrollWidth": 768,
+        "scrollHeight": 2148,
+        "overflowElements": [],
+        "brokenImages": [],
+        "actions": [
+          {
+            "label": "Contact / Inquire",
+            "selector": "site-header__phone",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgb(255, 255, 255)",
+            "contrast": 4.72,
+            "borderContrast": null,
+            "target": {
+              "width": 144,
+              "height": 72
+            }
+          },
+          {
+            "label": "ASK ABOUT THIS RANGE",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 219,
+              "height": 47
+            }
+          },
+          {
+            "label": "ASK ABOUT THIS RANGE",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 244,
+              "height": 47
+            }
+          }
+        ],
+        "darkSecondary": [],
+        "smallestTarget": 18,
+        "mobileClearance": {
+          "bodyPaddingBottom": 0,
+          "barHeight": 0,
+          "passes": true
+        },
+        "inquiryLinks": [
+          "/contact",
+          "/contact#inquiry",
+          "/contact?topic=bus-puv#inquiry",
+          "/contact?topic=bus-puv#inquiry",
+          "/contact",
+          "/contact#inquiry",
+          "/contact#inquiry"
+        ],
+        "candidateFactLeaks": [],
+        "activeOperationalLinks": [],
+        "forbiddenCopy": [],
+        "awaitingStates": [
+          "Phone: awaiting confirmation",
+          "Address: awaiting confirmation",
+          "Hours: awaiting confirmation"
+        ],
+        "motion": {
+          "rootScrollBehavior": "auto",
+          "maxTransitionMs": 0.01,
+          "cardTransform": null
+        }
+      }
+    },
+    {
+      "route": "/parts-service",
+      "width": 768,
+      "result": "PASS",
+      "failures": [],
+      "audit": {
+        "title": "Parts & Service | Hino Cebu",
+        "h1Count": 1,
+        "viewport": {
+          "width": 768,
+          "height": 900,
+          "visualWidth": 768
+        },
+        "scrollWidth": 768,
+        "scrollHeight": 2546,
+        "overflowElements": [],
+        "brokenImages": [],
+        "actions": [
+          {
+            "label": "Contact / Inquire",
+            "selector": "site-header__phone",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgb(255, 255, 255)",
+            "contrast": 4.72,
+            "borderContrast": null,
+            "target": {
+              "width": 144,
+              "height": 72
+            }
+          },
+          {
+            "label": "START AN INQUIRY",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 196,
+              "height": 47
+            }
+          },
+          {
+            "label": "ASK ABOUT PARTS",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 203,
+              "height": 47
+            }
+          },
+          {
+            "label": "REQUEST SERVICE INFORMATION",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 290,
+              "height": 68
+            }
+          },
+          {
+            "label": "REQUEST INFORMATION",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 241,
+              "height": 47
+            }
+          }
+        ],
+        "darkSecondary": [],
+        "smallestTarget": 18,
+        "mobileClearance": {
+          "bodyPaddingBottom": 0,
+          "barHeight": 0,
+          "passes": true
+        },
+        "inquiryLinks": [
+          "/contact",
+          "/contact#inquiry",
+          "/contact?topic=general#inquiry",
+          "/contact?topic=parts#inquiry",
+          "/contact?topic=service#inquiry",
+          "/contact?topic=general#inquiry",
+          "/contact",
+          "/contact#inquiry",
+          "/contact#inquiry"
+        ],
+        "candidateFactLeaks": [],
+        "activeOperationalLinks": [],
+        "forbiddenCopy": [],
+        "awaitingStates": [
+          "Phone: awaiting confirmation",
+          "Address: awaiting confirmation",
+          "Hours: awaiting confirmation"
+        ],
+        "motion": {
+          "rootScrollBehavior": "auto",
+          "maxTransitionMs": 0.01,
+          "cardTransform": null
+        }
+      }
+    },
+    {
+      "route": "/contact",
+      "width": 768,
+      "result": "PASS",
+      "failures": [],
+      "audit": {
+        "title": "Contact | Hino Cebu",
+        "h1Count": 1,
+        "viewport": {
+          "width": 768,
+          "height": 900,
+          "visualWidth": 768
+        },
+        "scrollWidth": 768,
+        "scrollHeight": 2530,
+        "overflowElements": [],
+        "brokenImages": [],
+        "actions": [
+          {
+            "label": "Contact / Inquire",
+            "selector": "site-header__phone",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgb(255, 255, 255)",
+            "contrast": 4.72,
+            "borderContrast": null,
+            "target": {
+              "width": 144,
+              "height": 72
+            }
+          },
+          {
+            "label": "REQUEST INFORMATION",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 216,
+              "height": 47
+            }
+          },
+          {
+            "label": "CONTACT / INQUIRE",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 186,
+              "height": 47
+            }
+          }
+        ],
+        "darkSecondary": [],
+        "smallestTarget": 18,
+        "mobileClearance": {
+          "bodyPaddingBottom": 0,
+          "barHeight": 0,
+          "passes": true
+        },
+        "inquiryLinks": [
+          "/contact",
+          "/contact#inquiry",
+          "/contact#inquiry",
+          "/contact",
+          "/contact#inquiry",
+          "/contact#inquiry"
+        ],
+        "candidateFactLeaks": [],
+        "activeOperationalLinks": [],
+        "forbiddenCopy": [],
+        "awaitingStates": [
+          "Phone: awaiting confirmation",
+          "Address: awaiting confirmation",
+          "Hours: awaiting confirmation",
+          "Email: awaiting confirmation",
+          "Verified directions link: awaiting confirmation",
+          "Map and directions: awaiting confirmation",
+          "Phone: awaiting confirmation",
+          "Address: awaiting confirmation",
+          "Hours: awaiting confirmation"
+        ],
+        "motion": {
+          "rootScrollBehavior": "auto",
+          "maxTransitionMs": 0.01,
+          "cardTransform": null
+        }
+      }
+    },
+    {
+      "route": "/about",
+      "width": 768,
+      "result": "PASS",
+      "failures": [],
+      "audit": {
+        "title": "About | Hino Cebu",
+        "h1Count": 1,
+        "viewport": {
+          "width": 768,
+          "height": 900,
+          "visualWidth": 768
+        },
+        "scrollWidth": 768,
+        "scrollHeight": 2769,
+        "overflowElements": [],
+        "brokenImages": [],
+        "actions": [
+          {
+            "label": "Contact / Inquire",
+            "selector": "site-header__phone",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgb(255, 255, 255)",
+            "contrast": 4.72,
+            "borderContrast": null,
+            "target": {
+              "width": 144,
+              "height": 72
+            }
+          },
+          {
+            "label": "START AN INQUIRY",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 204,
+              "height": 47
+            }
+          },
+          {
+            "label": "REQUEST INFORMATION",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 241,
+              "height": 47
+            }
+          }
+        ],
+        "darkSecondary": [],
+        "smallestTarget": 18,
+        "mobileClearance": {
+          "bodyPaddingBottom": 0,
+          "barHeight": 0,
+          "passes": true
+        },
+        "inquiryLinks": [
+          "/contact",
+          "/contact#inquiry",
+          "/contact?topic=general#inquiry",
+          "/contact?topic=general#inquiry",
+          "/contact",
+          "/contact#inquiry",
+          "/contact#inquiry"
+        ],
+        "candidateFactLeaks": [],
+        "activeOperationalLinks": [],
+        "forbiddenCopy": [],
+        "awaitingStates": [
+          "Address: awaiting confirmation",
+          "Phone: awaiting confirmation",
+          "Hours: awaiting confirmation",
+          "Directions: awaiting confirmation",
+          "Phone: awaiting confirmation",
+          "Address: awaiting confirmation",
+          "Hours: awaiting confirmation"
+        ],
+        "motion": {
+          "rootScrollBehavior": "auto",
+          "maxTransitionMs": 0.01,
+          "cardTransform": null
+        }
+      }
+    },
+    {
+      "route": "/trucks",
+      "width": 1024,
+      "result": "PASS",
+      "failures": [],
+      "audit": {
+        "title": "Explore Hino trucks | Hino Cebu",
+        "h1Count": 1,
+        "viewport": {
+          "width": 1024,
+          "height": 900,
+          "visualWidth": 1024
+        },
+        "scrollWidth": 1024,
+        "scrollHeight": 2247,
+        "overflowElements": [],
+        "brokenImages": [],
+        "actions": [
+          {
+            "label": "Contact / Inquire",
+            "selector": "site-header__phone",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgb(255, 255, 255)",
+            "contrast": 4.72,
+            "borderContrast": null,
+            "target": {
+              "width": 146,
+              "height": 72
+            }
+          },
+          {
+            "label": "REQUEST INFORMATION",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 216,
+              "height": 47
+            }
+          },
+          {
+            "label": "LIGHT-DUTY TRUCK HINO 200 SERIES Compact and practical for urban delivery and everyday commercial us",
+            "selector": "truck-listing-card",
+            "foreground": "rgb(17, 17, 17)",
+            "background": "rgb(255, 255, 255)",
+            "border": "rgb(217, 220, 221)",
+            "contrast": 18.88,
+            "borderContrast": 1.38,
+            "target": {
+              "width": 220,
+              "height": 702
+            }
+          },
+          {
+            "label": "LIGHT / MEDIUM-DUTY TRUCK HINO 300 SERIES A versatile Hino platform for growing businesses, fleets, ",
+            "selector": "truck-listing-card",
+            "foreground": "rgb(17, 17, 17)",
+            "background": "rgb(255, 255, 255)",
+            "border": "rgb(217, 220, 221)",
+            "contrast": 18.88,
+            "borderContrast": 1.38,
+            "target": {
+              "width": 220,
+              "height": 702
+            }
+          },
+          {
+            "label": "MEDIUM / HEAVY-DUTY TRUCK HINO 500 SERIES Built for demanding cargo, construction, hauling, and flee",
+            "selector": "truck-listing-card",
+            "foreground": "rgb(17, 17, 17)",
+            "background": "rgb(255, 255, 255)",
+            "border": "rgb(217, 220, 221)",
+            "contrast": 18.88,
+            "borderContrast": 1.38,
+            "target": {
+              "width": 220,
+              "height": 702
+            }
+          },
+          {
+            "label": "PASSENGER TRANSPORT HINO BUS & PUV Commercial passenger solutions supported by Hino engineering and ",
+            "selector": "truck-listing-card",
+            "foreground": "rgb(17, 17, 17)",
+            "background": "rgb(255, 255, 255)",
+            "border": "rgb(217, 220, 221)",
+            "contrast": 18.88,
+            "borderContrast": 1.38,
+            "target": {
+              "width": 220,
+              "height": 702
+            }
+          },
+          {
+            "label": "TELL US WHAT YOUR BUSINESS NEEDS",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 346,
+              "height": 47
+            }
+          }
+        ],
+        "darkSecondary": [],
+        "smallestTarget": 18,
+        "mobileClearance": {
+          "bodyPaddingBottom": 0,
+          "barHeight": 0,
+          "passes": true
+        },
+        "inquiryLinks": [
+          "/contact",
+          "/contact#inquiry",
+          "/contact?topic=general#inquiry",
+          "/contact?topic=general#inquiry",
+          "/contact",
+          "/contact#inquiry",
+          "/contact#inquiry"
+        ],
+        "candidateFactLeaks": [],
+        "activeOperationalLinks": [],
+        "forbiddenCopy": [],
+        "awaitingStates": [
+          "Phone: awaiting confirmation",
+          "Address: awaiting confirmation",
+          "Hours: awaiting confirmation"
+        ],
+        "motion": {
+          "rootScrollBehavior": "auto",
+          "maxTransitionMs": 0.01,
+          "cardTransform": "none"
+        }
+      }
+    },
+    {
+      "route": "/trucks/200-series",
+      "width": 1024,
+      "result": "PASS",
+      "failures": [],
+      "audit": {
+        "title": "Hino 200 Series | Hino Cebu",
+        "h1Count": 1,
+        "viewport": {
+          "width": 1024,
+          "height": 900,
+          "visualWidth": 1024
+        },
+        "scrollWidth": 1024,
+        "scrollHeight": 2280,
+        "overflowElements": [],
+        "brokenImages": [],
+        "actions": [
+          {
+            "label": "Contact / Inquire",
+            "selector": "site-header__phone",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgb(255, 255, 255)",
+            "contrast": 4.72,
+            "borderContrast": null,
+            "target": {
+              "width": 146,
+              "height": 72
+            }
+          },
+          {
+            "label": "ASK ABOUT THIS RANGE",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 219,
+              "height": 47
+            }
+          },
+          {
+            "label": "ASK ABOUT THIS RANGE",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 244,
+              "height": 47
+            }
+          }
+        ],
+        "darkSecondary": [],
+        "smallestTarget": 18,
+        "mobileClearance": {
+          "bodyPaddingBottom": 0,
+          "barHeight": 0,
+          "passes": true
+        },
+        "inquiryLinks": [
+          "/contact",
+          "/contact#inquiry",
+          "/contact?topic=200-series#inquiry",
+          "/contact?topic=200-series#inquiry",
+          "/contact",
+          "/contact#inquiry",
+          "/contact#inquiry"
+        ],
+        "candidateFactLeaks": [],
+        "activeOperationalLinks": [],
+        "forbiddenCopy": [],
+        "awaitingStates": [
+          "Phone: awaiting confirmation",
+          "Address: awaiting confirmation",
+          "Hours: awaiting confirmation"
+        ],
+        "motion": {
+          "rootScrollBehavior": "auto",
+          "maxTransitionMs": 0.01,
+          "cardTransform": null
+        }
+      }
+    },
+    {
+      "route": "/trucks/300-series",
+      "width": 1024,
+      "result": "PASS",
+      "failures": [],
+      "audit": {
+        "title": "Hino 300 Series | Hino Cebu",
+        "h1Count": 1,
+        "viewport": {
+          "width": 1024,
+          "height": 900,
+          "visualWidth": 1024
+        },
+        "scrollWidth": 1024,
+        "scrollHeight": 2484,
+        "overflowElements": [],
+        "brokenImages": [],
+        "actions": [
+          {
+            "label": "Contact / Inquire",
+            "selector": "site-header__phone",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgb(255, 255, 255)",
+            "contrast": 4.72,
+            "borderContrast": null,
+            "target": {
+              "width": 146,
+              "height": 72
+            }
+          },
+          {
+            "label": "ASK ABOUT THIS RANGE",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 219,
+              "height": 47
+            }
+          },
+          {
+            "label": "ASK ABOUT THIS RANGE",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 244,
+              "height": 47
+            }
+          }
+        ],
+        "darkSecondary": [],
+        "smallestTarget": 18,
+        "mobileClearance": {
+          "bodyPaddingBottom": 0,
+          "barHeight": 0,
+          "passes": true
+        },
+        "inquiryLinks": [
+          "/contact",
+          "/contact#inquiry",
+          "/contact?topic=300-series#inquiry",
+          "/contact?topic=300-series#inquiry",
+          "/contact",
+          "/contact#inquiry",
+          "/contact#inquiry"
+        ],
+        "candidateFactLeaks": [],
+        "activeOperationalLinks": [],
+        "forbiddenCopy": [],
+        "awaitingStates": [
+          "Phone: awaiting confirmation",
+          "Address: awaiting confirmation",
+          "Hours: awaiting confirmation"
+        ],
+        "motion": {
+          "rootScrollBehavior": "auto",
+          "maxTransitionMs": 0.01,
+          "cardTransform": null
+        }
+      }
+    },
+    {
+      "route": "/trucks/500-series",
+      "width": 1024,
+      "result": "PASS",
+      "failures": [],
+      "audit": {
+        "title": "Hino 500 Series | Hino Cebu",
+        "h1Count": 1,
+        "viewport": {
+          "width": 1024,
+          "height": 900,
+          "visualWidth": 1024
+        },
+        "scrollWidth": 1024,
+        "scrollHeight": 2531,
+        "overflowElements": [],
+        "brokenImages": [],
+        "actions": [
+          {
+            "label": "Contact / Inquire",
+            "selector": "site-header__phone",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgb(255, 255, 255)",
+            "contrast": 4.72,
+            "borderContrast": null,
+            "target": {
+              "width": 146,
+              "height": 72
+            }
+          },
+          {
+            "label": "ASK ABOUT THIS RANGE",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 219,
+              "height": 47
+            }
+          },
+          {
+            "label": "ASK ABOUT THIS RANGE",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 244,
+              "height": 47
+            }
+          }
+        ],
+        "darkSecondary": [],
+        "smallestTarget": 18,
+        "mobileClearance": {
+          "bodyPaddingBottom": 0,
+          "barHeight": 0,
+          "passes": true
+        },
+        "inquiryLinks": [
+          "/contact",
+          "/contact#inquiry",
+          "/contact?topic=500-series#inquiry",
+          "/contact?topic=500-series#inquiry",
+          "/contact",
+          "/contact#inquiry",
+          "/contact#inquiry"
+        ],
+        "candidateFactLeaks": [],
+        "activeOperationalLinks": [],
+        "forbiddenCopy": [],
+        "awaitingStates": [
+          "Phone: awaiting confirmation",
+          "Address: awaiting confirmation",
+          "Hours: awaiting confirmation"
+        ],
+        "motion": {
+          "rootScrollBehavior": "auto",
+          "maxTransitionMs": 0.01,
+          "cardTransform": null
+        }
+      }
+    },
+    {
+      "route": "/trucks/bus-puv",
+      "width": 1024,
+      "result": "PASS",
+      "failures": [],
+      "audit": {
+        "title": "Hino Bus & PUV | Hino Cebu",
+        "h1Count": 1,
+        "viewport": {
+          "width": 1024,
+          "height": 900,
+          "visualWidth": 1024
+        },
+        "scrollWidth": 1024,
+        "scrollHeight": 2304,
+        "overflowElements": [],
+        "brokenImages": [],
+        "actions": [
+          {
+            "label": "Contact / Inquire",
+            "selector": "site-header__phone",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgb(255, 255, 255)",
+            "contrast": 4.72,
+            "borderContrast": null,
+            "target": {
+              "width": 146,
+              "height": 72
+            }
+          },
+          {
+            "label": "ASK ABOUT THIS RANGE",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 219,
+              "height": 47
+            }
+          },
+          {
+            "label": "ASK ABOUT THIS RANGE",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 244,
+              "height": 47
+            }
+          }
+        ],
+        "darkSecondary": [],
+        "smallestTarget": 18,
+        "mobileClearance": {
+          "bodyPaddingBottom": 0,
+          "barHeight": 0,
+          "passes": true
+        },
+        "inquiryLinks": [
+          "/contact",
+          "/contact#inquiry",
+          "/contact?topic=bus-puv#inquiry",
+          "/contact?topic=bus-puv#inquiry",
+          "/contact",
+          "/contact#inquiry",
+          "/contact#inquiry"
+        ],
+        "candidateFactLeaks": [],
+        "activeOperationalLinks": [],
+        "forbiddenCopy": [],
+        "awaitingStates": [
+          "Phone: awaiting confirmation",
+          "Address: awaiting confirmation",
+          "Hours: awaiting confirmation"
+        ],
+        "motion": {
+          "rootScrollBehavior": "auto",
+          "maxTransitionMs": 0.01,
+          "cardTransform": null
+        }
+      }
+    },
+    {
+      "route": "/parts-service",
+      "width": 1024,
+      "result": "PASS",
+      "failures": [],
+      "audit": {
+        "title": "Parts & Service | Hino Cebu",
+        "h1Count": 1,
+        "viewport": {
+          "width": 1024,
+          "height": 900,
+          "visualWidth": 1024
+        },
+        "scrollWidth": 1024,
+        "scrollHeight": 2618,
+        "overflowElements": [],
+        "brokenImages": [],
+        "actions": [
+          {
+            "label": "Contact / Inquire",
+            "selector": "site-header__phone",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgb(255, 255, 255)",
+            "contrast": 4.72,
+            "borderContrast": null,
+            "target": {
+              "width": 146,
+              "height": 72
+            }
+          },
+          {
+            "label": "START AN INQUIRY",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 196,
+              "height": 47
+            }
+          },
+          {
+            "label": "ASK ABOUT PARTS",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 203,
+              "height": 47
+            }
+          },
+          {
+            "label": "REQUEST SERVICE INFORMATION",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 307,
+              "height": 47
+            }
+          },
+          {
+            "label": "REQUEST INFORMATION",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 241,
+              "height": 47
+            }
+          }
+        ],
+        "darkSecondary": [],
+        "smallestTarget": 18,
+        "mobileClearance": {
+          "bodyPaddingBottom": 0,
+          "barHeight": 0,
+          "passes": true
+        },
+        "inquiryLinks": [
+          "/contact",
+          "/contact#inquiry",
+          "/contact?topic=general#inquiry",
+          "/contact?topic=parts#inquiry",
+          "/contact?topic=service#inquiry",
+          "/contact?topic=general#inquiry",
+          "/contact",
+          "/contact#inquiry",
+          "/contact#inquiry"
+        ],
+        "candidateFactLeaks": [],
+        "activeOperationalLinks": [],
+        "forbiddenCopy": [],
+        "awaitingStates": [
+          "Phone: awaiting confirmation",
+          "Address: awaiting confirmation",
+          "Hours: awaiting confirmation"
+        ],
+        "motion": {
+          "rootScrollBehavior": "auto",
+          "maxTransitionMs": 0.01,
+          "cardTransform": null
+        }
+      }
+    },
+    {
+      "route": "/contact",
+      "width": 1024,
+      "result": "PASS",
+      "failures": [],
+      "audit": {
+        "title": "Contact | Hino Cebu",
+        "h1Count": 1,
+        "viewport": {
+          "width": 1024,
+          "height": 900,
+          "visualWidth": 1024
+        },
+        "scrollWidth": 1024,
+        "scrollHeight": 2275,
+        "overflowElements": [],
+        "brokenImages": [],
+        "actions": [
+          {
+            "label": "Contact / Inquire",
+            "selector": "site-header__phone",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgb(255, 255, 255)",
+            "contrast": 4.72,
+            "borderContrast": null,
+            "target": {
+              "width": 146,
+              "height": 72
+            }
+          },
+          {
+            "label": "REQUEST INFORMATION",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 216,
+              "height": 47
+            }
+          },
+          {
+            "label": "CONTACT / INQUIRE",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 186,
+              "height": 47
+            }
+          }
+        ],
+        "darkSecondary": [],
+        "smallestTarget": 18,
+        "mobileClearance": {
+          "bodyPaddingBottom": 0,
+          "barHeight": 0,
+          "passes": true
+        },
+        "inquiryLinks": [
+          "/contact",
+          "/contact#inquiry",
+          "/contact#inquiry",
+          "/contact",
+          "/contact#inquiry",
+          "/contact#inquiry"
+        ],
+        "candidateFactLeaks": [],
+        "activeOperationalLinks": [],
+        "forbiddenCopy": [],
+        "awaitingStates": [
+          "Phone: awaiting confirmation",
+          "Address: awaiting confirmation",
+          "Hours: awaiting confirmation",
+          "Email: awaiting confirmation",
+          "Verified directions link: awaiting confirmation",
+          "Map and directions: awaiting confirmation",
+          "Phone: awaiting confirmation",
+          "Address: awaiting confirmation",
+          "Hours: awaiting confirmation"
+        ],
+        "motion": {
+          "rootScrollBehavior": "auto",
+          "maxTransitionMs": 0.01,
+          "cardTransform": null
+        }
+      }
+    },
+    {
+      "route": "/about",
+      "width": 1024,
+      "result": "PASS",
+      "failures": [],
+      "audit": {
+        "title": "About | Hino Cebu",
+        "h1Count": 1,
+        "viewport": {
+          "width": 1024,
+          "height": 900,
+          "visualWidth": 1024
+        },
+        "scrollWidth": 1024,
+        "scrollHeight": 2758,
+        "overflowElements": [],
+        "brokenImages": [],
+        "actions": [
+          {
+            "label": "Contact / Inquire",
+            "selector": "site-header__phone",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgb(255, 255, 255)",
+            "contrast": 4.72,
+            "borderContrast": null,
+            "target": {
+              "width": 146,
+              "height": 72
+            }
+          },
+          {
+            "label": "START AN INQUIRY",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 204,
+              "height": 47
+            }
+          },
+          {
+            "label": "REQUEST INFORMATION",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 241,
+              "height": 47
+            }
+          }
+        ],
+        "darkSecondary": [],
+        "smallestTarget": 18,
+        "mobileClearance": {
+          "bodyPaddingBottom": 0,
+          "barHeight": 0,
+          "passes": true
+        },
+        "inquiryLinks": [
+          "/contact",
+          "/contact#inquiry",
+          "/contact?topic=general#inquiry",
+          "/contact?topic=general#inquiry",
+          "/contact",
+          "/contact#inquiry",
+          "/contact#inquiry"
+        ],
+        "candidateFactLeaks": [],
+        "activeOperationalLinks": [],
+        "forbiddenCopy": [],
+        "awaitingStates": [
+          "Address: awaiting confirmation",
+          "Phone: awaiting confirmation",
+          "Hours: awaiting confirmation",
+          "Directions: awaiting confirmation",
+          "Phone: awaiting confirmation",
+          "Address: awaiting confirmation",
+          "Hours: awaiting confirmation"
+        ],
+        "motion": {
+          "rootScrollBehavior": "auto",
+          "maxTransitionMs": 0.01,
+          "cardTransform": null
+        }
+      }
+    },
+    {
+      "route": "/trucks",
+      "width": 1440,
+      "result": "PASS",
+      "failures": [],
+      "audit": {
+        "title": "Explore Hino trucks | Hino Cebu",
+        "h1Count": 1,
+        "viewport": {
+          "width": 1440,
+          "height": 900,
+          "visualWidth": 1440
+        },
+        "scrollWidth": 1440,
+        "scrollHeight": 2331,
+        "overflowElements": [],
+        "brokenImages": [],
+        "actions": [
+          {
+            "label": "Contact / Inquire",
+            "selector": "site-header__phone",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgb(255, 255, 255)",
+            "contrast": 4.72,
+            "borderContrast": null,
+            "target": {
+              "width": 146,
+              "height": 72
+            }
+          },
+          {
+            "label": "REQUEST INFORMATION",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 216,
+              "height": 47
+            }
+          },
+          {
+            "label": "LIGHT-DUTY TRUCK HINO 200 SERIES Compact and practical for urban delivery and everyday commercial us",
+            "selector": "truck-listing-card",
+            "foreground": "rgb(17, 17, 17)",
+            "background": "rgb(255, 255, 255)",
+            "border": "rgb(217, 220, 221)",
+            "contrast": 18.88,
+            "borderContrast": 1.38,
+            "target": {
+              "width": 324,
+              "height": 757
+            }
+          },
+          {
+            "label": "LIGHT / MEDIUM-DUTY TRUCK HINO 300 SERIES A versatile Hino platform for growing businesses, fleets, ",
+            "selector": "truck-listing-card",
+            "foreground": "rgb(17, 17, 17)",
+            "background": "rgb(255, 255, 255)",
+            "border": "rgb(217, 220, 221)",
+            "contrast": 18.88,
+            "borderContrast": 1.38,
+            "target": {
+              "width": 324,
+              "height": 757
+            }
+          },
+          {
+            "label": "MEDIUM / HEAVY-DUTY TRUCK HINO 500 SERIES Built for demanding cargo, construction, hauling, and flee",
+            "selector": "truck-listing-card",
+            "foreground": "rgb(17, 17, 17)",
+            "background": "rgb(255, 255, 255)",
+            "border": "rgb(217, 220, 221)",
+            "contrast": 18.88,
+            "borderContrast": 1.38,
+            "target": {
+              "width": 324,
+              "height": 757
+            }
+          },
+          {
+            "label": "PASSENGER TRANSPORT HINO BUS & PUV Commercial passenger solutions supported by Hino engineering and ",
+            "selector": "truck-listing-card",
+            "foreground": "rgb(17, 17, 17)",
+            "background": "rgb(255, 255, 255)",
+            "border": "rgb(217, 220, 221)",
+            "contrast": 18.88,
+            "borderContrast": 1.38,
+            "target": {
+              "width": 324,
+              "height": 757
+            }
+          },
+          {
+            "label": "TELL US WHAT YOUR BUSINESS NEEDS",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 346,
+              "height": 47
+            }
+          }
+        ],
+        "darkSecondary": [],
+        "smallestTarget": 18,
+        "mobileClearance": {
+          "bodyPaddingBottom": 0,
+          "barHeight": 0,
+          "passes": true
+        },
+        "inquiryLinks": [
+          "/contact",
+          "/contact#inquiry",
+          "/contact?topic=general#inquiry",
+          "/contact?topic=general#inquiry",
+          "/contact",
+          "/contact#inquiry",
+          "/contact#inquiry"
+        ],
+        "candidateFactLeaks": [],
+        "activeOperationalLinks": [],
+        "forbiddenCopy": [],
+        "awaitingStates": [
+          "Phone: awaiting confirmation",
+          "Address: awaiting confirmation",
+          "Hours: awaiting confirmation"
+        ],
+        "motion": {
+          "rootScrollBehavior": "auto",
+          "maxTransitionMs": 0.01,
+          "cardTransform": "none"
+        }
+      }
+    },
+    {
+      "route": "/trucks/200-series",
+      "width": 1440,
+      "result": "PASS",
+      "failures": [],
+      "audit": {
+        "title": "Hino 200 Series | Hino Cebu",
+        "h1Count": 1,
+        "viewport": {
+          "width": 1440,
+          "height": 900,
+          "visualWidth": 1440
+        },
+        "scrollWidth": 1440,
+        "scrollHeight": 2383,
+        "overflowElements": [],
+        "brokenImages": [],
+        "actions": [
+          {
+            "label": "Contact / Inquire",
+            "selector": "site-header__phone",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgb(255, 255, 255)",
+            "contrast": 4.72,
+            "borderContrast": null,
+            "target": {
+              "width": 146,
+              "height": 72
+            }
+          },
+          {
+            "label": "ASK ABOUT THIS RANGE",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 219,
+              "height": 47
+            }
+          },
+          {
+            "label": "ASK ABOUT THIS RANGE",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 244,
+              "height": 47
+            }
+          }
+        ],
+        "darkSecondary": [],
+        "smallestTarget": 18,
+        "mobileClearance": {
+          "bodyPaddingBottom": 0,
+          "barHeight": 0,
+          "passes": true
+        },
+        "inquiryLinks": [
+          "/contact",
+          "/contact#inquiry",
+          "/contact?topic=200-series#inquiry",
+          "/contact?topic=200-series#inquiry",
+          "/contact",
+          "/contact#inquiry",
+          "/contact#inquiry"
+        ],
+        "candidateFactLeaks": [],
+        "activeOperationalLinks": [],
+        "forbiddenCopy": [],
+        "awaitingStates": [
+          "Phone: awaiting confirmation",
+          "Address: awaiting confirmation",
+          "Hours: awaiting confirmation"
+        ],
+        "motion": {
+          "rootScrollBehavior": "auto",
+          "maxTransitionMs": 0.01,
+          "cardTransform": null
+        }
+      }
+    },
+    {
+      "route": "/trucks/300-series",
+      "width": 1440,
+      "result": "PASS",
+      "failures": [],
+      "audit": {
+        "title": "Hino 300 Series | Hino Cebu",
+        "h1Count": 1,
+        "viewport": {
+          "width": 1440,
+          "height": 900,
+          "visualWidth": 1440
+        },
+        "scrollWidth": 1440,
+        "scrollHeight": 2589,
+        "overflowElements": [],
+        "brokenImages": [],
+        "actions": [
+          {
+            "label": "Contact / Inquire",
+            "selector": "site-header__phone",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgb(255, 255, 255)",
+            "contrast": 4.72,
+            "borderContrast": null,
+            "target": {
+              "width": 146,
+              "height": 72
+            }
+          },
+          {
+            "label": "ASK ABOUT THIS RANGE",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 219,
+              "height": 47
+            }
+          },
+          {
+            "label": "ASK ABOUT THIS RANGE",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 244,
+              "height": 47
+            }
+          }
+        ],
+        "darkSecondary": [],
+        "smallestTarget": 18,
+        "mobileClearance": {
+          "bodyPaddingBottom": 0,
+          "barHeight": 0,
+          "passes": true
+        },
+        "inquiryLinks": [
+          "/contact",
+          "/contact#inquiry",
+          "/contact?topic=300-series#inquiry",
+          "/contact?topic=300-series#inquiry",
+          "/contact",
+          "/contact#inquiry",
+          "/contact#inquiry"
+        ],
+        "candidateFactLeaks": [],
+        "activeOperationalLinks": [],
+        "forbiddenCopy": [],
+        "awaitingStates": [
+          "Phone: awaiting confirmation",
+          "Address: awaiting confirmation",
+          "Hours: awaiting confirmation"
+        ],
+        "motion": {
+          "rootScrollBehavior": "auto",
+          "maxTransitionMs": 0.01,
+          "cardTransform": null
+        }
+      }
+    },
+    {
+      "route": "/trucks/500-series",
+      "width": 1440,
+      "result": "PASS",
+      "failures": [],
+      "audit": {
+        "title": "Hino 500 Series | Hino Cebu",
+        "h1Count": 1,
+        "viewport": {
+          "width": 1440,
+          "height": 900,
+          "visualWidth": 1440
+        },
+        "scrollWidth": 1440,
+        "scrollHeight": 2589,
+        "overflowElements": [],
+        "brokenImages": [],
+        "actions": [
+          {
+            "label": "Contact / Inquire",
+            "selector": "site-header__phone",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgb(255, 255, 255)",
+            "contrast": 4.72,
+            "borderContrast": null,
+            "target": {
+              "width": 146,
+              "height": 72
+            }
+          },
+          {
+            "label": "ASK ABOUT THIS RANGE",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 219,
+              "height": 47
+            }
+          },
+          {
+            "label": "ASK ABOUT THIS RANGE",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 244,
+              "height": 47
+            }
+          }
+        ],
+        "darkSecondary": [],
+        "smallestTarget": 18,
+        "mobileClearance": {
+          "bodyPaddingBottom": 0,
+          "barHeight": 0,
+          "passes": true
+        },
+        "inquiryLinks": [
+          "/contact",
+          "/contact#inquiry",
+          "/contact?topic=500-series#inquiry",
+          "/contact?topic=500-series#inquiry",
+          "/contact",
+          "/contact#inquiry",
+          "/contact#inquiry"
+        ],
+        "candidateFactLeaks": [],
+        "activeOperationalLinks": [],
+        "forbiddenCopy": [],
+        "awaitingStates": [
+          "Phone: awaiting confirmation",
+          "Address: awaiting confirmation",
+          "Hours: awaiting confirmation"
+        ],
+        "motion": {
+          "rootScrollBehavior": "auto",
+          "maxTransitionMs": 0.01,
+          "cardTransform": null
+        }
+      }
+    },
+    {
+      "route": "/trucks/bus-puv",
+      "width": 1440,
+      "result": "PASS",
+      "failures": [],
+      "audit": {
+        "title": "Hino Bus & PUV | Hino Cebu",
+        "h1Count": 1,
+        "viewport": {
+          "width": 1440,
+          "height": 900,
+          "visualWidth": 1440
+        },
+        "scrollWidth": 1440,
+        "scrollHeight": 2383,
+        "overflowElements": [],
+        "brokenImages": [],
+        "actions": [
+          {
+            "label": "Contact / Inquire",
+            "selector": "site-header__phone",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgb(255, 255, 255)",
+            "contrast": 4.72,
+            "borderContrast": null,
+            "target": {
+              "width": 146,
+              "height": 72
+            }
+          },
+          {
+            "label": "ASK ABOUT THIS RANGE",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 219,
+              "height": 47
+            }
+          },
+          {
+            "label": "ASK ABOUT THIS RANGE",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 244,
+              "height": 47
+            }
+          }
+        ],
+        "darkSecondary": [],
+        "smallestTarget": 18,
+        "mobileClearance": {
+          "bodyPaddingBottom": 0,
+          "barHeight": 0,
+          "passes": true
+        },
+        "inquiryLinks": [
+          "/contact",
+          "/contact#inquiry",
+          "/contact?topic=bus-puv#inquiry",
+          "/contact?topic=bus-puv#inquiry",
+          "/contact",
+          "/contact#inquiry",
+          "/contact#inquiry"
+        ],
+        "candidateFactLeaks": [],
+        "activeOperationalLinks": [],
+        "forbiddenCopy": [],
+        "awaitingStates": [
+          "Phone: awaiting confirmation",
+          "Address: awaiting confirmation",
+          "Hours: awaiting confirmation"
+        ],
+        "motion": {
+          "rootScrollBehavior": "auto",
+          "maxTransitionMs": 0.01,
+          "cardTransform": null
+        }
+      }
+    },
+    {
+      "route": "/parts-service",
+      "width": 1440,
+      "result": "PASS",
+      "failures": [],
+      "audit": {
+        "title": "Parts & Service | Hino Cebu",
+        "h1Count": 1,
+        "viewport": {
+          "width": 1440,
+          "height": 900,
+          "visualWidth": 1440
+        },
+        "scrollWidth": 1440,
+        "scrollHeight": 2704,
+        "overflowElements": [],
+        "brokenImages": [],
+        "actions": [
+          {
+            "label": "Contact / Inquire",
+            "selector": "site-header__phone",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgb(255, 255, 255)",
+            "contrast": 4.72,
+            "borderContrast": null,
+            "target": {
+              "width": 146,
+              "height": 72
+            }
+          },
+          {
+            "label": "START AN INQUIRY",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 196,
+              "height": 47
+            }
+          },
+          {
+            "label": "ASK ABOUT PARTS",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 203,
+              "height": 47
+            }
+          },
+          {
+            "label": "REQUEST SERVICE INFORMATION",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 307,
+              "height": 47
+            }
+          },
+          {
+            "label": "REQUEST INFORMATION",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 241,
+              "height": 47
+            }
+          }
+        ],
+        "darkSecondary": [],
+        "smallestTarget": 18,
+        "mobileClearance": {
+          "bodyPaddingBottom": 0,
+          "barHeight": 0,
+          "passes": true
+        },
+        "inquiryLinks": [
+          "/contact",
+          "/contact#inquiry",
+          "/contact?topic=general#inquiry",
+          "/contact?topic=parts#inquiry",
+          "/contact?topic=service#inquiry",
+          "/contact?topic=general#inquiry",
+          "/contact",
+          "/contact#inquiry",
+          "/contact#inquiry"
+        ],
+        "candidateFactLeaks": [],
+        "activeOperationalLinks": [],
+        "forbiddenCopy": [],
+        "awaitingStates": [
+          "Phone: awaiting confirmation",
+          "Address: awaiting confirmation",
+          "Hours: awaiting confirmation"
+        ],
+        "motion": {
+          "rootScrollBehavior": "auto",
+          "maxTransitionMs": 0.01,
+          "cardTransform": null
+        }
+      }
+    },
+    {
+      "route": "/contact",
+      "width": 1440,
+      "result": "PASS",
+      "failures": [],
+      "audit": {
+        "title": "Contact | Hino Cebu",
+        "h1Count": 1,
+        "viewport": {
+          "width": 1440,
+          "height": 900,
+          "visualWidth": 1440
+        },
+        "scrollWidth": 1440,
+        "scrollHeight": 2301,
+        "overflowElements": [],
+        "brokenImages": [],
+        "actions": [
+          {
+            "label": "Contact / Inquire",
+            "selector": "site-header__phone",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgb(255, 255, 255)",
+            "contrast": 4.72,
+            "borderContrast": null,
+            "target": {
+              "width": 146,
+              "height": 72
+            }
+          },
+          {
+            "label": "REQUEST INFORMATION",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 216,
+              "height": 47
+            }
+          },
+          {
+            "label": "CONTACT / INQUIRE",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 186,
+              "height": 47
+            }
+          }
+        ],
+        "darkSecondary": [],
+        "smallestTarget": 18,
+        "mobileClearance": {
+          "bodyPaddingBottom": 0,
+          "barHeight": 0,
+          "passes": true
+        },
+        "inquiryLinks": [
+          "/contact",
+          "/contact#inquiry",
+          "/contact#inquiry",
+          "/contact",
+          "/contact#inquiry",
+          "/contact#inquiry"
+        ],
+        "candidateFactLeaks": [],
+        "activeOperationalLinks": [],
+        "forbiddenCopy": [],
+        "awaitingStates": [
+          "Phone: awaiting confirmation",
+          "Address: awaiting confirmation",
+          "Hours: awaiting confirmation",
+          "Email: awaiting confirmation",
+          "Verified directions link: awaiting confirmation",
+          "Map and directions: awaiting confirmation",
+          "Phone: awaiting confirmation",
+          "Address: awaiting confirmation",
+          "Hours: awaiting confirmation"
+        ],
+        "motion": {
+          "rootScrollBehavior": "auto",
+          "maxTransitionMs": 0.01,
+          "cardTransform": null
+        }
+      }
+    },
+    {
+      "route": "/about",
+      "width": 1440,
+      "result": "PASS",
+      "failures": [],
+      "audit": {
+        "title": "About | Hino Cebu",
+        "h1Count": 1,
+        "viewport": {
+          "width": 1440,
+          "height": 900,
+          "visualWidth": 1440
+        },
+        "scrollWidth": 1440,
+        "scrollHeight": 2725,
+        "overflowElements": [],
+        "brokenImages": [],
+        "actions": [
+          {
+            "label": "Contact / Inquire",
+            "selector": "site-header__phone",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgb(255, 255, 255)",
+            "contrast": 4.72,
+            "borderContrast": null,
+            "target": {
+              "width": 146,
+              "height": 72
+            }
+          },
+          {
+            "label": "START AN INQUIRY",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 204,
+              "height": 47
+            }
+          },
+          {
+            "label": "REQUEST INFORMATION",
+            "selector": "button button--primary",
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(227, 27, 35)",
+            "border": "rgba(0, 0, 0, 0)",
+            "contrast": 4.72,
+            "borderContrast": 4.45,
+            "target": {
+              "width": 241,
+              "height": 47
+            }
+          }
+        ],
+        "darkSecondary": [],
+        "smallestTarget": 18,
+        "mobileClearance": {
+          "bodyPaddingBottom": 0,
+          "barHeight": 0,
+          "passes": true
+        },
+        "inquiryLinks": [
+          "/contact",
+          "/contact#inquiry",
+          "/contact?topic=general#inquiry",
+          "/contact?topic=general#inquiry",
+          "/contact",
+          "/contact#inquiry",
+          "/contact#inquiry"
+        ],
+        "candidateFactLeaks": [],
+        "activeOperationalLinks": [],
+        "forbiddenCopy": [],
+        "awaitingStates": [
+          "Address: awaiting confirmation",
+          "Phone: awaiting confirmation",
+          "Hours: awaiting confirmation",
+          "Directions: awaiting confirmation",
+          "Phone: awaiting confirmation",
+          "Address: awaiting confirmation",
+          "Hours: awaiting confirmation"
+        ],
+        "motion": {
+          "rootScrollBehavior": "auto",
+          "maxTransitionMs": 0.01,
+          "cardTransform": null
+        }
+      }
+    }
+  ],
+  "interactions": {
+    "keyboard": {
+      "skipFocus": {
+        "focused": true,
+        "top": "16px",
+        "outline": "none",
+        "boxShadow": "rgba(227, 27, 35, 0.35) 0px 0px 0px 3px"
+      },
+      "skipTarget": "main-content",
+      "menuOpen": true,
+      "closed": true,
+      "focusRestored": true
+    },
+    "zoom": {
+      "effectiveCssWidth": 265,
+      "deviceScaleFactor": 2,
+      "horizontalOverflow": false,
+      "bodyPaddingBottom": 64,
+      "barHeight": 61,
+      "lastControlClear": true
+    },
+    "topics": {
+      "fallbackTopic": "general",
+      "allowedPrefill": "parts",
+      "editedTopic": "service",
+      "invalid": {
+        "focus": "name",
+        "errors": [
+          "name",
+          "mobile",
+          "consent"
+        ],
+        "described": true
+      },
+      "loading": {
+        "disabled": true,
+        "label": "PREPARING YOUR NEXT STEP…",
+        "live": "Checking your details…"
+      },
+      "success": {
+        "heading": "THANK YOU FOR YOUR INTEREST IN HINO CEBU.",
+        "focused": true,
+        "liveRegion": "polite",
+        "text": "THANK YOU FOR YOUR INTEREST IN HINO CEBU.\n\nLocal phone details are awaiting confirmation.\n\nSTART ANOTHER INQUIRY"
+      }
+    }
+  }
+}
