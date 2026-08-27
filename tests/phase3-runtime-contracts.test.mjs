@@ -10,6 +10,7 @@ import { createRequire } from "node:module";
 const projectRoot = fileURLToPath(new URL("..", import.meta.url));
 const require = createRequire(import.meta.url);
 const routes = [
+  "/",
   "/trucks",
   "/trucks/200-series",
   "/trucks/300-series",
@@ -153,6 +154,8 @@ test("production output gates unresolved facts and excludes unsafe public surfac
   assert.match(output, /Phone: awaiting confirmation/);
   assert.match(output, /Address: awaiting confirmation/);
   assert.match(output, /Hours: awaiting confirmation/);
+  assert.match(output, /Email: awaiting confirmation/);
+  assert.match(output, /Verified directions link: awaiting confirmation/);
   assert.doesNotMatch(output, /\(032\) 346 3322|tel:\+63323463322/i);
   assert.doesNotMatch(output, /8WC6\+Q46|Saint John Paul II Avenue|Monday|8:00 AM|5:00 PM/i);
   assert.doesNotMatch(output, /maps\.google|google\.com\/maps/i);

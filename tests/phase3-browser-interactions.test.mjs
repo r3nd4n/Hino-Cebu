@@ -8,6 +8,12 @@ import path from "node:path";
 import test, { after, before } from "node:test";
 import { fileURLToPath } from "node:url";
 
+import {
+  evaluate as evaluateCdp,
+  openPage,
+  pressKey,
+} from "../.planning/phases/03-truck-discovery-local-support-routes/03-10-browser-audit.mjs";
+
 const projectRoot = fileURLToPath(new URL("..", import.meta.url));
 const require = createRequire(import.meta.url);
 const chromeCandidates = [
@@ -73,46 +79,8 @@ async function stop(processHandle) {
   if (processHandle.exitCode === null) processHandle.kill("SIGKILL");
 }
 
-class Cdp {
-  constructor(socket) {
-    this.socket = socket;
-    this.nextId = 1;
-    this.pending = new Map();
-    socket.addEventListener("message", ({ data }) => {
-      const message = JSON.parse(data);
-      const waiter = this.pending.get(message.id);
-      if (!waiter) return;
-      this.pending.delete(message.id);
-      if (message.error) waiter.reject(new Error(message.error.message));
-      else waiter.resolve(message.result);
-    });
-  }
-
-  send(method, params = {}) {
-    const id = this.nextId++;
-    this.socket.send(JSON.stringify({ id, method, params }));
-    return new Promise((resolve, reject) => this.pending.set(id, { resolve, reject }));
-  }
-}
-
-async function openBrowserPage() {
-  const response = await fetch(`${debugUrl}/json/new?${encodeURIComponent("about:blank")}`, { method: "PUT" });
-  assert.equal(response.status, 200, "Chrome must create an isolated CDP page");
-  const target = await response.json();
-  const socket = new WebSocket(target.webSocketDebuggerUrl);
-  await new Promise((resolve, reject) => {
-    socket.addEventListener("open", resolve, { once: true });
-    socket.addEventListener("error", reject, { once: true });
-  });
-  const cdp = new Cdp(socket);
-  await Promise.all([cdp.send("Page.enable"), cdp.send("Runtime.enable")]);
-  return { cdp, socket, target };
-}
-
 async function evaluate(expression) {
-  const result = await browser.cdp.send("Runtime.evaluate", { expression, awaitPromise: true, returnByValue: true });
-  if (result.exceptionDetails) throw new Error(result.exceptionDetails.exception?.description ?? result.exceptionDetails.text);
-  return result.result.value;
+  return evaluateCdp(browser.cdp, expression);
 }
 
 async function navigate(route) {
@@ -123,11 +91,7 @@ async function navigate(route) {
 }
 
 async function key(key, { shift = false } = {}) {
-  const code = key === "Tab" ? "Tab" : key === "Escape" ? "Escape" : key;
-  const virtualKeyCode = key === "Tab" ? 9 : key === "Escape" ? 27 : 0;
-  const modifiers = shift ? 8 : 0;
-  await browser.cdp.send("Input.dispatchKeyEvent", { type: "rawKeyDown", key, code, modifiers, windowsVirtualKeyCode: virtualKeyCode, nativeVirtualKeyCode: virtualKeyCode });
-  await browser.cdp.send("Input.dispatchKeyEvent", { type: "keyUp", key, code, modifiers, windowsVirtualKeyCode: virtualKeyCode, nativeVirtualKeyCode: virtualKeyCode });
+  await pressKey(browser.cdp, key, key, { shift });
   await new Promise((resolve) => setTimeout(resolve, 50));
 }
 
@@ -168,7 +132,7 @@ before(async () => {
     waitFor(`${baseUrl}/trucks`, "Next production server", nextProcess),
     waitFor(`${debugUrl}/json/version`, "Chrome debugging endpoint", chromeProcess),
   ]);
-  browser = await openBrowserPage();
+  browser = await openPage(debugUrl);
   await browser.cdp.send("Emulation.setDeviceMetricsOverride", { width: 390, height: 900, deviceScaleFactor: 1, mobile: true });
 });
 
@@ -232,4 +196,93 @@ test("homepage consent exposes and describes its invalid state", async () => {
     return { invalid: consent.getAttribute('aria-invalid'), described: Boolean(error?.innerText), firstFocus: document.activeElement?.id };
   })()`);
   assert.deepEqual(invalid, { invalid: "true", described: true, firstFocus: "quote-name" });
+});
+
+test("Contact renders the complete normalized local inquiry lifecycle through reset", async () => {
+  await navigate("/contact?topic=arbitrary#inquiry");
+  assert.equal(await evaluate(`document.querySelector('[name="inquiryTopic"]').value`), "general");
+
+  await navigate("/contact?topic=parts#inquiry");
+  const states = await evaluate(`(async () => {
+    const setValue = (element, value) => {
+      const descriptor = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(element), 'value');
+      descriptor.set.call(element, value);
+      element.dispatchEvent(new Event('input', { bubbles: true }));
+      element.dispatchEvent(new Event('change', { bubbles: true }));
+    };
+    const topic = document.querySelector('[name="inquiryTopic"]');
+    const allowedPrefill = topic.value;
+    setValue(topic, 'service');
+    const editedTopic = topic.value;
+    const submit = document.querySelector('form button[type="submit"]');
+    submit.click();
+    await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    const invalidElements = [...document.querySelectorAll('[aria-invalid="true"]')];
+    const invalid = {
+      focus: document.activeElement?.getAttribute('name'),
+      fields: invalidElements.map(element => element.getAttribute('name')),
+      described: invalidElements.every(element => {
+        const errorId = element.getAttribute('aria-describedby');
+        return errorId && Boolean(document.getElementById(errorId)?.innerText);
+      }),
+    };
+
+    setValue(document.querySelector('[name="name"]'), 'Test User');
+    setValue(document.querySelector('[name="mobile"]'), '09171234567');
+    document.querySelector('[name="consent"]').click();
+    await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    const beforeLoading = {
+      topic: document.querySelector('[name="inquiryTopic"]').value,
+      name: document.querySelector('[name="name"]').value,
+      mobile: document.querySelector('[name="mobile"]').value,
+      consent: document.querySelector('[name="consent"]').checked,
+    };
+    const loadingSubmit = document.querySelector('form button[type="submit"]');
+    loadingSubmit.click();
+    await new Promise(resolve => requestAnimationFrame(resolve));
+    const firstLoading = { disabled: loadingSubmit.disabled, label: loadingSubmit.textContent.trim(), live: document.querySelector('.form-message').textContent.trim() };
+    loadingSubmit.click();
+    const duplicateLoading = { disabled: loadingSubmit.disabled, label: loadingSubmit.textContent.trim(), live: document.querySelector('.form-message').textContent.trim() };
+    await new Promise(resolve => setTimeout(resolve, 400));
+    const heading = document.querySelector('.inquiry-confirmation h2');
+    const success = {
+      heading: heading?.textContent.trim(),
+      focused: document.activeElement === heading,
+      live: document.querySelector('.inquiry-confirmation')?.getAttribute('aria-live'),
+      restartType: document.querySelector('.inquiry-confirmation button')?.type,
+    };
+    document.querySelector('.inquiry-confirmation button').click();
+    await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    const resetFields = ['name', 'mobile', 'email', 'company', 'message'].map(name => document.querySelector('[name="' + name + '"]').value);
+    return {
+      allowedPrefill,
+      editedTopic,
+      invalid,
+      beforeLoading,
+      firstLoading,
+      duplicateLoading,
+      success,
+      reset: {
+        topic: document.querySelector('[name="inquiryTopic"]').value,
+        fields: resetFields,
+        consent: document.querySelector('[name="consent"]').checked,
+        errors: document.querySelectorAll('.field-error').length,
+        focused: document.activeElement?.getAttribute('name'),
+      },
+    };
+  })()`);
+
+  assert.equal(states.allowedPrefill, "parts");
+  assert.equal(states.editedTopic, "service");
+  assert.deepEqual(states.invalid, { focus: "name", fields: ["name", "mobile", "consent"], described: true });
+  assert.deepEqual(states.beforeLoading, { topic: "service", name: "Test User", mobile: "09171234567", consent: true });
+  assert.deepEqual(states.firstLoading, { disabled: true, label: "Preparing your next step…", live: "Checking your details…" });
+  assert.deepEqual(states.duplicateLoading, states.firstLoading);
+  assert.deepEqual(states.success, {
+    heading: "Thank you for your interest in Hino Cebu.",
+    focused: true,
+    live: "polite",
+    restartType: "button",
+  });
+  assert.deepEqual(states.reset, { topic: "parts", fields: ["", "", "", "", ""], consent: false, errors: 0, focused: "inquiryTopic" });
 });

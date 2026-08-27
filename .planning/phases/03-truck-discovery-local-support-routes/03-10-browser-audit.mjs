@@ -1,5 +1,6 @@
 import fs from "node:fs/promises";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 const baseUrl = process.env.PHASE3_BASE_URL ?? "http://127.0.0.1:4310";
 const debugUrl = process.env.CHROME_DEBUG_URL ?? "http://127.0.0.1:9222";
@@ -16,7 +17,7 @@ const routes = [
 ];
 const widths = [390, 768, 1024, 1440];
 
-class Cdp {
+export class Cdp {
   constructor(socket) {
     this.socket = socket;
     this.nextId = 1;
@@ -39,8 +40,8 @@ class Cdp {
   }
 }
 
-async function openPage() {
-  const response = await fetch(`${debugUrl}/json/new?${encodeURIComponent("about:blank")}`, { method: "PUT" });
+export async function openPage(chromeDebugUrl = debugUrl) {
+  const response = await fetch(`${chromeDebugUrl}/json/new?${encodeURIComponent("about:blank")}`, { method: "PUT" });
   if (!response.ok) throw new Error(`Chrome target creation failed: ${response.status}`);
   const target = await response.json();
   const socket = new WebSocket(target.webSocketDebuggerUrl);
@@ -53,7 +54,7 @@ async function openPage() {
   return { cdp, socket, target };
 }
 
-async function evaluate(cdp, expression) {
+export async function evaluate(cdp, expression) {
   const result = await cdp.send("Runtime.evaluate", {
     expression,
     awaitPromise: true,
@@ -63,7 +64,7 @@ async function evaluate(cdp, expression) {
   return result.result.value;
 }
 
-async function navigate(cdp, url) {
+export async function navigate(cdp, url) {
   await cdp.send("Page.navigate", { url });
   await new Promise((resolve) => setTimeout(resolve, 550));
   await evaluate(cdp, `new Promise(resolve => document.readyState === "complete" ? resolve() : addEventListener("load", resolve, { once: true }))`);
@@ -71,11 +72,12 @@ async function navigate(cdp, url) {
   await evaluate(cdp, `new Promise(async resolve => { for (let y = 0; y < document.documentElement.scrollHeight; y += 700) { scrollTo(0, y); await new Promise(r => setTimeout(r, 45)); } scrollTo(0, document.documentElement.scrollHeight); await new Promise(r => setTimeout(r, 250)); await Promise.race([Promise.all([...document.images].map(image => image.decode().catch(() => null))), new Promise(r => setTimeout(r, 1200))]); scrollTo(0, 0); await new Promise(r => setTimeout(r, 120)); resolve(); })`);
 }
 
-async function pressKey(cdp, key, code = key) {
+export async function pressKey(cdp, key, code = key, { shift = false } = {}) {
   const virtualKeyCode = key === "Enter" ? 13 : key === "Escape" ? 27 : key === "Tab" ? 9 : 0;
-  await cdp.send("Input.dispatchKeyEvent", { type: "rawKeyDown", key, code, windowsVirtualKeyCode: virtualKeyCode, nativeVirtualKeyCode: virtualKeyCode });
+  const modifiers = shift ? 8 : 0;
+  await cdp.send("Input.dispatchKeyEvent", { type: "rawKeyDown", key, code, modifiers, windowsVirtualKeyCode: virtualKeyCode, nativeVirtualKeyCode: virtualKeyCode });
   if (key === "Enter") await cdp.send("Input.dispatchKeyEvent", { type: "char", key, code, text: "\r", unmodifiedText: "\r", windowsVirtualKeyCode: virtualKeyCode, nativeVirtualKeyCode: virtualKeyCode });
-  await cdp.send("Input.dispatchKeyEvent", { type: "keyUp", key, code, windowsVirtualKeyCode: virtualKeyCode, nativeVirtualKeyCode: virtualKeyCode });
+  await cdp.send("Input.dispatchKeyEvent", { type: "keyUp", key, code, modifiers, windowsVirtualKeyCode: virtualKeyCode, nativeVirtualKeyCode: virtualKeyCode });
 }
 
 const auditExpression = `(() => {
@@ -287,4 +289,6 @@ async function run() {
   }
 }
 
-await run();
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  await run();
+}
