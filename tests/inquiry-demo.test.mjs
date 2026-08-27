@@ -61,6 +61,26 @@ async function transition(status, event, draft = validDraft) {
   `);
 }
 
+async function reset(initialTopic = "parts") {
+  return runTypeScript(`
+    const { registerHooks } = await import('node:module');
+    registerHooks({
+      resolve(specifier, context, nextResolve) {
+        if (specifier.startsWith('@/')) {
+          return nextResolve(new URL('./src/' + specifier.slice(2) + '.ts', import.meta.url).href, context);
+        }
+        return nextResolve(specifier, context);
+      },
+    });
+    const { transitionInquiry } = await import('./src/lib/inquiry-demo.ts');
+    process.stdout.write(JSON.stringify(transitionInquiry({
+      event: "reset",
+      status: "success",
+      initialTopic: ${JSON.stringify(initialTopic)},
+    })));
+  `);
+}
+
 const topics = [
   "general",
   "200-series",
@@ -188,6 +208,34 @@ test("pending completion returns only the local confirmation", async () => {
   const serialized = JSON.stringify(result).toLowerCase();
   for (const forbidden of ["send", "sent", "received", "persist", "provider", "follow up", "follow-up"])
     assert.doesNotMatch(serialized, new RegExp(forbidden));
+});
+
+test("success reset returns a clean idle draft with the normalized initial context", async () => {
+  assert.deepEqual(await reset("parts"), {
+    outcome: "reset-local",
+    nextStatus: "idle",
+    draft: {
+      originTopic: "parts",
+      inquiryTopic: "parts",
+      name: "",
+      mobile: "",
+      email: "",
+      company: "",
+      message: "",
+      consent: false,
+    },
+    errors: {},
+  });
+});
+
+test("InquiryForm wires a real restart action in both phone states and restores topic focus", async () => {
+  const form = await readFile(new URL("../src/components/contact/InquiryForm.tsx", import.meta.url), "utf8");
+
+  assert.match(form, /event:\s*"reset"/);
+  assert.match(form, /type="button"[^>]*>Start another inquiry<\/button>/);
+  assert.match(form, /querySelector<HTMLElement>\('\[name="inquiryTopic"\]'\)[\s\S]*?\.focus\(\)/);
+  assert.match(form, /Start another inquiry[\s\S]*?phone\.status === "approved"[\s\S]*?Call Hino Cebu/);
+  assert.doesNotMatch(form, /href="\/contact#inquiry"[^>]*>Start another inquiry<\/a>/);
 });
 
 test("Contact normalizes server-owned query context before the client boundary", async () => {
