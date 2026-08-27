@@ -29,6 +29,11 @@ type InquiryTransitionInput =
       event: "complete";
       status: "loading";
       draft?: Partial<InquiryDraft>;
+    }
+  | {
+      event: "reset";
+      status: "success";
+      initialTopic: InquiryTopic;
     };
 
 export type InquiryTransitionResult =
@@ -43,11 +48,30 @@ export type InquiryTransitionResult =
       outcome: "completed-local";
       nextStatus: "success";
       message: string;
+    }
+  | {
+      outcome: "reset-local";
+      nextStatus: "idle";
+      draft: InquiryDraft;
+      errors: Record<string, never>;
     };
 
 export const inquiryLocalConfirmation = "Thank you for your interest in Hino Cebu.";
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const mobilePattern = /^(?:\+63|0)9\d{9}$/;
+
+export function createInquiryDraft(initialTopic: InquiryTopic): InquiryDraft {
+  return {
+    originTopic: initialTopic,
+    inquiryTopic: initialTopic,
+    name: "",
+    mobile: "",
+    email: "",
+    company: "",
+    message: "",
+    consent: false,
+  };
+}
 
 export function validateInquiryDraft(draft: Partial<InquiryDraft>): InquiryValidationResult {
   const errors: Partial<Record<InquiryField, string>> = {};
@@ -71,6 +95,15 @@ export function validateInquiryDraft(draft: Partial<InquiryDraft>): InquiryValid
 }
 
 export function transitionInquiry(input: InquiryTransitionInput): InquiryTransitionResult {
+  if (input.event === "reset") {
+    return {
+      outcome: "reset-local",
+      nextStatus: "idle",
+      draft: createInquiryDraft(input.initialTopic),
+      errors: {},
+    };
+  }
+
   if (input.event === "complete") {
     return {
       outcome: "completed-local",

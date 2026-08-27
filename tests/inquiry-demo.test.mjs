@@ -250,11 +250,15 @@ test("Contact normalizes server-owned query context before the client boundary",
 });
 
 test("InquiryForm preserves the normalized origin and follows the accessible field order", async () => {
-  const form = await readFile(new URL("../src/components/contact/InquiryForm.tsx", import.meta.url), "utf8");
+  const [form, validator] = await Promise.all([
+    readFile(new URL("../src/components/contact/InquiryForm.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../src/lib/inquiry-demo.ts", import.meta.url), "utf8"),
+  ]);
 
   assert.match(form, /^"use client";/);
-  assert.match(form, /originTopic:\s*initialTopic/);
-  assert.match(form, /inquiryTopic:\s*initialTopic/);
+  assert.match(form, /createInquiryDraft\(initialTopic\)/);
+  assert.match(validator, /originTopic:\s*initialTopic/);
+  assert.match(validator, /inquiryTopic:\s*initialTopic/);
   assert.doesNotMatch(form, /updateDraft\("originTopic"/);
 
   const orderedIds = [

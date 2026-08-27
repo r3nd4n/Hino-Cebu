@@ -5,6 +5,7 @@ import { type FormEvent, useRef, useState } from "react";
 import { inquiryTopics, type InquiryTopic } from "@/content/inquiry";
 import type { PublicContact } from "@/content/site";
 import {
+  createInquiryDraft,
   inquiryLocalConfirmation,
   type InquiryDraft,
   type InquiryField,
@@ -21,16 +22,7 @@ export function InquiryForm({
   initialTopic: InquiryTopic;
   phone: PublicContact["phone"];
 }) {
-  const [draft, setDraft] = useState<InquiryDraft>({
-    originTopic: initialTopic,
-    inquiryTopic: initialTopic,
-    name: "",
-    mobile: "",
-    email: "",
-    company: "",
-    message: "",
-    consent: false,
-  });
+  const [draft, setDraft] = useState<InquiryDraft>(() => createInquiryDraft(initialTopic));
   const [errors, setErrors] = useState<InquiryErrors>({});
   const [status, setStatus] = useState<InquiryStatus>("idle");
   const formRef = useRef<HTMLFormElement>(null);
@@ -77,15 +69,33 @@ export function InquiryForm({
     }, 300);
   }
 
+  function resetInquiry() {
+    const transition = transitionInquiry({
+      event: "reset",
+      status: "success",
+      initialTopic,
+    });
+
+    if (transition.outcome !== "reset-local") return;
+
+    setDraft(transition.draft);
+    setErrors(transition.errors);
+    setStatus(transition.nextStatus);
+    window.requestAnimationFrame(() => {
+      formRef.current
+        ?.querySelector<HTMLElement>('[name="inquiryTopic"]')
+        ?.focus();
+    });
+  }
+
   if (status === "success") {
     return (
       <div aria-live="polite" className="inquiry-confirmation">
         <h2 ref={confirmationRef} tabIndex={-1}>{inquiryLocalConfirmation}</h2>
         <p>{phone.status === "approved" ? `For immediate assistance, call ${phone.display}.` : "Local phone details are awaiting confirmation."}</p>
-        {phone.status === "approved" ? (
-          <a className="button button--primary" href={phone.href}>Call Hino Cebu</a>
-        ) : (
-          <a className="button button--primary" href="/contact#inquiry">Start another inquiry</a>
+        <button className="button button--primary" onClick={resetInquiry} type="button">Start another inquiry</button>
+        {phone.status === "approved" && (
+          <a className="button button--secondary" href={phone.href}>Call Hino Cebu</a>
         )}
       </div>
     );
