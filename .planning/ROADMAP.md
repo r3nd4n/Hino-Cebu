@@ -32,7 +32,7 @@ Five MVP phases deliver a conversion-first Hino Cebu website from safe foundatio
 **Goal:** Extend the conversion system across vehicles, parts/service, contact, and local-dealer information.
 **Mode:** mvp
 **Requirements:** DISC-01, DISC-02, DISC-03, DISC-04
-**Plans:** 4/10 plans executed
+**Plans:** 6/10 plans executed
 
 Plans:
 **Wave 1**
@@ -50,8 +50,8 @@ Plans:
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
-- [ ] 03-05-PLAN.md — Establish approval-gated local facts and safe shared-shell fallbacks.
-- [ ] 03-06-PLAN.md — Repair shared/discovery selectors and protect compiled CSS.
+- [x] 03-05-PLAN.md — Establish approval-gated local facts and safe shared-shell fallbacks.
+- [x] 03-06-PLAN.md — Repair shared/discovery selectors and protect compiled CSS.
 
 **Wave 5** *(blocked on Wave 4 completion)*
 
