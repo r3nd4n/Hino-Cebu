@@ -33,8 +33,10 @@ export function MobileActionBar({ phone }: { phone: PublicContact["phone"] }) {
 
   if (isHomepage && !isVisible) return null;
 
+  const isSingleAction = phone.status !== "approved";
+
   return (
-    <nav aria-label="Quick actions" className="mobile-action-bar">
+    <nav aria-label="Quick actions" className={`mobile-action-bar${isSingleAction ? " mobile-action-bar--single" : ""}`}>
       {phone.status === "approved" ? (
         <a href={phone.href}><Icon icon={Phone} size={18} />Call</a>
       ) : null}

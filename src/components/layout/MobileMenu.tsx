@@ -19,6 +19,7 @@ export function MobileMenu({ navigation, phone }: MobileMenuProps) {
   const pathname = usePathname();
   const isHomepage = pathname === "/";
   const [isOpen, setIsOpen] = useState(false);
+  const panelRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -26,15 +27,47 @@ export function MobileMenu({ navigation, phone }: MobileMenuProps) {
 
     const previousOverflow = document.body.style.overflow;
     const trigger = triggerRef.current;
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setIsOpen(false);
+    const obscuredElements = [
+      document.querySelector<HTMLElement>("main"),
+      document.querySelector<HTMLElement>(".site-footer"),
+      document.querySelector<HTMLElement>(".mobile-action-bar"),
+    ].filter((element): element is HTMLElement => element !== null);
+    const previousInert = obscuredElements.map((element) => ({ element, inert: element.inert }));
+    const focusableElements = () => [...(panelRef.current?.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+    ) ?? [])].filter((element) => element.getClientRects().length > 0);
+    const containFocus = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsOpen(false);
+        return;
+      }
+      if (event.key !== "Tab") return;
+
+      const focusables = focusableElements();
+      const first = focusables[0];
+      const last = focusables.at(-1);
+      if (!first || !last) return;
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      } else if (!panelRef.current?.contains(document.activeElement)) {
+        event.preventDefault();
+        first.focus();
+      }
     };
 
     document.body.style.overflow = "hidden";
-    document.addEventListener("keydown", closeOnEscape);
+    for (const element of obscuredElements) element.inert = true;
+    const focusFrame = window.requestAnimationFrame(() => focusableElements()[0]?.focus());
+    document.addEventListener("keydown", containFocus);
     return () => {
+      window.cancelAnimationFrame(focusFrame);
       document.body.style.overflow = previousOverflow;
-      document.removeEventListener("keydown", closeOnEscape);
+      for (const { element, inert } of previousInert) element.inert = inert;
+      document.removeEventListener("keydown", containFocus);
       trigger?.focus();
     };
   }, [isOpen]);
@@ -53,7 +86,7 @@ export function MobileMenu({ navigation, phone }: MobileMenuProps) {
         <Icon icon={isOpen ? X : Menu} size={24} />
       </button>
       {isOpen ? (
-        <div className="mobile-menu__panel" id="mobile-navigation">
+        <div className="mobile-menu__panel" id="mobile-navigation" ref={panelRef}>
           <nav aria-label="Mobile navigation">
             {navigation.map((item) => <Link href={item.href} key={item.href} onClick={() => setIsOpen(false)}>{item.label}</Link>)}
           </nav>

@@ -161,6 +161,8 @@ h3 { font-size: 1.5rem; }
 .mobile-action-bar { background: var(--color-paper); border-top: 1px solid var(--color-border); bottom: 0; display: none; grid-template-columns: 1fr 1fr; left: 0; padding: var(--space-sm) var(--gutter) calc(var(--space-sm) + env(safe-area-inset-bottom)); position: fixed; right: 0; z-index: 18; }
 .mobile-action-bar a { align-items: center; background: var(--color-dark); color: var(--color-paper); display: flex; font-size: 0.75rem; font-weight: 700; gap: var(--space-sm); justify-content: center; min-height: 3rem; padding-inline: var(--space-sm); text-align: center; text-decoration: none; text-transform: uppercase; }
 .mobile-action-bar a:last-child { background: var(--color-red); }
+.mobile-action-bar--single { grid-template-columns: minmax(0, 1fr); }
+.mobile-action-bar--single a { width: 100%; }
 
 /* Phase 3 discovery and local-support route contracts. */
 main#main-content { min-width: 0; }

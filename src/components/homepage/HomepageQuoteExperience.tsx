@@ -22,6 +22,16 @@ type QuoteStatus = "idle" | "loading" | "success";
 type QuoteErrors = Partial<Record<QuoteField, string>>;
 
 const confirmationHeading = "Thank you for your interest in Hino Cebu.";
+const quoteFieldIds: Record<QuoteField, string> = {
+  name: "quote-name",
+  mobile: "quote-mobile",
+  email: "quote-email",
+  company: "quote-company",
+  vehicleInterest: "quote-vehicle-interest",
+  businessUse: "quote-business-use",
+  estimatedUnits: "quote-estimated-units",
+  consent: "quote-consent",
+};
 
 export function HomepageQuoteExperience({
   phone,
@@ -60,6 +70,10 @@ export function HomepageQuoteExperience({
     if (!validation.ok) {
       setErrors(validation.errors);
       setStatus("idle");
+      const firstInvalid = Object.keys(validation.errors)[0] as QuoteField | undefined;
+      window.requestAnimationFrame(() => {
+        if (firstInvalid) document.getElementById(quoteFieldIds[firstInvalid])?.focus();
+      });
       return;
     }
 
@@ -185,7 +199,7 @@ function QuoteForm({ businessUseSelectRef, draft, errors, onSubmit, onUpdate, ph
           <option value="6+">6+</option>
         </QuoteSelect>
         <div className="quote-field quote-field--consent">
-          <input aria-describedby={errors.consent ? "quote-consent-error" : undefined} checked={draft.consent} disabled={isLoading} id="quote-consent" onChange={(event) => onUpdate("consent", event.target.checked)} type="checkbox" />
+          <input aria-describedby={errors.consent ? "quote-consent-error" : undefined} aria-invalid={Boolean(errors.consent)} checked={draft.consent} disabled={isLoading} id="quote-consent" onChange={(event) => onUpdate("consent", event.target.checked)} type="checkbox" />
           <label htmlFor="quote-consent">I agree to be contacted by Hino Cebu about my inquiry.</label>
           {errors.consent && <p className="field-error" id="quote-consent-error">{errors.consent}</p>}
         </div>
