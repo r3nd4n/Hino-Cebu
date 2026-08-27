@@ -17,7 +17,7 @@ export function HomepageSupportSections({
   contact: PublicContact;
   siteName: string;
 }) {
-  const { service, valuePoints, visit } = homepageContent;
+  const { service, valuePoints } = homepageContent;
 
   return (
     <>
@@ -53,11 +53,12 @@ export function HomepageSupportSections({
         </div>
       </section>
 
-      <section aria-labelledby="visit-heading" className="visit-section" id="visit-hino-cebu">
+      <section aria-labelledby="local-information-heading" className="visit-section" id="local-information">
         <div className="container visit-section__grid">
           <div className="visit-section__content">
-            <p className="eyebrow">{visit.eyebrow}</p>
-            <h2 id="visit-heading">{visit.title}</h2>
+            <p className="eyebrow">Local information</p>
+            <h2 id="local-information-heading">Contact Hino Cebu</h2>
+            <p>Local contact and location details appear here only after confirmation.</p>
             {contact.address.status === "approved" ? (
               <address>
                 <Icon icon={MapPin} size={22} />
@@ -74,18 +75,21 @@ export function HomepageSupportSections({
                 {contact.hours.rows.map((entry) => <div key={entry.days}><dt>{entry.days}</dt><dd>{entry.hours}</dd></div>)}
               </dl>
             ) : <p>Hours: awaiting confirmation</p>}
-            {contact.directions.status === "approved" ? (
-              <a className="button button--primary" href={contact.directions.href} rel="noreferrer" target="_blank">
-                {visit.directionsAction}<Icon icon={ArrowUpRight} size={17} />
-              </a>
-            ) : (
-              <Link className="button button--primary" href="/contact#inquiry">
-                Contact / Inquire<Icon icon={ArrowUpRight} size={17} />
-              </Link>
-            )}
+            <Link className="button button--primary" href="/contact#inquiry">
+              Contact / Inquire<Icon icon={ArrowUpRight} size={17} />
+            </Link>
           </div>
           <div className="visit-section__map">
-            <p>{siteName} map details are awaiting confirmation.</p>
+            {contact.directions.status === "approved" ? (
+              <>
+                <p>Verified directions for {siteName} are available.</p>
+                <a className="button button--secondary" href={contact.directions.href} rel="noreferrer" target="_blank">
+                  Open directions<Icon icon={ArrowUpRight} size={17} />
+                </a>
+              </>
+            ) : (
+              <p>{siteName} map details are awaiting confirmation.</p>
+            )}
           </div>
         </div>
       </section>
@@ -118,8 +122,7 @@ export function HomepageSupportSections({
         .visit-section dl div { border-bottom: 1px solid var(--color-border); display: flex; justify-content: space-between; padding-block: var(--space-sm); }
         .visit-section dt { font-weight: 700; }
         .visit-section dd { color: var(--color-muted-ink); margin: 0; }
-        .visit-section__map { box-shadow: var(--shadow-card); min-height: 22rem; }
-        .visit-section iframe { border: 0; height: 100%; min-height: 22rem; width: 100%; }
+        .visit-section__map { align-content: center; background: var(--color-charcoal); box-shadow: var(--shadow-card); color: var(--color-paper); min-height: 22rem; padding: var(--space-xl); }
         @media (max-width: 767px) { .why-hino__points { grid-template-columns: 1fr; } .support-service__grid, .visit-section__grid { grid-template-columns: 1fr; } .support-service__media { min-height: 15rem; } .visit-section__map { grid-row: 1; } }
       `}</style>
     </>

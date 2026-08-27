@@ -18,7 +18,7 @@ const initialDraft: QuoteDraft = {
   consent: false,
 };
 
-type QuoteStatus = "idle" | "loading" | "success" | "failure";
+type QuoteStatus = "idle" | "loading" | "success";
 type QuoteErrors = Partial<Record<QuoteField, string>>;
 
 const confirmationHeading = "Thank you for your interest in Hino Cebu.";
@@ -66,12 +66,8 @@ export function HomepageQuoteExperience({
     setErrors({});
     setStatus("loading");
 
-    try {
-      // Phase 2 intentionally performs no lead delivery. Phase 4 replaces this local state with the secure endpoint.
-      window.setTimeout(() => setStatus("success"), 300);
-    } catch {
-      setStatus("failure");
-    }
+    // Phase 4 replaces this presentation timer at the production submission boundary.
+    window.setTimeout(() => setStatus("success"), 300);
   }
 
   return (
@@ -117,7 +113,7 @@ export function HomepageQuoteExperience({
           <h2 id="business-needs-title">{homepageContent.businessNeeds.title}</h2>
           <div className="homepage-business-needs__grid">
             {homepageContent.businessNeeds.options.map((businessUse) => (
-              <button className="homepage-business-needs__card" key={businessUse} onClick={() => chooseBusinessUse(businessUse)} type="button">
+              <button className="homepage-business-needs__card" disabled={status === "loading"} key={businessUse} onClick={() => chooseBusinessUse(businessUse)} type="button">
                 <span>{businessUse}</span>
                 <strong>Find my Hino <span aria-hidden="true">→</span></strong>
               </button>
@@ -165,19 +161,12 @@ function QuoteForm({ businessUseSelectRef, draft, errors, onSubmit, onUpdate, ph
         <p className="eyebrow">Request a quote</p>
         <h2>Start with your business needs</h2>
       </div>
-      {status === "failure" && (
-        <p aria-live="assertive" className="form-message form-message--error">
-          {phone.status === "approved"
-            ? `We couldn't send your inquiry right now. Please try again or call Hino Cebu at ${phone.display}.`
-            : "We couldn't send your inquiry right now. Please try again."}
-        </p>
-      )}
       <form noValidate onSubmit={onSubmit}>
-        <QuoteTextField autoComplete="name" error={errors.name} id="quote-name" label="Full name" onChange={(value) => onUpdate("name", value)} value={draft.name} />
-        <QuoteTextField autoComplete="tel" error={errors.mobile} id="quote-mobile" inputMode="tel" label="Mobile number" onChange={(value) => onUpdate("mobile", value)} type="tel" value={draft.mobile} />
-        <QuoteTextField autoComplete="email" error={errors.email} id="quote-email" label="Email address" onChange={(value) => onUpdate("email", value)} type="email" value={draft.email} />
-        <QuoteTextField autoComplete="organization" error={errors.company} id="quote-company" label="Company or business" onChange={(value) => onUpdate("company", value)} value={draft.company} />
-        <QuoteSelect error={errors.vehicleInterest} id="quote-vehicle-interest" label="Vehicle interest" onChange={(value) => onUpdate("vehicleInterest", value)} value={draft.vehicleInterest}>
+        <QuoteTextField autoComplete="name" disabled={isLoading} error={errors.name} id="quote-name" label="Full name" onChange={(value) => onUpdate("name", value)} value={draft.name} />
+        <QuoteTextField autoComplete="tel" disabled={isLoading} error={errors.mobile} id="quote-mobile" inputMode="tel" label="Mobile number" onChange={(value) => onUpdate("mobile", value)} type="tel" value={draft.mobile} />
+        <QuoteTextField autoComplete="email" disabled={isLoading} error={errors.email} id="quote-email" label="Email address" onChange={(value) => onUpdate("email", value)} type="email" value={draft.email} />
+        <QuoteTextField autoComplete="organization" disabled={isLoading} error={errors.company} id="quote-company" label="Company or business" onChange={(value) => onUpdate("company", value)} value={draft.company} />
+        <QuoteSelect disabled={isLoading} error={errors.vehicleInterest} id="quote-vehicle-interest" label="Vehicle interest" onChange={(value) => onUpdate("vehicleInterest", value)} value={draft.vehicleInterest}>
           <option value="">Select a vehicle interest</option>
           <option value="Not sure — recommend a Hino for me">Not sure — recommend a Hino for me</option>
           <option value="200 Series">200 Series</option>
@@ -185,18 +174,18 @@ function QuoteForm({ businessUseSelectRef, draft, errors, onSubmit, onUpdate, ph
           <option value="500 Series">500 Series</option>
           <option value="Bus & PUV">Bus & PUV</option>
         </QuoteSelect>
-        <QuoteSelect error={errors.businessUse} id="quote-business-use" label="Business use" onChange={(value) => onUpdate("businessUse", value)} ref={businessUseSelectRef} value={draft.businessUse}>
+        <QuoteSelect disabled={isLoading} error={errors.businessUse} id="quote-business-use" label="Business use" onChange={(value) => onUpdate("businessUse", value)} ref={businessUseSelectRef} value={draft.businessUse}>
           <option value="">Select your business use</option>
           {businessUses.map((businessUse) => <option key={businessUse} value={businessUse}>{businessUse}</option>)}
         </QuoteSelect>
-        <QuoteSelect error={errors.estimatedUnits} id="quote-estimated-units" label="Estimated units" onChange={(value) => onUpdate("estimatedUnits", value)} value={draft.estimatedUnits}>
+        <QuoteSelect disabled={isLoading} error={errors.estimatedUnits} id="quote-estimated-units" label="Estimated units" onChange={(value) => onUpdate("estimatedUnits", value)} value={draft.estimatedUnits}>
           <option value="">Select estimated units</option>
           <option value="1">1</option>
           <option value="2–5">2–5</option>
           <option value="6+">6+</option>
         </QuoteSelect>
         <div className="quote-field quote-field--consent">
-          <input aria-describedby={errors.consent ? "quote-consent-error" : undefined} checked={draft.consent} id="quote-consent" onChange={(event) => onUpdate("consent", event.target.checked)} type="checkbox" />
+          <input aria-describedby={errors.consent ? "quote-consent-error" : undefined} checked={draft.consent} disabled={isLoading} id="quote-consent" onChange={(event) => onUpdate("consent", event.target.checked)} type="checkbox" />
           <label htmlFor="quote-consent">I agree to be contacted by Hino Cebu about my inquiry.</label>
           {errors.consent && <p className="field-error" id="quote-consent-error">{errors.consent}</p>}
         </div>
@@ -211,6 +200,7 @@ function QuoteForm({ businessUseSelectRef, draft, errors, onSubmit, onUpdate, ph
 
 type QuoteTextFieldProps = {
   autoComplete?: string;
+  disabled?: boolean;
   error?: string;
   id: string;
   inputMode?: "email" | "tel" | "text";
@@ -220,13 +210,14 @@ type QuoteTextFieldProps = {
   value: string;
 };
 
-function QuoteTextField({ autoComplete, error, id, inputMode, label, onChange, type = "text", value }: QuoteTextFieldProps) {
+function QuoteTextField({ autoComplete, disabled, error, id, inputMode, label, onChange, type = "text", value }: QuoteTextFieldProps) {
   const errorId = `${id}-error`;
-  return <div className="quote-field"><label htmlFor={id}>{label}</label><input aria-describedby={error ? errorId : undefined} aria-invalid={Boolean(error)} autoComplete={autoComplete} id={id} inputMode={inputMode} onChange={(event) => onChange(event.target.value)} type={type} value={value} />{error && <p className="field-error" id={errorId}>{error}</p>}</div>;
+  return <div className="quote-field"><label htmlFor={id}>{label}</label><input aria-describedby={error ? errorId : undefined} aria-invalid={Boolean(error)} autoComplete={autoComplete} disabled={disabled} id={id} inputMode={inputMode} onChange={(event) => onChange(event.target.value)} type={type} value={value} />{error && <p className="field-error" id={errorId}>{error}</p>}</div>;
 }
 
 type QuoteSelectProps = {
   children: ReactNode;
+  disabled?: boolean;
   error?: string;
   id: string;
   label: string;
@@ -234,7 +225,7 @@ type QuoteSelectProps = {
   value: string;
 };
 
-function QuoteSelect({ children, error, id, label, onChange, value, ref }: QuoteSelectProps & { ref?: Ref<HTMLSelectElement> }) {
+function QuoteSelect({ children, disabled, error, id, label, onChange, value, ref }: QuoteSelectProps & { ref?: Ref<HTMLSelectElement> }) {
   const errorId = `${id}-error`;
-  return <div className="quote-field"><label htmlFor={id}>{label}</label><select aria-describedby={error ? errorId : undefined} aria-invalid={Boolean(error)} id={id} onChange={(event) => onChange(event.target.value)} ref={ref} value={value}>{children}</select>{error && <p className="field-error" id={errorId}>{error}</p>}</div>;
+  return <div className="quote-field"><label htmlFor={id}>{label}</label><select aria-describedby={error ? errorId : undefined} aria-invalid={Boolean(error)} disabled={disabled} id={id} onChange={(event) => onChange(event.target.value)} ref={ref} value={value}>{children}</select>{error && <p className="field-error" id={errorId}>{error}</p>}</div>;
 }
