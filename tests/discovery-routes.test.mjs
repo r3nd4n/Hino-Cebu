@@ -6,11 +6,6 @@ import test from "node:test";
 const readSource = (file) => readFile(new URL(`../${file}`, import.meta.url), "utf8");
 
 const srcRoot = new URL("../src/", import.meta.url);
-const deferredPlainStyleFiles = new Set([
-  "src/app/about/page.tsx",
-  "src/app/contact/page.tsx",
-  "src/app/parts-service/page.tsx",
-]);
 
 async function listSourceFiles(directory = srcRoot) {
   const entries = await readdir(directory, { withFileTypes: true });
@@ -69,16 +64,10 @@ test("global selector audit distinguishes styled-jsx from invalid plain-style sy
   const occurrences = await auditGlobalSelectors();
   const plain = occurrences.filter(({ kind }) => kind === "plain");
   const styledJsx = occurrences.filter(({ kind }) => kind === "styled-jsx");
-  const unexpectedPlain = plain.filter(({ file }) => !deferredPlainStyleFiles.has(file));
 
   assert.ok(styledJsx.length > 0, "the repository fixture must exercise valid styled-jsx :global() selectors");
   assert.ok(styledJsx.every(({ file }) => file.includes("/homepage/")), formatOccurrences(styledJsx));
-  assert.deepEqual(
-    new Set(plain.filter(({ file }) => deferredPlainStyleFiles.has(file)).map(({ file }) => file)),
-    deferredPlainStyleFiles,
-    `the deferred route selector census changed:\n${formatOccurrences(plain)}`,
-  );
-  assert.equal(unexpectedPlain.length, 0, `invalid :global() in ordinary <style> blocks:\n${formatOccurrences(unexpectedPlain)}`);
+  assert.equal(plain.length, 0, `invalid :global() in ordinary <style> blocks:\n${formatOccurrences(plain)}`);
 });
 
 test("shared discovery selector contract uses browser-valid dark actions, media, and icons", async () => {
