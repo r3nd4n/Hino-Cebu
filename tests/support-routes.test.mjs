@@ -265,3 +265,52 @@ test("About route separates local and national subjects before practical Cebu fa
   assert.doesNotMatch(page, /promotions?/i);
   assert.doesNotMatch(page, prohibitedPublicClaims);
 });
+
+test("Contact and About keep all unresolved local facts behind inquiry-first fallbacks", async () => {
+  const [{ projectPublicContact }, contact, about, aboutContent, inquiry] = await Promise.all([
+    loadSiteModule(),
+    readSource("src/app/contact/page.tsx"),
+    readSource("src/app/about/page.tsx"),
+    readSource("src/content/about.ts"),
+    readSource("src/content/inquiry.ts"),
+  ]);
+
+  const unresolved = projectPublicContact(contactFixture());
+  assert.deepEqual(unresolved, {
+    phone: { status: "awaiting-confirmation" },
+    address: { status: "awaiting-confirmation" },
+    directions: { status: "awaiting-confirmation" },
+    hours: { status: "awaiting-confirmation" },
+  });
+
+  for (const [name, source] of [["Contact", contact], ["About", about]]) {
+    assert.match(source, /Phone: awaiting confirmation/);
+    assert.match(source, /Address: awaiting confirmation/);
+    assert.match(source, /Hours: awaiting confirmation/);
+    assert.match(source, /(?:Map and directions|Directions): awaiting confirmation/);
+    assert.doesNotMatch(source, /siteConfig\.contact|siteConfig\.hours|maps\.google|<iframe/i);
+    assert.doesNotMatch(source, /plan a visit|visit Hino Cebu|direct navigation/i);
+  }
+  assert.match(contact, /href="\/contact#inquiry"/);
+  assert.match(about, /inquiryHref\("general"\)/);
+  assert.match(inquiry, /Object\.hasOwn\(inquiryTopics, value\)/);
+  assert.doesNotMatch(aboutContent, /Visit or contact|plan a visit/i);
+
+  const addressOnly = projectPublicContact(contactFixture({ addressStatus: "approved" }));
+  assert.deepEqual(addressOnly.address, {
+    status: "approved",
+    display: "Candidate Cebu address",
+  });
+  assert.deepEqual(addressOnly.directions, { status: "awaiting-confirmation" });
+  assert.doesNotMatch(JSON.stringify(addressOnly), /maps\.example\.test/);
+
+  const mixed = projectPublicContact(contactFixture({
+    directionsStatus: "approved",
+    hoursStatus: "approved",
+  }));
+  assert.deepEqual(mixed.directions, { status: "awaiting-confirmation" });
+  assert.deepEqual(mixed.hours, {
+    status: "approved",
+    rows: [{ days: "Candidate weekdays", hours: "Candidate hours" }],
+  });
+});
