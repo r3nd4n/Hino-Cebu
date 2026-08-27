@@ -16,7 +16,7 @@ progress:
 
 ## Project Reference
 
-See: `.planning/PROJECT.md` (updated 2026-08-26)
+See: `.planning/PROJECT.md` (updated 2026-08-28)
 
 **Core value:** Make it easy and credible for a Cebu business to identify the right Hino solution and start a local sales or service conversation.
 **Current focus:** Phase 4 — Secure Lead Routing & Confirmation
@@ -27,6 +27,7 @@ See: `.planning/PROJECT.md` (updated 2026-08-26)
 - Planning configuration: YOLO, standard granularity, parallel execution, quality model profile, and Git-tracked docs.
 - Research complete; requirements and roadmap created.
 - Phase 2 conversion-led homepage is complete, deployed, and visually approved by the stakeholder.
+- Phase 3 truck discovery and local-support routes are complete; verification passed 49/49 with a clean code review.
 
 ## Decisions Pending External Verification
 
@@ -36,7 +37,7 @@ See: `.planning/PROJECT.md` (updated 2026-08-26)
 - Privacy/DPO channel, analytics consent, Resend domain, and Google Sheets service-account access.
 
 ---
-*Last updated: 2026-08-26 after Phase 2 completion*
+*Last updated: 2026-08-28 after Phase 3 verification*
 
 ## Performance Metrics
 
@@ -48,3 +49,5 @@ See: `.planning/PROJECT.md` (updated 2026-08-26)
 
 - [Phase 03]: Official product provenance is projected out before discovery content reaches route components. — Prevents maintainer-only URLs and review metadata from entering the public DOM.
 - [Phase 03]: All four configured truck ranges use finite local journeys; 200 Series and Bus & PUV use a lightweight confirmation state. — Avoids dead ends without inventing product detail or Cebu availability.
+- [Phase 03]: Public contact facts cross independent fail-closed approval projections, and unresolved facts remain inquiry-first. — Prevents candidate business data from becoming operational links.
+- [Phase 03]: Client conversion journeys are protected by fresh production and real-Chrome lifecycle tests. — Keeps reset, focus containment, topic remounting, and responsive behavior executable.
