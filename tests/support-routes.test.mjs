@@ -207,7 +207,10 @@ test("truck and support actions stay inquiry-first until the configured phone is
   }
   assert.match(template, /inquiryHref\(series\.slug\)/);
   assert.match(partsService, /inquiryHref\("general"\)/);
-  assert.doesNotMatch(template, /or call Hino Cebu/i);
+  assert.match(
+    template,
+    /publicContact\.phone\.status === "approved" \? \([\s\S]*or call Hino Cebu for guidance\.[\s\S]*\) : \([\s\S]*then start an inquiry for local guidance\./,
+  );
 
   const approved = projectPublicContact(contactFixture({ phoneStatus: "approved" }));
   assert.deepEqual(approved.phone, {

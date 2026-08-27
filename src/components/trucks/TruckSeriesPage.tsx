@@ -77,7 +77,11 @@ export function TruckSeriesPage({ series, image }: TruckSeriesPageProps) {
         <section aria-labelledby="lightweight-heading" className="series-section series-lightweight">
           <div className="container series-lightweight__panel">
             <h2 id="lightweight-heading">Ask Hino Cebu about this range.</h2>
-            <p>Current Cebu availability and detailed specifications require confirmation. Tell us what your operation needs, or call Hino Cebu for guidance.</p>
+            {publicContact.phone.status === "approved" ? (
+              <p>Current Cebu availability and detailed specifications require confirmation. Tell us what your operation needs, or call Hino Cebu for guidance.</p>
+            ) : (
+              <p>Current Cebu availability and detailed specifications require confirmation. Tell us what your operation needs, then start an inquiry for local guidance.</p>
+            )}
           </div>
         </section>
       )}
