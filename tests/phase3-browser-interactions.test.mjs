@@ -158,6 +158,67 @@ test("homepage consent exposes and describes its invalid state", async () => {
   assert.deepEqual(invalid, { invalid: "true", described: true, firstFocus: "quote-name" });
 });
 
+test("Contact remounts a clean normalized form after public App Router navigation", async () => {
+  await navigate("/contact?topic=parts#inquiry");
+  const transition = await evaluate(`(async () => {
+    const setValue = (element, value) => {
+      const descriptor = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(element), 'value');
+      descriptor.set.call(element, value);
+      element.dispatchEvent(new Event('input', { bubbles: true }));
+      element.dispatchEvent(new Event('change', { bubbles: true }));
+    };
+    setValue(document.querySelector('[name="inquiryTopic"]'), 'service');
+    setValue(document.querySelector('[name="name"]'), 'Dirty visitor draft');
+    setValue(document.querySelector('[name="mobile"]'), '09171234567');
+    setValue(document.querySelector('[name="email"]'), 'not-an-email');
+    setValue(document.querySelector('[name="company"]'), 'Draft Company');
+    setValue(document.querySelector('[name="message"]'), 'Draft message');
+    document.querySelector('[name="consent"]').click();
+    document.querySelector('form button[type="submit"]').click();
+    await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+
+    const marker = crypto.randomUUID();
+    window.__phase3NavigationIdentity = marker;
+    const navigationEntries = performance.getEntriesByType('navigation').length;
+    document.querySelector('.mobile-menu__trigger').click();
+    await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    const publicLink = document.querySelector('.mobile-menu__actions a[href="/contact#inquiry"]');
+    const linkHref = publicLink?.getAttribute('href');
+    publicLink?.click();
+
+    const deadline = Date.now() + 5000;
+    while (Date.now() < deadline) {
+      const topic = document.querySelector('[name="inquiryTopic"]')?.value;
+      if (location.pathname === '/contact' && location.search === '' && topic === 'general') break;
+      await new Promise(resolve => setTimeout(resolve, 50));
+    }
+
+    return {
+      sameDocument: window.__phase3NavigationIdentity === marker,
+      navigationEntriesPreserved: performance.getEntriesByType('navigation').length === navigationEntries,
+      linkHref,
+      url: location.pathname + location.search + location.hash,
+      topic: document.querySelector('[name="inquiryTopic"]')?.value,
+      fields: ['name', 'mobile', 'email', 'company', 'message'].map(name => document.querySelector('[name="' + name + '"]')?.value),
+      consent: document.querySelector('[name="consent"]')?.checked,
+      errors: document.querySelectorAll('.field-error').length,
+      menuClosed: document.querySelector('.mobile-menu__panel') === null,
+    };
+  })()`);
+
+  assert.deepEqual(transition, {
+    sameDocument: true,
+    navigationEntriesPreserved: true,
+    linkHref: "/contact#inquiry",
+    url: "/contact#inquiry",
+    topic: "general",
+    fields: ["", "", "", "", ""],
+    consent: false,
+    errors: 0,
+    menuClosed: true,
+  });
+});
+
 test("Contact renders the complete normalized local inquiry lifecycle through reset", async () => {
   await navigate("/contact?topic=arbitrary#inquiry");
   assert.equal(await evaluate(`document.querySelector('[name="inquiryTopic"]').value`), "general");
