@@ -122,6 +122,17 @@ test("unresolved and unsafe emails fail closed in projection and rendered output
     "sales@example.test?subject=Injected",
     "sales@example.test#fragment",
     "sales@example.test\r\nBcc:other@example.test",
+    "sales@example.test:garbage",
+    "sales@example.test%0d%0aBcc:evil.test",
+    "sales%40cebu@example.test",
+    "sales/cebu@example.test",
+    "sales\\cebu@example.test",
+    "sales,cebu@example.test",
+    "sales;cebu@example.test",
+    '"sales"@example.test',
+    "sales..cebu@example.test",
+    "sales@-example.test",
+    "sales@example-.test",
   ];
 
   for (const emailValue of unsafeValues) {

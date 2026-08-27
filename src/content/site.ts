@@ -67,16 +67,20 @@ const awaitingConfirmation = (): AwaitingConfirmation => ({
   status: "awaiting-confirmation",
 });
 
-const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const unsafeEmailCharacters = /[\u0000-\u001f\u007f\s?#]/;
+const publicEmailPattern =
+  /^[A-Z0-9!#$&'*+=^_`{|}~-]+(?:\.[A-Z0-9!#$&'*+=^_`{|}~-]+)*@[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?(?:\.[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?)+$/i;
+const unsafeMailtoInput = /[%:;,<>"\\/?#\u0000-\u001f\u007f\s]/;
 
 export function projectPublicContact(config: LocalFactConfiguration): PublicContact {
   const addressApproved = config.contact.address.status === "approved";
   const email = config.contact.email.value?.trim() ?? "";
+  const [localPart = ""] = email.split("@", 1);
   const emailApproved =
     config.contact.email.status === "approved" &&
-    emailPattern.test(email) &&
-    !unsafeEmailCharacters.test(email);
+    email.length <= 254 &&
+    localPart.length <= 64 &&
+    publicEmailPattern.test(email) &&
+    !unsafeMailtoInput.test(email);
 
   return {
     phone:
