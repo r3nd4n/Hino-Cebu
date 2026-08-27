@@ -234,8 +234,8 @@ test("InquiryForm preserves the normalized origin and follows the accessible fie
   assert.match(form, /disabled=\{isLoading\}/);
   assert.match(form, /transitionInquiry/);
   assert.match(form, /\.focus\(\)/);
-  assert.match(form, /window\.setTimeout\([^,]+,\s*300\)/);
-  assert.match(form, /Thank you for your interest in Hino Cebu\./);
+  assert.match(form, /window\.setTimeout\([\s\S]*\},\s*300\)/);
+  assert.match(form, /\{inquiryLocalConfirmation\}/);
   assert.match(form, /phone\.status === "approved"/);
   assert.match(form, /Local phone details are awaiting confirmation\./);
   assert.doesNotMatch(form, /failure|catch\s*\{|couldn.t send|\bsend\b|\bsent\b|\breceived\b|follow up/i);

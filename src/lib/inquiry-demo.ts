@@ -17,7 +17,35 @@ export type InquiryValidationResult =
   | { ok: false; errors: Partial<Record<InquiryField, string>> }
   | { ok: true; message: string };
 
-const localConfirmation = "Thank you for your interest in Hino Cebu.";
+export type InquiryStatus = "idle" | "loading" | "success";
+
+type InquiryTransitionInput =
+  | {
+      event: "activate";
+      status: Exclude<InquiryStatus, "success">;
+      draft: Partial<InquiryDraft>;
+    }
+  | {
+      event: "complete";
+      status: "loading";
+      draft?: Partial<InquiryDraft>;
+    };
+
+export type InquiryTransitionResult =
+  | {
+      outcome: "invalid";
+      nextStatus: "idle";
+      errors: Partial<Record<InquiryField, string>>;
+    }
+  | { outcome: "accepted-local"; nextStatus: "loading" }
+  | { outcome: "duplicate-pending"; nextStatus: "loading" }
+  | {
+      outcome: "completed-local";
+      nextStatus: "success";
+      message: string;
+    };
+
+export const inquiryLocalConfirmation = "Thank you for your interest in Hino Cebu.";
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const mobilePattern = /^(?:\+63|0)9\d{9}$/;
 
@@ -39,5 +67,24 @@ export function validateInquiryDraft(draft: Partial<InquiryDraft>): InquiryValid
 
   return Object.keys(errors).length > 0
     ? { ok: false, errors }
-    : { ok: true, message: localConfirmation };
+    : { ok: true, message: inquiryLocalConfirmation };
+}
+
+export function transitionInquiry(input: InquiryTransitionInput): InquiryTransitionResult {
+  if (input.event === "complete") {
+    return {
+      outcome: "completed-local",
+      nextStatus: "success",
+      message: inquiryLocalConfirmation,
+    };
+  }
+
+  if (input.status === "loading") {
+    return { outcome: "duplicate-pending", nextStatus: "loading" };
+  }
+
+  const validation = validateInquiryDraft(input.draft);
+  return validation.ok
+    ? { outcome: "accepted-local", nextStatus: "loading" }
+    : { outcome: "invalid", nextStatus: "idle", errors: validation.errors };
 }
