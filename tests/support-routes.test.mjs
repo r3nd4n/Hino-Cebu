@@ -1,6 +1,11 @@
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { createRequire } from "node:module";
+import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+import { renderToStaticMarkup } from "react-dom/server";
 import test from "node:test";
+import ts from "typescript";
 
 const readSource = (file) => readFile(new URL(`../${file}`, import.meta.url), "utf8");
 
@@ -8,6 +13,31 @@ const prohibitedPublicClaims =
   /authorized dealer|legal entity|our history|Cebu history|in stock|inventory|guaranteed|guarantee|turnaround|uptime|service plan|dealer count|customer volume|territory|award/i;
 
 const loadSiteModule = () => import("../src/content/site.ts");
+const require = createRequire(import.meta.url);
+
+const renderContactEmail = async (email) => {
+  const source = await readSource("src/components/contact/ContactEmail.tsx");
+  const compiled = ts.transpileModule(source, {
+    compilerOptions: {
+      esModuleInterop: true,
+      jsx: ts.JsxEmit.ReactJSX,
+      module: ts.ModuleKind.CommonJS,
+      target: ts.ScriptTarget.ES2022,
+    },
+    fileName: "ContactEmail.tsx",
+  });
+  const fixtureDirectory = await mkdtemp(join(tmpdir(), "hino-contact-email-"));
+  const fixtureModule = join(fixtureDirectory, "ContactEmail.cjs");
+
+  try {
+    await writeFile(fixtureModule, compiled.outputText, "utf8");
+    const { ContactEmail } = require(fixtureModule);
+
+    return renderToStaticMarkup(ContactEmail({ email }));
+  } finally {
+    await rm(fixtureDirectory, { force: true, recursive: true });
+  }
+};
 
 const configuredFact = (value, status = "requires-verification") => ({
   value,
@@ -18,6 +48,8 @@ const configuredFact = (value, status = "requires-verification") => ({
 const contactFixture = ({
   phoneStatus = "requires-verification",
   addressStatus = "requires-verification",
+  emailValue = null,
+  emailStatus = "unresolved",
   directionsStatus = "requires-verification",
   hoursStatus = "requires-verification",
 } = {}) => ({
@@ -27,7 +59,7 @@ const contactFixture = ({
       phoneStatus,
     ),
     address: configuredFact("Candidate Cebu address", addressStatus),
-    email: configuredFact(null, "unresolved"),
+    email: configuredFact(emailValue, emailStatus),
     directionsUrl: configuredFact("https://maps.example.test/candidate", directionsStatus),
   },
   hours: configuredFact(
@@ -41,6 +73,7 @@ test("default local facts project awaiting-confirmation without candidate values
 
   assert.deepEqual(publicContact.phone, { status: "awaiting-confirmation" });
   assert.deepEqual(publicContact.address, { status: "awaiting-confirmation" });
+  assert.deepEqual(publicContact.email, { status: "awaiting-confirmation" });
   assert.deepEqual(publicContact.hours, { status: "awaiting-confirmation" });
   assert.deepEqual(publicContact.directions, { status: "awaiting-confirmation" });
 
@@ -48,6 +81,66 @@ test("default local facts project awaiting-confirmation without candidate values
   assert.doesNotMatch(serialized, /\(032\) 346 3322|tel:\+63323463322/);
   assert.doesNotMatch(serialized, /8WC6\+Q46|Saint John Paul II Avenue/);
   assert.doesNotMatch(serialized, /Monday|8:00 AM|5:00 PM/);
+});
+
+test("email projection and rendering reveal only a valid approved address", async () => {
+  const { projectPublicContact } = await loadSiteModule();
+  const projected = projectPublicContact(contactFixture({
+    emailValue: "  sales.cebu@example.test  ",
+    emailStatus: "approved",
+  }));
+
+  assert.deepEqual(projected.email, {
+    status: "approved",
+    display: "sales.cebu@example.test",
+    href: "mailto:sales.cebu@example.test",
+  });
+  assert.deepEqual(projected.phone, { status: "awaiting-confirmation" });
+  assert.deepEqual(projected.address, { status: "awaiting-confirmation" });
+  assert.deepEqual(projected.hours, { status: "awaiting-confirmation" });
+  assert.deepEqual(projected.directions, { status: "awaiting-confirmation" });
+  assert.doesNotMatch(
+    JSON.stringify(projected),
+    /\(032\) 346 3322|Candidate Cebu address|Candidate weekdays|Candidate hours|maps\.example\.test/,
+  );
+
+  const markup = await renderContactEmail(projected.email);
+  assert.equal(markup, '<a href="mailto:sales.cebu@example.test">sales.cebu@example.test</a>');
+  assert.equal((markup.match(/<a\b/g) ?? []).length, 1);
+});
+
+test("unresolved and unsafe emails fail closed in projection and rendered output", async () => {
+  const { projectPublicContact } = await loadSiteModule();
+  const unsafeValues = [
+    null,
+    "",
+    "   ",
+    "not-an-email",
+    "sales @example.test",
+    "sales@example.test?subject=Injected",
+    "sales@example.test#fragment",
+    "sales@example.test\r\nBcc:other@example.test",
+  ];
+
+  for (const emailValue of unsafeValues) {
+    const projected = projectPublicContact(contactFixture({
+      emailValue,
+      emailStatus: "approved",
+    }));
+    assert.deepEqual(projected.email, { status: "awaiting-confirmation" });
+    assert.doesNotMatch(JSON.stringify(projected.email), /mailto:|example\.test|Bcc/);
+  }
+
+  const notApproved = projectPublicContact(contactFixture({
+    emailValue: "pending@example.test",
+    emailStatus: "requires-verification",
+  }));
+  assert.deepEqual(notApproved.email, { status: "awaiting-confirmation" });
+  assert.doesNotMatch(JSON.stringify(notApproved.email), /pending@example\.test/);
+
+  const markup = await renderContactEmail(notApproved.email);
+  assert.equal(markup, "<p>Email: awaiting confirmation</p>");
+  assert.doesNotMatch(markup, /<a\b|mailto:|pending@example\.test/);
 });
 
 test("approved local facts become public independently", async () => {
@@ -279,6 +372,7 @@ test("Contact and About keep all unresolved local facts behind inquiry-first fal
   assert.deepEqual(unresolved, {
     phone: { status: "awaiting-confirmation" },
     address: { status: "awaiting-confirmation" },
+    email: { status: "awaiting-confirmation" },
     directions: { status: "awaiting-confirmation" },
     hours: { status: "awaiting-confirmation" },
   });
