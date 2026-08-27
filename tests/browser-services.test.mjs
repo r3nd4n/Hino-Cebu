@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { EventEmitter } from "node:events";
 import test from "node:test";
 
-import { stopProcess, trackProcess } from "./support/browser-services.mjs";
+import { stopProcess, trackProcess, waitFor } from "./support/browser-services.mjs";
 
 class FakeProcess extends EventEmitter {
   constructor({ closesAfterKill = true } = {}) {
@@ -45,4 +45,15 @@ test("browser-service teardown reports a process that never closes", async () =>
     /did not close after forced termination/,
   );
   assert.deepEqual(processHandle.signals, ["SIGTERM", "SIGKILL"]);
+});
+
+test("browser-service readiness fails immediately for signal-only child exit", async () => {
+  const processHandle = { exitCode: null, signalCode: "SIGKILL" };
+  const startedAt = Date.now();
+
+  await assert.rejects(
+    waitFor("http://127.0.0.1:1/not-contacted", "Signal-only fixture", processHandle),
+    /exitCode=null, signalCode=SIGKILL/,
+  );
+  assert.ok(Date.now() - startedAt < 1_000, "signal-only exit must bypass the readiness deadline");
 });

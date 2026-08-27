@@ -28,8 +28,12 @@ export async function waitFor(url, label, processHandle, output = () => "") {
   const deadline = Date.now() + 30_000;
   let lastError;
   while (Date.now() < deadline) {
-    if (processHandle?.exitCode !== null) {
-      throw new Error(`${label} exited before readiness.\n${output()}`);
+    const exitedByCode = processHandle?.exitCode !== null && processHandle?.exitCode !== undefined;
+    const exitedBySignal = processHandle?.signalCode !== null && processHandle?.signalCode !== undefined;
+    if (exitedByCode || exitedBySignal) {
+      throw new Error(
+        `${label} exited before readiness (exitCode=${processHandle.exitCode ?? "null"}, signalCode=${processHandle.signalCode ?? "null"}).\n${output()}`,
+      );
     }
     try {
       const response = await fetch(url, { signal: AbortSignal.timeout(1_000) });
