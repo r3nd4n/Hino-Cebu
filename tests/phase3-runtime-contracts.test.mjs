@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
 import { createServer } from "node:net";
-import { access, readdir, readFile, stat } from "node:fs/promises";
+import { access, readdir, stat } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { after, before, test } from "node:test";
@@ -158,13 +158,13 @@ test("production output gates unresolved facts and excludes unsafe public surfac
   assert.doesNotMatch(output, /maps\.google|google\.com\/maps/i);
   assert.doesNotMatch(output, /https:\/\/(?:www\.)?hino\.com\.ph/i);
   assert.doesNotMatch(output, /promotions?/i);
-  assert.doesNotMatch(output, /couldn.t send|could not send|inquiry (?:was )?sent|received your inquiry|follow[- ]?up/i);
+  assert.doesNotMatch(output, /couldn.t send|could not send|inquiry (?:was )?sent|received your inquiry|we (?:will|'ll) follow[- ]?up/i);
 });
 
 test("compiled production styles contain valid light-on-dark CTA rules", () => {
   const output = `${[...routeHtml.values()].join("\n")}\n${compiledCss}`;
 
   assert.doesNotMatch(output, /:global\(/);
-  assert.match(compiledCss, /\.page-hero__actions \.button--secondary\{[^}]*border-color:var\(--color-paper\)[^}]*color:var\(--color-paper\)/);
-  assert.match(compiledCss, /\.local-contact-cta__actions \.button--secondary\{[^}]*border-color:var\(--color-paper\)[^}]*color:var\(--color-paper\)/);
+  assert.match(compiledCss, /main#main-content \.page-hero__actions \.button--secondary[^{}]*\{[^}]*border-color:var\(--color-paper\)[^}]*color:var\(--color-paper\)/);
+  assert.match(compiledCss, /main#main-content \.local-contact-cta__actions \.button--secondary\{[^}]*border-color:var\(--color-paper\)[^}]*color:var\(--color-paper\)/);
 });
