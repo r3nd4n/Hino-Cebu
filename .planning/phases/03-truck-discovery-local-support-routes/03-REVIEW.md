@@ -1,20 +1,20 @@
 ---
 phase: 03-truck-discovery-local-support-routes
-reviewed: 2026-08-27T06:28:01Z
+reviewed: 2026-08-27T13:25:44Z
 depth: standard
-files_reviewed: 29
+files_reviewed: 31
 files_reviewed_list:
   - src/app/about/page.tsx
   - src/app/contact/page.tsx
   - src/app/globals.css
   - src/app/layout.tsx
-  - src/app/page.tsx
   - src/app/parts-service/page.tsx
+  - src/app/trucks/[slug]/page.tsx
+  - src/app/trucks/page.tsx
+  - src/components/contact/ContactEmail.tsx
   - src/components/contact/InquiryForm.tsx
-  - src/components/homepage/FinalQuoteCta.tsx
   - src/components/homepage/HomepageQuoteExperience.tsx
   - src/components/homepage/HomepageSupportSections.tsx
-  - src/components/homepage/TruckRangeSection.tsx
   - src/components/layout/Footer.tsx
   - src/components/layout/Header.tsx
   - src/components/layout/MobileActionBar.tsx
@@ -24,124 +24,97 @@ files_reviewed_list:
   - src/components/trucks/TruckCard.tsx
   - src/components/trucks/TruckSeriesPage.tsx
   - src/content/about.ts
+  - src/content/inquiry.ts
+  - src/content/services.ts
   - src/content/site.ts
+  - src/content/trucks.ts
   - src/lib/inquiry-demo.ts
   - tests/discovery-routes.test.mjs
-  - tests/foundation.test.mjs
-  - tests/homepage.test.mjs
   - tests/homepage-interaction.test.mjs
   - tests/inquiry-demo.test.mjs
+  - tests/phase3-browser-interactions.test.mjs
   - tests/phase3-runtime-contracts.test.mjs
   - tests/support-routes.test.mjs
 findings:
-  critical: 2
+  critical: 1
   warning: 4
   info: 0
-  total: 6
+  total: 5
 status: issues_found
 ---
 
 # Phase 3: Code Review Report
 
-**Reviewed:** 2026-08-27T06:28:01Z
+**Reviewed:** 2026-08-27T13:25:44Z
 **Depth:** standard
-**Files Reviewed:** 29
+**Files Reviewed:** 31
 **Status:** issues_found
 
 ## Summary
 
-The fresh production build, all 50 tests, and lint pass. The gap closure does fix the original invalid-selector blocker (prior CR-01), pending dealer-fact leakage (prior CR-02), hard-coded phone copy (prior WR-01), and fictitious failure state (prior WR-02). Prior WR-03 is only partially closed: generated HTML/CSS now has runtime coverage, but homepage fact gating and client form/menu behavior remain protected mainly by source-string checks and one-off acceptance evidence.
+The second gap-closure pass fixes the four previously reported blockers: approved email now has a public projection, inquiry confirmation has a working reset, the mobile menu contains keyboard focus and restores inert/overflow state, and the normal production/browser gates now include the homepage and rendered client interactions.
 
-The current implementation still has two ship blockers: an approved email can never cross the public projection, and the post-confirmation “Start another inquiry” action cannot start another inquiry. Four additional responsive, accessibility, and test-reliability defects should also be corrected.
+One new ship blocker remains in the approved-email projection: the validator admits malformed URI-reserved recipient strings and then interpolates them directly into an active `mailto:` URL. Four warnings remain around menu isolation, route-driven inquiry attribution, browser-test ownership, and Windows process teardown.
 
 ## Narrative Findings (AI reviewer)
 
 ## Critical Issues
 
-### CR-01 [BLOCKER]: Approved email configuration is permanently rendered as unresolved
+### CR-01 [BLOCKER]: Approved email validation still admits malformed or unsafe mailto recipients
 
-**File:** `C:/Users/johnc/Desktop/HINO-CEBU Jay Project/src/content/site.ts:42-55,62-83`; `C:/Users/johnc/Desktop/HINO-CEBU Jay Project/src/app/contact/page.tsx:65`
+**File:** `C:/Users/johnc/Desktop/HINO-CEBU Jay Project/src/content/site.ts:70-90`
 
-**Issue:** `siteConfig.contact.email` has the same status-bearing configuration contract as the other local facts, but `PublicContact` and `projectPublicContact()` omit email entirely. Contact therefore hard-codes `Email: awaiting confirmation` even after a maintainer changes the configured email to `approved`. The approval boundary silently discards a valid operational fact and makes the authoritative configuration misleading.
+**Issue:** The address check only requires one `@`, some dot later in the string, and the absence of whitespace, controls, `?`, and `#`. URI-reserved and encoded characters remain allowed. Values such as `sales@example.test:garbage` or `sales@example.test%0d%0aBcc:evil.test` therefore pass the projection and are interpolated unchanged into an active `mailto:` link. At minimum this publishes an invalid operational address; percent-encoded line breaks can also be interpreted by some mail handlers as header separators. That contradicts the fail-closed approved-fact boundary and the summary's claim that malformed inputs are rejected.
 
-**Fix:** Add an email branch to the public projection and render it discriminatively, just like phone:
+**Fix:** Validate a deliberately narrow mailbox grammar before projection and construct the URL from the validated value. For example, restrict the local part and DNS labels to the subset the site is willing to support, explicitly reject `%`, `:`, path separators, quotes, and encoded control sequences, and add these values to the unsafe-email test table:
 
 ```ts
-type ApprovedEmail = { status: "approved"; href: `mailto:${string}`; display: string };
+const publicEmailPattern =
+  /^[A-Z0-9.!#$&'*+/=^_`{|}~-]+@[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?(?:\.[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?)+$/i;
+const unsafeMailtoInput = /[%:;,<>"\\/]|%(?:0a|0d)/i;
 
-email:
-  config.contact.email.status === "approved" && config.contact.email.value
-    ? {
-        status: "approved",
-        display: config.contact.email.value,
-        href: `mailto:${config.contact.email.value}`,
-      }
-    : awaitingConfirmation(),
+const emailApproved =
+  config.contact.email.status === "approved" &&
+  publicEmailPattern.test(email) &&
+  !unsafeMailtoInput.test(email);
 ```
-
-Add unresolved and approved-email projection/render tests so approval reveals only the email.
-
-### CR-02 [BLOCKER]: “Start another inquiry” is a dead conversion action
-
-**File:** `C:/Users/johnc/Desktop/HINO-CEBU Jay Project/src/components/contact/InquiryForm.tsx:80-89`
-
-**Issue:** After local confirmation, the form is removed and replaced with an anchor to `/contact#inquiry`. The visitor is already at that URL and the component remains in `success`, so activating “Start another inquiry” only scrolls to the same section; it never restores or resets the form. The label promises an action the UI cannot perform.
-
-**Fix:** Use a button that resets the state machine and restores focus to the form (or navigate to a route state that actually remounts it):
-
-```tsx
-<button
-  className="button button--primary"
-  onClick={() => {
-    setDraft({ ...emptyDraft, originTopic: initialTopic, inquiryTopic: initialTopic });
-    setErrors({});
-    setStatus("idle");
-    requestAnimationFrame(() => formRef.current?.focus());
-  }}
-  type="button"
->
-  Start another inquiry
-</button>
-```
-
-Exercise this through a rendered interaction test.
 
 ## Warnings
 
-### WR-01 [WARNING]: Default mobile action bar leaves half of the bar empty
+### WR-01 [WARNING]: The open mobile menu leaves the header logo exposed to pointer and assistive-technology navigation
 
-**File:** `C:/Users/johnc/Desktop/HINO-CEBU Jay Project/src/components/layout/MobileActionBar.tsx:36-43`; `C:/Users/johnc/Desktop/HINO-CEBU Jay Project/src/app/globals.css:161-163`
+**File:** `C:/Users/johnc/Desktop/HINO-CEBU Jay Project/src/components/layout/MobileMenu.tsx:30-38`; `C:/Users/johnc/Desktop/HINO-CEBU Jay Project/src/components/layout/MobileMenu.tsx:62-65`
 
-**Issue:** The bar always uses `grid-template-columns: 1fr 1fr`, but the default unresolved-phone branch omits the Call link. The sole inquiry action occupies one column and leaves the other half blank at every mobile width. This weakens the primary mobile conversion surface precisely in the launch-safe default state.
+**Issue:** Opening the panel makes `main`, the footer, and the mobile action bar inert, but the rest of the header remains active. At mobile widths the Hino Cebu home link stays visible above the fixed panel because the header has the higher stacking context. It can be clicked while the menu is open and remains discoverable to assistive technology, so the surface is not actually isolated even though Tab is trapped. The rendered test asserts only the same three regions and cannot detect this escape.
 
-**Fix:** Add a one-action modifier or span the remaining link when phone is unresolved, for example `.mobile-action-bar--single { grid-template-columns: 1fr; }`.
+**Fix:** Make the non-menu header children inert while open (for example, the identity link and any other siblings of `.mobile-menu`), preserving and restoring each prior inert value. Alternatively move the close control into a real `role="dialog" aria-modal="true"` panel and inert the full page shell outside it. Extend the browser assertion to prove the header identity is unavailable while open.
 
-### WR-02 [WARNING]: Open mobile navigation does not contain focus or hide the background
+### WR-02 [WARNING]: Inquiry attribution can remain stale when the normalized topic prop changes without a remount
 
-**File:** `C:/Users/johnc/Desktop/HINO-CEBU Jay Project/src/components/layout/MobileMenu.tsx:24-40,55-71`
+**File:** `C:/Users/johnc/Desktop/HINO-CEBU Jay Project/src/components/contact/InquiryForm.tsx:18-27`; `C:/Users/johnc/Desktop/HINO-CEBU Jay Project/src/components/contact/InquiryForm.tsx:72-83`
 
-**Issue:** Opening the full-viewport panel only locks body scrolling and adds Escape handling. Keyboard and assistive-technology users can still tab into and operate obscured page controls behind the panel because focus is neither moved into/contained within the menu nor the rest of the page made inert. The acceptance evidence checks open/Escape restoration but does not protect this traversal case.
+**Issue:** `initialTopic` is copied into state only by the `useState` initializer. If App Router navigation changes `/contact?topic=parts` to another Contact topic while React preserves this client component, `originTopic` and the editable topic retain the prior route context. The reset handler then uses the new prop, producing a different origin only after confirmation. This makes the Phase 4 attribution boundary dependent on whether navigation happened to remount the component.
 
-**Fix:** On open, focus the first menu control, trap Tab/Shift+Tab within the panel, and make background content inert (or use an accessible dialog/menu primitive). Restore focus only when the menu closes.
+**Fix:** Key the form by the normalized topic at the server boundary (`<InquiryForm key={initialTopic} ... />`) or explicitly reset the complete draft, errors, and status in an effect when `initialTopic` changes. Add a rendered navigation test that moves between two allowlisted Contact topics without a full document reload.
 
-### WR-03 [WARNING]: Homepage consent error omits the invalid-state signal
+### WR-03 [WARNING]: Ordinary browser tests import executable helpers from an archivable planning artifact
 
-**File:** `C:/Users/johnc/Desktop/HINO-CEBU Jay Project/src/components/homepage/HomepageQuoteExperience.tsx:187-190`
+**File:** `C:/Users/johnc/Desktop/HINO-CEBU Jay Project/tests/phase3-browser-interactions.test.mjs:11-15`
 
-**Issue:** The consent checkbox references its error text with `aria-describedby`, but unlike the other fields and the Contact consent checkbox it never sets `aria-invalid`. A screen reader can encounter the error text without being told that the checkbox itself is invalid, creating inconsistent validation semantics in a form modified by this gap closure.
+**Issue:** The normal `npm test` source imports CDP helpers from `.planning/phases/.../03-10-browser-audit.mjs`. GSD cleanup/archive workflows are allowed to move phase directories, and production or CI source checkouts commonly omit planning evidence. Either action breaks the test suite at module resolution before any test runs. The acceptance audit can remain versioned evidence, but it should not own reusable runtime-test infrastructure.
 
-**Fix:** Add `aria-invalid={Boolean(errors.consent)}` to the checkbox and cover the rendered invalid state.
+**Fix:** Move `Cdp`, `openPage`, `evaluate`, and `pressKey` into a stable test-support module under `tests/support/`. Import that module from both the ordinary browser suite and the planning audit, leaving the audit as an evidence-producing consumer.
 
-### WR-04 [WARNING]: Runtime regression coverage still omits the changed homepage and client behavior
+### WR-04 [WARNING]: Forced process termination does not wait before deleting the Chrome profile
 
-**File:** `C:/Users/johnc/Desktop/HINO-CEBU Jay Project/tests/phase3-runtime-contracts.test.mjs:12-21,141-170`; `C:/Users/johnc/Desktop/HINO-CEBU Jay Project/tests/homepage-interaction.test.mjs:5-20,47-144`; `C:/Users/johnc/Desktop/HINO-CEBU Jay Project/tests/inquiry-demo.test.mjs:204-243`
+**File:** `C:/Users/johnc/Desktop/HINO-CEBU Jay Project/tests/phase3-browser-interactions.test.mjs:72-80`; `C:/Users/johnc/Desktop/HINO-CEBU Jay Project/tests/phase3-browser-interactions.test.mjs:139-145`
 
-**Issue:** The production suite fetches only the eight Phase 3 routes, even though this closure changed homepage contact/fact behavior. Homepage tests still read source as strings, and InquiryForm tests execute the pure transition but do not render the component. As a result, the dead reset action, missing consent state, focus escape, duplicate UI timers, or a homepage candidate-fact leak can pass the automated gate. The one-off browser acceptance artifact is useful evidence but is not run by `npm test`.
+**Issue:** After the two-second graceful-shutdown deadline, `stop()` sends `SIGKILL` and returns immediately. The `after` hook can then recursively remove the profile while Chrome still owns files. On Windows this intermittently yields `EPERM`, can fail an otherwise successful suite, and can leave the process/profile that the test claims to clean up.
 
-**Fix:** Include `/` in the production fact-leak contract and add rendered browser/component tests for invalid fields, duplicate activation, confirmation/reset, and menu focus containment. Keep source scans only for narrow static boundaries such as prohibited imports or provenance tokens.
+**Fix:** After forced termination, await a second bounded `exit`/`close` promise before returning, and report a teardown failure if the child still has not exited. Apply the same helper to the evidence audit so both lifecycle owners use identical cleanup semantics.
 
 ---
 
-_Reviewed: 2026-08-27T06:28:01Z_
+_Reviewed: 2026-08-27T13:25:44Z_
 _Reviewer: the agent (gsd-code-reviewer)_
 _Depth: standard_
