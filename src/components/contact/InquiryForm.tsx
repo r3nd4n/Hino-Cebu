@@ -1,6 +1,6 @@
 "use client";
 
-import { type FormEvent, useRef, useState } from "react";
+import { type FormEvent, useEffect, useRef, useState } from "react";
 
 import { inquiryTopics, type InquiryTopic } from "@/content/inquiry";
 import type { PublicContact } from "@/content/site";
@@ -29,6 +29,12 @@ export function InquiryForm({
   const confirmationRef = useRef<HTMLHeadingElement>(null);
 
   const isLoading = status === "loading";
+
+  useEffect(() => {
+    if (status !== "success") return;
+    const focusFrame = window.requestAnimationFrame(() => confirmationRef.current?.focus());
+    return () => window.cancelAnimationFrame(focusFrame);
+  }, [status]);
 
   function updateDraft<K extends InquiryField>(field: K, value: InquiryDraft[K]) {
     setDraft((current) => ({ ...current, [field]: value }));
@@ -65,7 +71,6 @@ export function InquiryForm({
     window.setTimeout(() => {
       const completion = transitionInquiry({ event: "complete", status: "loading" });
       setStatus(completion.nextStatus);
-      window.requestAnimationFrame(() => confirmationRef.current?.focus());
     }, 300);
   }
 
