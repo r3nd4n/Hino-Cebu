@@ -1,228 +1,163 @@
 ---
 phase: 03-truck-discovery-local-support-routes
-verified: 2026-08-27T06:33:56Z
-status: gaps_found
-score: 33/37 must-haves verified
+verified: 2026-08-27T16:56:34Z
+status: passed
+score: 49/49 must-haves verified
 overrides_applied: 0
 re_verification:
   previous_status: gaps_found
-  previous_score: 12/21
+  previous_score: 33/37
   gaps_closed:
-    - "Invalid compiled selectors and unreadable secondary actions were replaced with browser-valid global descendants and verified in compiled CSS and browser output."
-    - "Candidate phone, address, hours, map, and directions are now status-bearing and withheld until approved."
-    - "Fresh-build production contracts and a reproducible 32-cell browser acceptance artifact replace source-regex-only evidence."
+    - "Valid approved email now crosses the safe public projection and renders as exactly one mailto action; unresolved and unsafe values fail closed."
+    - "Start another inquiry now executes a clean reset, restores normalized context, and restores useful focus."
+    - "The mobile menu now contains focus, makes covered content including the skip link inert, and restores focus, inert values, and scroll state."
+    - "Fresh runtime coverage includes the homepage and normal rendered-browser tests cover consent, Contact remount/reset, and menu focus."
   gaps_remaining: []
-  regressions:
-    - "Approved email is discarded by projectPublicContact."
-    - "The success-state Start another inquiry action does not reset InquiryForm."
-    - "The mobile menu does not move or contain focus or make obscured content inert."
-    - "Automated coverage omits homepage runtime and rendered client interactions."
-gaps:
-  - truth: "Changing one local fact to approved reveals only that fact's approved public value."
-    status: failed
-    reason: "Email is status-bearing authoritative configuration, but LocalFactConfiguration, PublicContact, and projectPublicContact omit it; Contact hard-codes Email: awaiting confirmation."
-    artifacts:
-      - path: "src/content/site.ts"
-        issue: "Configured email at lines 109-113 cannot cross the projection at lines 42-83."
-      - path: "src/app/contact/page.tsx"
-        issue: "Line 65 unconditionally renders the pending-email state."
-    missing:
-      - "Project approved email through PublicContact and render an approved mailto action."
-      - "Test unresolved and approved email projection/rendering."
-  - truth: "Inquiry local validation/loading/success behavior is executable and preserves a complete inquiry journey."
-    status: failed
-    reason: "After success the form unmounts and Start another inquiry links to the current fragment; status remains success, so the form does not return."
-    artifacts:
-      - path: "src/components/contact/InquiryForm.tsx"
-        issue: "Lines 80-89 provide a same-page anchor without resetting draft, errors, status, or focus."
-      - path: ".planning/phases/03-truck-discovery-local-support-routes/03-10-browser-audit.mjs"
-        issue: "The audit stops after confirmation and never verifies restart."
-    missing:
-      - "Implement a reset action and restore useful focus."
-      - "Add a rendered confirmation/restart regression."
-  - truth: "At the required widths, Phase 3 routes have no broken focus behavior."
-    status: failed
-    reason: "The full-viewport mobile navigation locks scrolling and handles Escape but neither moves nor traps focus; obscured page content remains operable."
-    artifacts:
-      - path: "src/components/layout/MobileMenu.tsx"
-        issue: "Lines 24-40 have no initial focus, Tab containment, modal semantics, or inert background."
-      - path: ".planning/phases/03-truck-discovery-local-support-routes/03-10-browser-audit.mjs"
-        issue: "Lines 233-239 test open/Escape/restoration but not traversal while open."
-    missing:
-      - "Move focus into the menu, contain Tab/Shift+Tab, and make the background inert."
-      - "Add a rendered focus-traversal regression."
-  - truth: "All decisions D-01 through D-19 remain protected by automated contracts, lint, build, and responsive/interaction review."
-    status: failed
-    reason: "The production suite covers eight Phase 3 routes but not the homepage changed in Plan 03-08; homepage and client form/menu tests remain mostly source scans, allowing current defects through green tests."
-    artifacts:
-      - path: "tests/phase3-runtime-contracts.test.mjs"
-        issue: "Routes at lines 12-21 exclude `/`."
-      - path: "tests/homepage-interaction.test.mjs"
-        issue: "Client behavior is primarily asserted by reading TSX source strings."
-      - path: "tests/inquiry-demo.test.mjs"
-        issue: "The pure state machine runs, but InquiryForm is not rendered or interacted with."
-    missing:
-      - "Include homepage output in the fresh-build fact-safety contract."
-      - "Add rendered tests for invalid state, duplicate pending activation, confirmation/reset, and menu focus."
-      - "Protect homepage consent invalid semantics."
+  regressions: []
 ---
 
 # Phase 3: Truck Discovery & Local Support Routes Verification Report
 
-**Phase Goal:** Extend the conversion system across vehicles, parts/service, contact, and local-dealer information.  
-**Verified:** 2026-08-27T06:33:56Z  
-**Status:** gaps_found  
-**Re-verification:** Yes - after gap-closure Plans 03-05 through 03-10
+**Phase Goal:** Extend the conversion system across vehicles, parts/service, contact, and local-dealer information.
+**Verified:** 2026-08-27T16:56:34Z
+**Status:** passed
+**Re-verification:** Yes — after all fourteen plans and final review fixes
 
-> MVP metadata note: ROADMAP marks this phase `mvp`, but its goal is not in canonical user-story form. The installed `gsd-sdk` also lacks the documented `query user-story.validate` interface. This report verifies the literal roadmap goal and success criteria without inventing a replacement contract.
+> MVP metadata note: ROADMAP marks this phase `mvp`, but its roadmap goal is not in canonical user-story form, and the installed `gsd-sdk` lacks the documented `query user-story.validate` interface. Consistent with the prior verification, this report verifies the literal roadmap goal, its success criteria, and the valid Phase 3 plan user-story outcome without inventing a new contract.
 
 ## User Flow Coverage
 
-| Step | Expected | Evidence | Status |
+| Step | Expected | Actual code/runtime evidence | Status |
 |---|---|---|---|
-| Discover trucks | Scan four ranges and open each finite route | Projected listing, static params, fresh build | VERIFIED |
-| Evaluate 300/500 | See distinct application-first configurable content | Shared template and exactly three qualified highlights | VERIFIED |
-| Reach local support | Use Parts/Service, Contact, and About without leaked pending facts | Approval projection and 32-cell acceptance | FAILED - approved email can never surface |
-| Begin/continue inquiry | Validate, confirm locally, and begin another inquiry | Transition executes through confirmation | FAILED - restart action is dead |
-| Use mobile shell | Navigate with responsive, keyboard-operable shared UI | Shared shell and viewport evidence | FAILED - menu does not contain focus |
-| Outcome | Begin a credible local sales/service conversation across routes | Main inquiry works, but email, restart, and modal-focus defects leave the outcome incomplete | FAILED |
+| Discover ranges | Scan four configurable image-led ranges | `publicTruckSeries` projects four records into single-link cards; fresh `/trucks` output passed | VERIFIED |
+| Evaluate a range | Reach useful finite 200/300/500/Bus pages | Four static params, guarded lookup, shared application-first template, rich 300/500 and honest lightweight 200/Bus output | VERIFIED |
+| Reach support | Use distinct Parts, Service, Contact, and About paths | All routes render distinct practical content and an allowlisted inquiry path | VERIFIED |
+| Continue inquiry | Normalize context, validate, confirm locally, restart cleanly | Pure transition plus real-Chrome lifecycle and same-document remount tests pass | VERIFIED |
+| Use shared shell | Navigate responsively and by keyboard | Shared shell; focus containment, skip-link inertness, Escape cleanup, and 32-cell probe pass | VERIFIED |
+| Preserve trust | Publish no pending facts, mother-site links, Promotions, or false delivery claims | Homepage plus eight Phase 3 production responses pass the fresh runtime gate | VERIFIED |
+| Outcome | Begin a credible local sales/service conversation | Every route retains inquiry while operational facts remain independently approval-gated | VERIFIED |
 
 ## Goal Achievement
 
-### Observable Truths - every PLAN must-have
+### Observable Truths
 
-| # | Plan | Truth | Status | Evidence |
-|---:|---|---|---|---|
-| 1 | 03-01 | Four image-led cards, broad guidance, notice, page inquiry | VERIFIED | Four projected records, disclaimer, general CTA. |
-| 2 | 03-01 | Every card reaches a finite complete route, including honest 200/Bus pages | VERIFIED | Four generated slugs; lightweight template retains inquiry. |
-| 3 | 03-01 | 300/500 lead with distinct applications and exactly three highlights | VERIFIED | Typed records and shared template enforce order/count. |
-| 4 | 03-01 | Product provenance stays maintainer-only | VERIFIED | Projection excludes sources; runtime finds no `hino.com.ph`. |
-| 5 | 03-01 | Series safeguards and inquiry/approved-call paths | VERIFIED | Availability copy; inquiry always available; call approval-gated. |
-| 6 | 03-02 | Parts & Service leads with separate paths then guidance | VERIFIED | Two primary and two supporting offerings render in order. |
-| 7 | 03-02 | About separates local commitment, national context, facts, actions | VERIFIED | Route order and conditional practical info are substantive. |
-| 8 | 03-02 | National provenance stays internal and creates no local claim | VERIFIED | Public About projection excludes provenance. |
-| 9 | 03-02 | Parts, Service, About retain contextual inquiry/approved call | VERIFIED | Allowlisted inquiry always renders; call is conditional. |
-| 10 | 03-03 | CTAs converge on allowlisted Contact `#inquiry` | VERIFIED | Typed href and normalized query. |
-| 11 | 03-03 | Editable topic preserves normalized origin | VERIFIED | Separate origin and editable topic state. |
-| 12 | 03-03 | Form validates, prevents duplicates, makes no delivery claim | VERIFIED | Pure transition tests pass all four outcomes. |
-| 13 | 03-03 | Contact conditionally exposes approved facts/no guessed links | VERIFIED | Existing projected facts gate correctly; email defect scored at #22. |
-| 14 | 03-03 | Form and approved click-to-call are available | VERIFIED | Form always renders; approved phone controls call. |
-| 15 | 03-04 | Shared shell, one main, footer, conversion, no Promotions | VERIFIED | Fresh production HTML contract passes eight routes. |
-| 16 | 03-04 | Exact widths have no layout or focus defects | FAILED | 32 layout cells pass, but menu permits focus behind overlay. |
-| 17 | 03-04 | Mobile action routing preserves homepage/general behavior | VERIFIED | Fixed `usePathname` branch. |
-| 18 | 03-04 | Visual tokens, focus styles, motion support remain | VERIFIED | Contrast >=4.72, skip focus, reduced motion pass. |
-| 19 | 03-04 | D-01-D-19 protected by automated/manual review | FAILED | Runtime/client coverage omissions miss present defects. |
-| 20 | 03-05 | Unapproved phone/address/map/hours never publish/activate | VERIFIED | No candidate values or operational links in runtime evidence. |
-| 21 | 03-05 | Shell usable with all facts unresolved | VERIFIED | Navigation/footer/general inquiry remain. |
-| 22 | 03-05 | Approving one local fact reveals only that fact | FAILED | Phone/address/hours/directions isolate; approved email is discarded. |
-| 23 | 03-06 | Dark secondary actions compile light text/border | VERIFIED | Compiled CSS and computed contrast pass. |
-| 24 | 03-06 | No plain style has styled-jsx-only `:global()` | VERIFIED | Census/compiled scan pass. |
-| 25 | 03-06 | Truck media/icons retain containment/color | VERIFIED | Rules and 32 captures show contained, intact assets. |
-| 26 | 03-07 | Routes never publish unresolved phone/address/map/hours | VERIFIED | Runtime shows awaiting states only. |
-| 27 | 03-07 | Every route remains an inquiry journey unresolved | VERIFIED | Each route contains a Contact inquiry path. |
-| 28 | 03-07 | Approved values reveal matching treatment only | VERIFIED | Projection fixtures pass existing four fact types. |
-| 29 | 03-08 | Inquiry validation/loading/success executable/truthful | FAILED | Core transition works; advertised restart cannot execute. |
-| 30 | 03-08 | Duplicate activation rejected; no fictitious failure | VERIFIED | Pure and browser double-activation evidence pass. |
-| 31 | 03-08 | Homepage uses central projection and inquiry fallbacks | VERIFIED | `publicContact` wiring and unresolved-state evidence. |
-| 32 | 03-09 | Invalid plain-style selectors removed/classified | VERIFIED | Selector audit and compiled scan pass. |
-| 33 | 03-09 | Production artifact test excludes leaks/provenance/promotions/false-send | VERIFIED | Fresh `next start` suite passes eight routes. |
-| 34 | 03-09 | Generated routes retain inquiry and dark CTA styling | VERIFIED | HTML/CSS contracts pass. |
-| 35 | 03-10 | Eight routes pass four-width layout/contrast | VERIFIED | 32/32; no overflow; min contrast 4.72. |
-| 36 | 03-10 | Keyboard, zoom, motion, form, duplicates behave | VERIFIED | Recorded enumerated probes pass; omitted menu traversal failed separately at #16. |
-| 37 | 03-10 | Unresolved facts truthful and inquiry reachable | VERIFIED | No candidate facts/links; every route has inquiry. |
+All 49 PLAN-frontmatter truths were checked against implementation and runtime evidence. Rows group truths by their source plan without reducing their scope.
 
-**Score:** 33/37 truths verified
+| Plan | Truths verified | Count | Status | Evidence |
+|---|---|---:|---|---|
+| 03-01 | Four image-led cards with broad guidance/notice/inquiry; every card reaches a complete finite route; distinct application-first 300/500 with exactly three qualified highlights; provenance is maintainer-only; availability safeguards plus inquiry/verified-call behavior | 5 | VERIFIED | Typed private-to-public projection, four static slugs, shared template, fresh output tests. |
+| 03-02 | Parts and Service lead as separate paths before supporting guidance; About separates local/national/practical content; national provenance creates no Cebu claim; all routes retain inquiry and approval-gated call | 4 | VERIFIED | Typed content projections and route-order/action contracts pass. |
+| 03-03 | CTAs converge on allowlisted Contact context; editable topic preserves normalized origin; local validation/duplicate/success stays truthful; Contact gates every fact/link; form and approved call remain available | 5 | VERIFIED | URL normalizer, keyed form, transition tests, rendered browser flow, and independent contact discriminants. |
+| 03-04 | Shared shell/one main/footer/conversion/no Promotions; all four widths avoid layout/focus/sticky defects; mobile action routing remains correct; visual/focus/motion system remains; D-01–D-19 are gated | 5 | VERIFIED | Fresh production suite and verifier-owned 32-cell/interaction probe. |
+| 03-05 | Unapproved phone/address/map/hours never publish or activate; unresolved shell remains usable; approving one fact reveals only that fact | 3 | VERIFIED | Runtime leak gate and executable mixed-status projections. |
+| 03-06 | Dark actions compile readably; no plain style uses styled-jsx-only `:global()`; truck media/icons retain containment/color | 3 | VERIFIED | Compiled CSS contracts and captures pass. |
+| 03-07 | Routes never publish unresolved facts; every route remains an inquiry journey; approved values reveal matching treatment only | 3 | VERIFIED | Nine-response runtime gate and route/fixture tests. |
+| 03-08 | Inquiry validation/loading/success is executable and truthful; duplicates are rejected with no fictitious failure; homepage uses the central projection and inquiry fallback | 3 | VERIFIED | State-machine tests, rendered client flow, and homepage runtime gate. |
+| 03-09 | Invalid selector syntax is removed/classified; fresh production excludes facts/provenance/Promotions/false delivery; generated routes retain inquiry and dark CTA styles | 3 | VERIFIED | Fresh `.next` runtime/compiled CSS suite. |
+| 03-10 | Eight routes pass four-width layout/contrast; keyboard/zoom/motion/form/duplicate behavior passes; unresolved facts remain truthful and inquiry reachable | 3 | VERIFIED | Verifier reran audit: 32/32, zero interaction failures. |
+| 03-11 | Unresolved/invalid email renders only pending state; valid approved email renders exactly one mailto without exposing other facts | 2 | VERIFIED | Strict projection grammar and server-render tests pass. |
+| 03-12 | Restart restores editable form; reset restores origin/topic and clears fields/errors/status with topic focus; approved phone stays adjacent and never replaces restart | 3 | VERIFIED | Pure reset and rendered DOM lifecycle pass. |
+| 03-13 | Menu moves/contains focus and makes all covered regions inert; Escape restores trigger/inert/scroll; unresolved mobile action fills width; homepage consent exposes invalid/described semantics | 4 | VERIFIED | Real-Chrome focus/inert, geometry, and invalid-submit tests pass, including skip link. |
+| 03-14 | Fresh runtime includes homepage safety gates; normal glob runs rendered homepage/inquiry/menu regressions; acceptance evidence is reproducible and claim-bounded | 3 | VERIFIED | `npm test` ran 62 tests; versioned audit independently passed. |
+
+**Score:** 49/49 truths verified
+
+### Roadmap Success Criteria
+
+| Criterion | Status | Evidence |
+|---|---|---|
+| Truck listing and representative detail routes render configurable approved content and clear inquiry paths | VERIFIED | Typed projection, four finite routes, safeguards, no public provenance, fresh route output. |
+| Parts/service, contact, and about/local pages provide credible practical paths to local assistance | VERIFIED | Distinct roles, safe email/facts, and executable restartable inquiry. |
+| Primary routes share consistent responsive navigation, footer, and conversion actions | VERIFIED | Shared layout and 32-cell focus/zoom/motion/contrast evidence. |
 
 ### Required Artifacts
 
-| Artifact group | Status | Evidence |
-|---|---|---|
-| Truck content/listing/static routes/shared template | VERIFIED | Substantive, wired, finite production routes. |
-| Service/About content and routes | VERIFIED | Real typed data flows through public projections. |
-| Inquiry allowlist/validator/transition/Contact | PARTIAL | Core flow works; reset path is hollow. |
-| Public contact configuration/projection | PARTIAL | Existing facts safe; email omitted. |
-| Header/footer/mobile action/shared CTAs | VERIFIED | Approval-aware and root-mounted; single-action layout warning below. |
-| Mobile menu | FAILED | Mounted but modal focus behavior incomplete. |
-| Global/responsive CSS | VERIFIED | Valid compiled selectors, responsive/focus/motion/dark-action rules. |
-| Phase 3 automated tests | PARTIAL | 50/50 pass; homepage runtime/rendered clients omitted. |
-| Browser audit/JSON/32 captures | VERIFIED | Exact viewport/layout/contrast/basic-interaction evidence. |
+| Artifact group | Exists | Substantive | Wired/data flowing | Status |
+|---|---:|---:|---:|---|
+| Truck content/listing/static routes/cards/template | Yes | Yes | Config → public projection → four routes | VERIFIED |
+| Parts/Service and About content/routes | Yes | Yes | Typed public content → distinct sections/actions | VERIFIED |
+| Contact projection and `ContactEmail` | Yes | Yes | Status config → fail-closed projection → pending text or exact mailto | VERIFIED |
+| Inquiry normalizer/state machine/form | Yes | Yes | URL context → keyed draft → transition → rendered states/reset | VERIFIED |
+| Header/footer/mobile menu/action bar | Yes | Yes | Layout props/pathname → shell and focus lifecycle | VERIFIED |
+| CSS responsive/selector contracts | Yes | Yes | Source rules → compiled CSS → computed browser output | VERIFIED |
+| Runtime/browser helpers and suites | Yes | Yes | Fresh build → isolated Next/Chrome/CDP → assertions/teardown | VERIFIED |
+| Acceptance JSON and 32 captures | Yes | Yes | Executable audit regenerated matrix/interactions | VERIFIED |
 
 ### Key Link Verification
 
-| From | To | Status | Details |
-|---|---|---|---|
-| Truck routes | truck content projection | WIRED | Listing map and guarded static lookup. |
-| Truck/support routes | Contact allowlist/CTA | WIRED | Inquiry always available; approved call conditional. |
-| Parts/About | typed public content | WIRED | Data renders, private provenance excluded. |
-| Contact | normalized topic -> form -> transition | PARTIAL | Submit works; success does not reconnect to idle. |
-| Shared shell/routes | `publicContact` | PARTIAL | Existing facts gate; email disconnected. |
-| Mobile menu | overlay/background | NOT_WIRED | No focus containment/inert relationship. |
-| Global CSS | route class contracts | WIRED | Compiled dark/responsive rules valid. |
-| Runtime suite | production routes/CSS | PARTIAL | Eight routes covered; homepage/client interactions omitted. |
+| From | To | Via | Status | Details |
+|---|---|---|---|---|
+| Truck routes | `src/content/trucks.ts` | public projection/static params/guard | WIRED | Consumers receive display-safe records only. |
+| Truck/support CTAs | Contact | typed `inquiryHref` | WIRED | Seven stable topics; unknown input normalizes to general. |
+| Contact page | `InquiryForm` | normalized query plus `key={initialTopic}` | WIRED | Real same-document navigation remounts a clean general form. |
+| InquiryForm | state machine | activate/complete/reset | WIRED | Invalid, duplicate, local success, and reset execute. |
+| Site config | Contact/homepage/shell | `projectPublicContact` | WIRED | Facts fail closed; valid email becomes exact mailto. |
+| Mobile menu | covered regions | focus trap plus prior-value inert map | WIRED | Includes skip link; cleanup restores state and trigger focus. |
+| Test suite | fresh `.next`/Chrome | runtime suite plus shared browser helper | WIRED | Freshness, isolated ports, bounded readiness, signal exit, and awaited close are tested. |
 
 ### Data-Flow Trace (Level 4)
 
 | Artifact | Data | Source | Status |
 |---|---|---|---|
-| Truck listing/detail | truck records | sourced records -> public projection | FLOWING |
-| Parts/About | offerings/copy | typed modules -> routes | FLOWING |
-| Contact facts | phone/address/hours/directions | status config -> projection | FLOWING |
-| Contact email | configured email | `siteConfig.contact.email` | DISCONNECTED |
-| Inquiry form | draft/errors/status | user input -> transition -> React state | PARTIAL - no reset transition |
+| Truck UI | `PublicTruckSeries` | sourced records projected by `toPublicTruckSeries` | FLOWING |
+| Parts/About | offerings/public about | typed modules/public projection | FLOWING |
+| Contact facts/email | `publicContact` discriminants | `siteConfig` via strict projection | FLOWING |
+| Inquiry UI | draft/errors/status | normalized URL + user events + pure transition | FLOWING |
+| Acceptance evidence | matrix/interactions | fresh browser DOM/computed styles | FLOWING |
 
 ### Behavioral Spot-Checks
 
-| Behavior | Command/evidence | Result | Status |
+| Behavior | Command | Result | Status |
 |---|---|---|---|
-| Production build | `npm run build` | Eight phase routes emitted | PASS |
-| Tests | `npm test` immediately after build | 50/50 | PASS |
+| Production build | `npm run build` | Homepage, support pages, and four finite slugs generated | PASS |
+| Automated suite | `npm test` | 62/62, including runtime and real Chrome tests | PASS |
 | Lint | `npm run lint` | Exit 0 | PASS |
-| Responsive/contrast | browser audit JSON | 32/32; contrast >=4.72 | PASS |
-| Approved email | config-to-render trace | No projected/rendered approved branch | FAIL |
-| Restart inquiry | success action/state trace | Same-fragment anchor; no reset | FAIL |
-| Menu focus | effect/DOM trace | Escape only; no trap/inert | FAIL |
+| Approved email | executable support-route tests | Exact mailto for valid approval; unsafe/unapproved values pending | PASS |
+| Contact remount/reset | rendered tests | Same-document clean remount and reset/focus pass | PASS |
+| Menu lifecycle | rendered tests | Wrap, skip-link inert, Escape/restoration pass | PASS |
+| Process lifecycle | browser-service tests | Forced close awaited; signal-only readiness exits immediately | PASS |
 
 ### Probe Execution
 
-No `probe-*.sh` is declared. The browser audit artifact was independently inspected and records a successful run at `2026-08-27T05:00:24.298Z`. It was not rerun because its contract requires separately running preview and Chrome debugging services. Missing focus-traversal/reset checks are gaps, not accepted from summary narration.
+| Probe | Command | Result | Status |
+|---|---|---|---|
+| Versioned Phase 3 browser audit | `node .planning/phases/03-truck-discovery-local-support-routes/03-10-browser-audit.mjs` | 32/32; zero interaction failures; menu, zoom, consent, inquiry lifecycle pass | PASS |
 
 ### Requirements Coverage
 
 | Requirement | Status | Evidence |
 |---|---|---|
-| DISC-01 | SATISFIED | Four configurable cards, finite details, no fabricated numerical claims. |
-| DISC-02 | SATISFIED | Representative 300/500 application-first pages and contextual inquiry. |
-| DISC-03 | BLOCKED | Approved email cannot surface; post-confirmation restart is dead. |
-| DISC-04 | BLOCKED | Layout/shell pass, but full-screen navigation focus is broken. |
+| DISC-01 | SATISFIED | Four configurable cards/finite details, no fabricated technical claims or public provenance. |
+| DISC-02 | SATISFIED | Distinct 300/500 application-first pages, qualified highlights, clear inquiry. |
+| DISC-03 | SATISFIED | Dedicated support/Contact/About routes, safe email/facts, executable inquiry restart. |
+| DISC-04 | SATISFIED | Shared responsive shell and fresh 32-cell/focus/zoom/motion/contrast checks. |
 
 No Phase 3 requirement is orphaned.
 
-### Anti-Patterns Found
+### Anti-Patterns and Disconfirmation Pass
 
-| File | Line | Pattern | Severity | Impact |
-|---|---:|---|---|---|
-| `src/content/site.ts` | 42-83 | Email omitted from projection | BLOCKER | Approved operational contact remains unreachable. |
-| `InquiryForm.tsx` | 80-89 | Same-fragment anchor labeled as reset | BLOCKER | Cannot start another inquiry. |
-| `MobileMenu.tsx` | 24-40 | Full-screen overlay without focus containment | BLOCKER | Obscured page stays keyboard-operable. |
-| `MobileActionBar.tsx` / `globals.css` | 36-43 / 161 | One link in fixed two-column grid | WARNING | Half the default mobile bar is blank. |
-| `HomepageQuoteExperience.tsx` | 187-190 | Consent error lacks `aria-invalid` | WARNING | Inconsistent screen-reader invalid semantics. |
-| Phase 3 tests | multiple | Runtime omission/source-string client checks | WARNING | Green suite misses functional/accessibility regressions. |
-
-No unreferenced `TBD`, `FIXME`, or `XXX` marker was found. `MobileActionBar`'s `return null` is intentional homepage visibility state, not a stub.
+| Check | Result | Classification |
+|---|---|---|
+| `TBD`, `FIXME`, `XXX`, `TODO`, `HACK`, placeholder markers | None in phase files | PASS |
+| Candidate facts, Promotions, mother-site links, false-delivery copy in public output | None | PASS |
+| Plain-style `:global()` | None; remaining occurrences are valid homepage `<style jsx>` | PASS |
+| Source-only client confidence | Superseded by normal real-Chrome interaction tests | PASS |
+| Error/cleanup coverage | Unsafe email, duplicate activation, signal exit, forced close, inert restoration, consent invalidity covered | PASS |
+| `MobileActionBar` `return null` | Intentional pre-observer homepage state, later populated | INFO |
 
 ### Human Verification Required
 
-None is needed to classify these gaps; all are observable in implementation wiring. The 32-cell artifact is sufficient for the layout/contrast claims it measures. Commercial fact approval remains an external launch input, but unresolved defaults are correctly supported and no approval is required for Phase 3 acceptance.
+None outstanding. The plans' deferred exact-width/keyboard checks were completed by the approved acceptance artifact and independently rerun here. Representative 390/768/1024/1440 captures were inspected and showed coherent, unclipped layouts. External commercial fact/asset authorization remains a launch input, while the safe unresolved defaults require no approval to function.
 
 ### Deferred Items
 
-None. Phase 4 owns server lead delivery, not public email projection, client reset, or navigation focus. Phase 5 is not a valid deferral for DISC-04 behavior explicitly promised in Phase 3.
+Phase 4 owns server validation, persistence, provider delivery, rate limiting, and production confirmation. Phase 5 owns broader launch certification. Neither contains a deferred Phase 3 gap.
 
 ### Gaps Summary
 
-The original three blocker classes are closed with code and runtime evidence. Phase 3 still cannot pass because four must-haves fail: approved email is discarded, the post-success restart action is nonfunctional, the full-screen mobile menu lacks focus containment, and automated coverage does not protect the changed runtime/client paths. The half-empty default mobile bar and missing homepage consent invalid signal are warnings rather than separate goal blockers.
+No gaps remain. The original selector/fact/runtime blockers and second-pass email/restart/menu/coverage blockers are closed in source wiring, executable tests, fresh production output, and a verifier-owned browser probe. Final review fixes for skip-link inertness, real same-document topic remount, stable helper ownership, signal-aware readiness, and awaited teardown are present and passing.
 
 ---
 
-_Verified: 2026-08-27T06:33:56Z_  
+_Verified: 2026-08-27T16:56:34Z_
 _Verifier: the agent (gsd-verifier)_

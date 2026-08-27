@@ -13,13 +13,13 @@ Make it easy and credible for a Cebu business to identify the right Hino solutio
 ### Validated
 
 - [x] Deliver a polished, responsive Hino Cebu homepage with a dominant truck hero and integrated quote CTA. (Phase 2, approved 2026-08-26)
+- [x] Provide truck discovery through listing and configurable series/detail pages. (Phase 3, verified 2026-08-28)
+- [x] Provide clear local sales, parts, service, contact, and dealership-location paths. (Phase 3, verified 2026-08-28)
 
 ### Active
 
 <!-- Current scope. Building toward these. -->
 
-- [ ] Provide truck discovery through listing and configurable series/detail pages.
-- [ ] Provide clear local sales, parts, service, contact, and dealership-location paths.
 - [ ] Capture, validate, attribute, and safely route quote and inquiry leads to Google Sheets and Resend.
 - [ ] Provide essential privacy, terms, SEO, structured-data, sitemap, robots, analytics, and accessibility foundations.
 - [ ] Keep content, site details, vehicle availability, and business claims configurable and verified.
@@ -52,11 +52,11 @@ The intended stack is Next.js with TypeScript and Vercel. Leads must be server-v
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Prioritize conversion-led local dealership experience | The website's primary purpose is to create Cebu sales and service conversations | — Pending |
+| Prioritize conversion-led local dealership experience | The website's primary purpose is to create Cebu sales and service conversations | Validated in Phases 2–3 |
 | Use Next.js, TypeScript, and Vercel | The specification requires a modern deployable site without a custom server | — Pending |
 | Integrate leads with Google Sheets and Resend | Provides practical operational routing with clear ownership | — Pending |
-| Exclude visible promotions from v1 | The specified journey should focus on credibility, vehicle discovery, support, and contact | — Pending |
-| Keep product and branch details configurable | Key commercial facts require verification before launch | — Pending |
+| Exclude visible promotions from v1 | The specified journey should focus on credibility, vehicle discovery, support, and contact | Validated in Phases 2–3 |
+| Keep product and branch details configurable | Key commercial facts require verification before launch | Validated in Phase 3 |
 
 ## Evolution
 
@@ -76,4 +76,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-08-26 after Phase 2 approval*
+*Last updated: 2026-08-28 after Phase 3 verification*

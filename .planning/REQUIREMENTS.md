@@ -65,7 +65,7 @@
 |---|---|---|
 | FND-01–FND-04 | Phase 1 | Pending |
 | HOME-01–HOME-05 | Phase 2 | Complete |
-| DISC-01–DISC-04 | Phase 3 | Pending |
+| DISC-01–DISC-04 | Phase 3 | Complete |
 | LEAD-01–LEAD-06 | Phase 4 | Pending |
 | QLT-01–QLT-05 | Phase 5 | Pending |
 
