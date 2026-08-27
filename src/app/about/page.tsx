@@ -123,7 +123,7 @@ export default function AboutPage() {
         .about-practical__intro { margin-top: var(--space-md); }
         .about-practical__grid { display: grid; gap: var(--space-md); grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: var(--space-xl); }
         .about-practical article { background: var(--color-paper); border: 1px solid var(--color-border); padding: var(--space-xl); }
-        .about-practical article > :global(svg) { color: var(--color-red); }
+        .about-practical article > svg { color: var(--color-red); }
         .about-practical h3 { margin-top: var(--space-md); }
         .about-practical address { font-style: normal; }
         .about-practical dl { margin: var(--space-md) 0 0; }
@@ -131,7 +131,7 @@ export default function AboutPage() {
         .about-practical dt { font-weight: 700; }
         .about-practical dd { color: var(--color-muted-ink); margin: 0; text-align: right; }
         .about-practical__actions { display: flex; flex-wrap: wrap; gap: var(--space-md); margin-top: var(--space-xl); }
-        .about-practical__actions :global(.button) { gap: var(--space-sm); }
+        .about-practical__actions .button { gap: var(--space-sm); }
         @media (max-width: 767px) { .about-local__grid, .about-practical__grid { grid-template-columns: 1fr; } .about-practical__actions { display: grid; } }
         @media (min-width: 768px) and (max-width: 1023px) { .about-practical__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
       `}</style>

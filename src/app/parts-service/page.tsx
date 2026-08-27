@@ -91,7 +91,7 @@ export default function PartsServicePage() {
         .support-path p:not(.eyebrow), .support-guidance article > p { color: var(--color-muted-ink); }
         .support-path ul, .support-guidance ul { display: grid; gap: var(--space-sm); margin: var(--space-lg) 0; padding-left: 1.25rem; }
         .support-path li::marker, .support-guidance li::marker { color: var(--color-red); }
-        .support-path :global(.button) { align-self: flex-start; gap: var(--space-sm); margin-top: auto; }
+        .support-path .button { align-self: flex-start; gap: var(--space-sm); margin-top: auto; }
         .support-guidance { background: var(--color-muted-surface); }
         .support-guidance__grid { display: grid; gap: var(--space-lg); grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: var(--space-xl); }
         .support-guidance article { border-top: 3px solid var(--color-red); background: var(--color-paper); padding: var(--space-xl); }
